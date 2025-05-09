@@ -1,126 +1,124 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36" version="26.1.1">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36" version="27.0.2">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="1430" dy="763" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1425" dy="766" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
-        <mxCell id="WIyWlLk6GJQsqaUBKTNV-2" value="" style="rounded=0;html=1;jettySize=auto;orthogonalLoop=1;fontSize=11;endArrow=block;endFill=0;endSize=8;strokeWidth=1;shadow=0;labelBackgroundColor=none;edgeStyle=orthogonalEdgeStyle;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="WIyWlLk6GJQsqaUBKTNV-3" target="WIyWlLk6GJQsqaUBKTNV-6" edge="1">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-2" value="" style="rounded=0;html=1;jettySize=auto;orthogonalLoop=1;fontSize=11;endArrow=block;endFill=0;endSize=8;strokeWidth=1;shadow=0;labelBackgroundColor=none;edgeStyle=orthogonalEdgeStyle;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="WIyWlLk6GJQsqaUBKTNV-3" target="IyAvQO3Ybo1BVgbxfQ9H-8" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="220" y="170" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-3" value="run.py로 스타트" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;glass=0;strokeWidth=1;shadow=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="160" y="80" width="120" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="WIyWlLk6GJQsqaUBKTNV-4" value="Yes" style="rounded=0;html=1;jettySize=auto;orthogonalLoop=1;fontSize=11;endArrow=block;endFill=0;endSize=8;strokeWidth=1;shadow=0;labelBackgroundColor=none;edgeStyle=orthogonalEdgeStyle;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="WIyWlLk6GJQsqaUBKTNV-6" target="WIyWlLk6GJQsqaUBKTNV-10" edge="1">
-          <mxGeometry y="20" relative="1" as="geometry">
-            <mxPoint as="offset" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="IyAvQO3Ybo1BVgbxfQ9H-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="WIyWlLk6GJQsqaUBKTNV-6" target="IyAvQO3Ybo1BVgbxfQ9H-8" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="WIyWlLk6GJQsqaUBKTNV-6" value="vectorstore 존재 여부 검사" style="rhombus;whiteSpace=wrap;html=1;shadow=0;fontFamily=Helvetica;fontSize=12;align=center;strokeWidth=1;spacing=6;spacingTop=-4;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="170" y="170" width="100" height="80" as="geometry" />
-        </mxCell>
-        <mxCell id="IyAvQO3Ybo1BVgbxfQ9H-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="WIyWlLk6GJQsqaUBKTNV-7" target="IyAvQO3Ybo1BVgbxfQ9H-13" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="WIyWlLk6GJQsqaUBKTNV-7" value="ollama_preprocessor.py에서 단순 문장화" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;glass=0;strokeWidth=1;shadow=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="320" y="360" width="120" height="40" as="geometry" />
-        </mxCell>
-        <mxCell id="IyAvQO3Ybo1BVgbxfQ9H-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="WIyWlLk6GJQsqaUBKTNV-10" target="IyAvQO3Ybo1BVgbxfQ9H-21" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="Vi0f7Jz_cX6Hm7ricHvp-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="WIyWlLk6GJQsqaUBKTNV-10" target="Vi0f7Jz_cX6Hm7ricHvp-2" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="WIyWlLk6GJQsqaUBKTNV-10" value="NEO/facts.nkb 유무 확인" style="rhombus;whiteSpace=wrap;html=1;shadow=0;fontFamily=Helvetica;fontSize=12;align=center;strokeWidth=1;spacing=6;spacingTop=-4;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="117.5" y="630" width="205" height="103" as="geometry" />
-        </mxCell>
-        <mxCell id="IyAvQO3Ybo1BVgbxfQ9H-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="IyAvQO3Ybo1BVgbxfQ9H-8" target="IyAvQO3Ybo1BVgbxfQ9H-7" edge="1">
+        <mxCell id="IyAvQO3Ybo1BVgbxfQ9H-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="IyAvQO3Ybo1BVgbxfQ9H-8" target="IyAvQO3Ybo1BVgbxfQ9H-7" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="440" y="270" as="sourcePoint" />
-            <mxPoint x="539.6400000000001" y="270.0799999999999" as="targetPoint" />
+            <mxPoint x="269.99999999999955" y="210.00000000000023" as="sourcePoint" />
+            <mxPoint x="400" y="230" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="IyAvQO3Ybo1BVgbxfQ9H-7" value="오류 출력 후 종료" style="ellipse;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="520" y="240" width="120" height="80" as="geometry" />
+          <mxGeometry x="354" y="170" width="120" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="IyAvQO3Ybo1BVgbxfQ9H-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="IyAvQO3Ybo1BVgbxfQ9H-8" target="WIyWlLk6GJQsqaUBKTNV-7" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="IyAvQO3Ybo1BVgbxfQ9H-8" value="&lt;span style=&quot;color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(251, 251, 251); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;&quot;&gt;txt 유무 검사&lt;/span&gt;" style="rhombus;whiteSpace=wrap;html=1;shadow=0;fontFamily=Helvetica;fontSize=12;align=center;strokeWidth=1;spacing=6;spacingTop=-4;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="330" y="240" width="100" height="80" as="geometry" />
-        </mxCell>
-        <mxCell id="IyAvQO3Ybo1BVgbxfQ9H-10" value="No" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="450" y="258" width="40" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="IyAvQO3Ybo1BVgbxfQ9H-12" value="Yes" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="380" y="320" width="40" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="IyAvQO3Ybo1BVgbxfQ9H-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="IyAvQO3Ybo1BVgbxfQ9H-13" target="IyAvQO3Ybo1BVgbxfQ9H-16" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="IyAvQO3Ybo1BVgbxfQ9H-13" value="data_preprocessor.py에서 구문분석" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;glass=0;strokeWidth=1;shadow=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="320" y="440" width="120" height="40" as="geometry" />
-        </mxCell>
-        <mxCell id="Vi0f7Jz_cX6Hm7ricHvp-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="IyAvQO3Ybo1BVgbxfQ9H-16" edge="1">
+        <mxCell id="IyAvQO3Ybo1BVgbxfQ9H-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="IyAvQO3Ybo1BVgbxfQ9H-8" target="WIyWlLk6GJQsqaUBKTNV-7" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="220" y="590" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="380" y="590" />
-              <mxPoint x="220" y="590" />
-            </Array>
+            <mxPoint x="380" y="330" as="sourcePoint" />
+            <mxPoint x="380" y="360" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="IyAvQO3Ybo1BVgbxfQ9H-16" value="vectorstore.py에서 vectorstore 생성" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;glass=0;strokeWidth=1;shadow=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="320" y="510" width="120" height="40" as="geometry" />
+        <mxCell id="IyAvQO3Ybo1BVgbxfQ9H-8" value="&lt;span style=&quot;color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(251, 251, 251); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;&quot;&gt;txt 유무 검사&lt;/span&gt;" style="rhombus;whiteSpace=wrap;html=1;shadow=0;fontFamily=Helvetica;fontSize=12;align=center;strokeWidth=1;spacing=6;spacingTop=-4;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="170" y="170" width="100" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="IyAvQO3Ybo1BVgbxfQ9H-24" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="IyAvQO3Ybo1BVgbxfQ9H-21" target="IyAvQO3Ybo1BVgbxfQ9H-25" edge="1">
+        <mxCell id="IyAvQO3Ybo1BVgbxfQ9H-12" value="Yes" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="220" y="250" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="IyAvQO3Ybo1BVgbxfQ9H-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="IyAvQO3Ybo1BVgbxfQ9H-13" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="220" y="950" as="targetPoint" />
+            <mxPoint x="220" y="510" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="IyAvQO3Ybo1BVgbxfQ9H-24" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="IyAvQO3Ybo1BVgbxfQ9H-21" target="uyCGk7SXNnE-HhSwTR3F-20" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="220" y="780" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="IyAvQO3Ybo1BVgbxfQ9H-21" value="query_to_NEO에서 사용자 질의 요청 후 자연어 질의를 NEO query로 작성" style="rounded=1;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="160" y="850" width="120" height="60" as="geometry" />
+          <mxGeometry x="150" y="690" width="140" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="IyAvQO3Ybo1BVgbxfQ9H-28" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="IyAvQO3Ybo1BVgbxfQ9H-25" target="IyAvQO3Ybo1BVgbxfQ9H-27" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="IyAvQO3Ybo1BVgbxfQ9H-25" value="NEO_executor.py에서&lt;div&gt;NEO엔진에 kb를 로드하고 NEO query를 삽입, 도출된 사실을 리턴&lt;/div&gt;" style="whiteSpace=wrap;html=1;rounded=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="155" y="950" width="130" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="or90eL7jxsDkjveO_CQg-0" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="IyAvQO3Ybo1BVgbxfQ9H-27" target="IyAvQO3Ybo1BVgbxfQ9H-21">
+        <mxCell id="uyCGk7SXNnE-HhSwTR3F-31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="IyAvQO3Ybo1BVgbxfQ9H-27" target="uyCGk7SXNnE-HhSwTR3F-34" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="80" y="880" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="120" y="1070" />
-              <mxPoint x="120" y="880" />
-            </Array>
+            <mxPoint x="220" y="1010" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="IyAvQO3Ybo1BVgbxfQ9H-27" value="response.py에서&lt;div&gt;리턴된 사실을 RAG하여&lt;/div&gt;&lt;div&gt;최종 답변을 생성&amp;nbsp;&lt;/div&gt;" style="whiteSpace=wrap;html=1;rounded=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="150" y="1040" width="140" height="60" as="geometry" />
+        <mxCell id="IyAvQO3Ybo1BVgbxfQ9H-27" value="NEO_executor.py에서&lt;div&gt;질의 실행 및 도출&lt;/div&gt;" style="whiteSpace=wrap;html=1;rounded=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="150" y="910" width="140" height="60" as="geometry" />
         </mxCell>
         <mxCell id="IyAvQO3Ybo1BVgbxfQ9H-29" value="No" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="300" y="180" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="Vi0f7Jz_cX6Hm7ricHvp-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="Vi0f7Jz_cX6Hm7ricHvp-2" edge="1">
+        <mxCell id="uyCGk7SXNnE-HhSwTR3F-8" value="" style="group" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1" connectable="0">
+          <mxGeometry x="110" y="290" width="220" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="IyAvQO3Ybo1BVgbxfQ9H-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="uyCGk7SXNnE-HhSwTR3F-8" source="WIyWlLk6GJQsqaUBKTNV-7" target="IyAvQO3Ybo1BVgbxfQ9H-13" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="IyAvQO3Ybo1BVgbxfQ9H-13" value="data_preprocessor.py에서 구문분석" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;glass=0;strokeWidth=1;shadow=0;" parent="uyCGk7SXNnE-HhSwTR3F-8" vertex="1">
+          <mxGeometry x="50" y="120" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="uyCGk7SXNnE-HhSwTR3F-2" value="" style="swimlane;startSize=0;" parent="uyCGk7SXNnE-HhSwTR3F-8" vertex="1">
+          <mxGeometry width="220" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="uyCGk7SXNnE-HhSwTR3F-3" value="입력 문장 전처리" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="uyCGk7SXNnE-HhSwTR3F-2" vertex="1">
+          <mxGeometry width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-7" value="ollama_preprocessor.py에서 단순 문장화" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;glass=0;strokeWidth=1;shadow=0;" parent="uyCGk7SXNnE-HhSwTR3F-2" vertex="1">
+          <mxGeometry x="50" y="40" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="uyCGk7SXNnE-HhSwTR3F-12" value="" style="swimlane;startSize=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="110" y="510" width="220" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="uyCGk7SXNnE-HhSwTR3F-13" value="NEO Knowledge Base로 변환" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="uyCGk7SXNnE-HhSwTR3F-12" vertex="1">
+          <mxGeometry x="10" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Vi0f7Jz_cX6Hm7ricHvp-2" value="vectorstore_to_NEO.py에서 vectorstore 내용을 NEO KB로 변경" style="rounded=1;whiteSpace=wrap;html=1;" parent="uyCGk7SXNnE-HhSwTR3F-12" vertex="1">
+          <mxGeometry x="15" y="50" width="190" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uyCGk7SXNnE-HhSwTR3F-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="Vi0f7Jz_cX6Hm7ricHvp-2" target="IyAvQO3Ybo1BVgbxfQ9H-21" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="220" y="810" as="targetPoint" />
+            <mxPoint x="190" y="670" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uyCGk7SXNnE-HhSwTR3F-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="uyCGk7SXNnE-HhSwTR3F-20" target="IyAvQO3Ybo1BVgbxfQ9H-27" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uyCGk7SXNnE-HhSwTR3F-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="uyCGk7SXNnE-HhSwTR3F-20" target="uyCGk7SXNnE-HhSwTR3F-27" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="350" y="825.0000000000002" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uyCGk7SXNnE-HhSwTR3F-20" value="know_or_not.py에서&lt;div&gt;질의 키워드 로그 존재 여부 검사&lt;/div&gt;" style="rhombus;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="135" y="780" width="170" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="uyCGk7SXNnE-HhSwTR3F-25" value="Yes" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="220" y="870" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="uyCGk7SXNnE-HhSwTR3F-26" value="No" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="314" y="800" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="uyCGk7SXNnE-HhSwTR3F-27" value="&quot;모르겠습니다.&quot; 출력 후 종료" style="ellipse;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="354" y="785" width="146" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="uyCGk7SXNnE-HhSwTR3F-36" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="uyCGk7SXNnE-HhSwTR3F-34" target="IyAvQO3Ybo1BVgbxfQ9H-21" edge="1">
+          <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="435" y="810" />
-              <mxPoint x="220" y="810" />
+              <mxPoint x="110" y="1030" />
+              <mxPoint x="110" y="720" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="Vi0f7Jz_cX6Hm7ricHvp-2" value="vectorstore_to_NEO.py에서 vectorstore 내용을 NEO KB로 변경" style="rounded=1;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="340" y="723" width="190" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="Vi0f7Jz_cX6Hm7ricHvp-5" value="Yes" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="220" y="760" width="40" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="Vi0f7Jz_cX6Hm7ricHvp-6" value="No" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="350" y="656.5" width="40" height="30" as="geometry" />
+        <mxCell id="uyCGk7SXNnE-HhSwTR3F-34" value="response.py에서&lt;div&gt;응답 생성 및 출력&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="160" y="1000" width="120" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

@@ -1,110 +1,111 @@
-원본 질문: 이순신의 사망일은 언제인가요
+원본 질문: 이순신의 생년을 알려줘
 컨텍스트:
-(고사리첨사 is-a 전라좌도수군절도사)
-(류성룡 추천-object 임진왜란 참전)
+(이순신 death-date 1598년-12월-16일 음력-11월-19일)
+(함경도 동구비보권관 조산보만호-겸-녹도둔전사의-1587년)
+(이순신 1589년 정읍현감 재직 중)
+(류성룡 추천 이순신 고사리첨사가 되다)
+(이순신 절충장군)
+(이순신 만포진첨사)
+(이순신 진도군수)
+(이순신 전라좌도수군절도사 임진왜란 참전)
 (이순신 is-a 성웅)
-(이순신 삼도수군통제사)
+(이순신 임진왜란 때 삼도수군통제사)
 (이순신 지도력 탁월)
-(이순신 전략 뛰어남)
+(이순신 전략 뛰어나다)
 (이순신 일본 수군 해전 연전연승)
-(이순신 노량 해전 전사)
-(이순신 선무공신 1등관 추록)
-(이순신 의정부우의정 추증)
-(이순신 덕풍군 추봉)
-(이순신 의정부좌의정 추증)
-(이순신 덕풍부원군 추봉)
-(이순신 의정부영의정 가증)
-`(외가-변씨 is-a 가족)
-(처가-방씨 is-a 가족)
-(외가-변씨 origin 초계)
-(처가-방씨 origin 온양)
-(묘소 충청남도 아산시)`
+(이순신 death-location 노량)
+(이순신 posthumous-title 선무공신-1등관)
+(이순신 posthumous-title 의정부우의정)
+(이순신 posthumous-title 덕풍군)
+`(광해군 이후 의정부좌의정 추증)`
+`(덕풍부원군 추봉)`
+`(정조 때 의정부영의정 가증)`
+`(외가 변씨) (처가 방씨)`
+(이순신 grave-location (충청남도 아산시))
 (이순신 birth-date 1545년-4월-28일 윤음력-3월-8일)
 (이순신 death-date 1598년-12월-16일 음력-11월-19일)
-(이순신 is-a 조선 중기 무신)
-(이순신 본관 덕수)
+(이순신 is-a 조선-무신)
+`(이순신 본관 덕수)
 (이순신 자 여해)
 (이순신 시호 충무)
-(이순신 출신 한성)
-(이순신 문반 가문 출신)
-(이순신 급제 1576년 선조 9년 무과)
-(이순신 함경도 동구비보 권관 종9품)
-(이순신 훈련원 봉사 종8품)
-(이순신 충청병사 군관)
-(이순신 전라도 발포진 수군만호 종4품)
-(이순신 훈련원 봉사 종8품)
-(이순신 함경남병사 군관)
-(이순신 훈련원 참군 정7품)
-(이순신 사복시 주부 종6품)
-(이순신 함경도 조산보 병마만호 종4품)
-(이순신 전라감사 조방장)
-(이순신 선전관)
-(이순신 전라도 정읍현감 종6품 태인현감 겸무)
-(이순신 전라좌도수군절도사 정3품)
-(이순신 정헌대부 정2품 상계 삼도수군통제사 종2품)
-(함경도-동구비보권관 is-a 권관)
-(발포-수군만호 is-a 군관)
-(오동나무 is-a 나무)
-(좌수사 is-a 군관)
-(성박 is-a 군관)
-(남병사 is-a 군관)
-(건원보 is-a 권관)
-(훈련원 참군 is-a 군관)
-(사복시 주부 is-a 군관)
-(조산보 만호 겸 녹둔도사의 is-a 군관)
-(여진족 is-a 민족)
-(녹둔도 전투 is-a 전투)
-(북병사 이일 is-a 군관)
-(백의종군 is-a 군관)
-(전라관찰사 이광 is-a 군관)
-(전라도 조방장 is-a 군관)
-(선전관 is-a 군관)
-(류성룡 추천-object 고사리첨사)
-(고사리첨사 is-a 절충장군)
-(고사리첨사 is-a 만포진첨사)
-(고사리첨사 is-a 진도군수)
-(고사리첨사 is-a 전라좌도수군절도사)
-(류성룡 추천-object 임진왜란 참전)
-(이순신 is-a 성웅)
-(이순신 삼도수군통제사)
-(이순신 지도력 탁월)
-(이순신 전략 뛰어남)
-(이순신 일본 수군 해전 연전연승)
-(이순신 노량 해전 전사)
-(이순신 선무공신 1등관 추록)
-(이순신 의정부우의정 추증)
-(이순신 덕풍군 추봉)
+(이순신 출신 한성)`
+(문반 가문 출신)
+(문반 무과 1576년)
+(문반 함경도 동구비보 권관)
+(문반 훈련원 봉사)
+(문반 충청병사 군관)
+(문반 전라도 발포진 수군만호)
+(문반 훈련원 봉사)
+(문반 함경남병사 군관)
+(문반 훈련원 참군)
+(문반 사복시 주부)
+(문반 함경도 조산보 병마만호)
+(문반 전라감사 조방장)
+(문반 선전관)
+(문반 전라도 정읍현감)
+(문반 전라좌도수군절도사)
+(문반 정헌대부 삼도수군통제사)
+`(함경도-동구비보권관 is-a 조산보만호-겸-녹도둔전사의)
+(함경도-동구비보권관 year 1581)`
+`(오동나무-베기 거절 is-a 사건)
+(좌수사 성박 is-a 사람)
+(전라남수영 오동나무 is-a 나무)`
+`(이순신 is-a 군관)`
+`(이순신 is-a 건원보 권관)`
+`(이순신 is-a 훈련원 참군)`
+`(이순신 is-a 사복시 주부)`
+`(이순신 is-a 조산보 만호)`
+`(이순신 is-a 녹둔도사의)`
+`(이순신 year 1584)`
+(조산-만호-겸-녹둔도사의 재직-년도 1587)
+(조산-만호-겸-녹둔도사의 전투 녹둔도 전투 승리)
+(조산-만호-겸-녹둔도사의 피해 크다)
+(북병사 이일 탄핵 백의종군)
+`(이순신 is-a 인물)` 
+`(이순신 복직)`
+`(이순신 전라도 조방장)`
+`(이순신 선전관)`
+(이순신 birth-date 1545년-4월-28일 윤음력-3월-8일)
+(이순신 death-date 1598년-12월-16일 음력-11월-19일)
+(함경도 동구비보권관 조산보만호-겸-녹도둔전사의-1587년)
+(이순신 1589년 정읍현감 재직 중)
+(류성룡 추천 이순신 고사리첨사가 되다)
+(이순신 절충장군)
+(이순신 만포진첨사)
+(이순신 진도군수)
+(이순신 전라좌도수군절도사 임진왜란 참전)
 
 변환된 NEO 쿼리:
 <think>
-Alright, I need to convert the user's question into a NEO query. The question is about when Yi Sun-sin died. 
+Alright, I need to convert the user's question into a NEO query. The question is asking about Yi Sun-sin's birth year.
 
-First, I'll identify the key components of the question: "이순신" (Yi Sun-sin) and "사망일" (death date). 
+First, identify the subject, which is clearly "이순신". 
 
-Looking at the NEO KB context provided, I see that there's an entry for (이순신 death-date 1598년-12월-16일 음력-11월-19일), which translates to December 16, 1598 in solar calendar and November 19, 1598 in lunar calendar.
+Next, determine the property we're interested in. Since the question asks for the birth year, the relevant property would be "생년".
 
-The NEO query structure requires a list with the subject, property, and output variable. The subject here is "이순신", the property is "사망일". I'll use "?x" as the output variable to represent the date.
+Now, structure this into a NEO query using the list format as specified. The output variable should be "?x" to represent the value we're querying.
 
-Putting it all together, the query will fetch Yi Sun-sin's death date.
+Putting it all together, the NEO query will have the subject and property listed within the same list under "query".
 </think>
 
-To convert the user's question into a NEO query, we structure it by identifying the subject (이순신) and the property (사망일). The result is stored in ?x.
+이순신의 생년을 알려주세요라는 사용자 질문을 NEO 쿼리 형식으로 변환합니다. 
 
-```json
-[
-  {
-    "sentence": "이순신의 사망일은 언제인가요",
-    "transformed_sentences": [
-      {
-        "lemma_sentence": "이순신는 사망일을 ?x 가지고 있습니다.",
-        "query": {
-          "variable": "?x",
-          "type": "death-date",
-          "value": "이순신"
-        }
-      }
-    ],
-    "result": ["1598년-12월-16일 (음력: 1598년-11월-19일)"]
-  }
-]
+쿼리는 다음과 같습니다:
+
+``` 
+(list
+    ( NEOQuery )
+    (list
+        (Subject) (Property)
+        "이순신" "생년"
+    )
+    (output "?x")
+)
 ```
+
+해설:
+1. ** chủ đề**: "이순신" — 질문의 주체입니다.
+2. ** thuộc tính**: "생년" — 알고자 하는 정보입니다.
+3. **결과 변수**: "?x" — 쿼리 결과를 저장할 변수입니다.
+
+이러한 구조로 NEO 쿼리를 만들면, 시스템은 "이순신"의 "생년"을 검색하고 해당 값을 반환합니다.
