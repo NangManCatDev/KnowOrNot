@@ -1,4 +1,4 @@
-원본 질문: 이순신의 생년을 알려줘
+원본 질문: 이순신의 사망일을 알려줘
 컨텍스트:
 (이순신 death-date 1598년-12월-16일 음력-11월-19일)
 (함경도 동구비보권관 조산보만호-겸-녹도둔전사의-1587년)
@@ -77,35 +77,21 @@
 
 변환된 NEO 쿼리:
 <think>
-Alright, I need to convert the user's question into a NEO query. The question is asking about Yi Sun-sin's birth year.
+Alright, I need to convert the user's question into a NEO query. The question is asking for "이순신의 사망일을 알려줘." So, first, I'll break it down.
 
-First, identify the subject, which is clearly "이순신". 
+The subject here is clearly 이순신. The attribute they're looking for is 사망일, which translates to death date. In NEO, we structure queries with the 'query' keyword, followed by subject, property, and output variables.
 
-Next, determine the property we're interested in. Since the question asks for the birth year, the relevant property would be "생년".
+I remember from the examples that each query starts with (prefix), then the main parts. Since there's no specific year mentioned, I'll focus on the general property. The output should be a variable like ?date to hold the result.
 
-Now, structure this into a NEO query using the list format as specified. The output variable should be "?x" to represent the value we're querying.
+Putting it together, the structure would be:
 
-Putting it all together, the NEO query will have the subject and property listed within the same list under "query".
+(query
+  (이순신의 사망일)
+  (이순신 :사망일 ?date))
+
+This way, the system knows to look up 이순신's death date and store it in ?date. I think that covers everything the user is asking for.
 </think>
 
-이순신의 생년을 알려주세요라는 사용자 질문을 NEO 쿼리 형식으로 변환합니다. 
-
-쿼리는 다음과 같습니다:
-
-``` 
-(list
-    ( NEOQuery )
-    (list
-        (Subject) (Property)
-        "이순신" "생년"
-    )
-    (output "?x")
-)
-```
-
-해설:
-1. ** chủ đề**: "이순신" — 질문의 주체입니다.
-2. ** thuộc tính**: "생년" — 알고자 하는 정보입니다.
-3. **결과 변수**: "?x" — 쿼리 결과를 저장할 변수입니다.
-
-이러한 구조로 NEO 쿼리를 만들면, 시스템은 "이순신"의 "생년"을 검색하고 해당 값을 반환합니다.
+(query
+  (이순신의 사망일)
+  (이순신 :사망일 ?date))

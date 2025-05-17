@@ -1,6 +1,6 @@
 import os
 import sys
-from ctypes import cdll, c_char_p, c_int
+from ctypes import cdll, c_char_p, c_int, create_string_buffer
 
 # Note: 해당 모듈은 NEO엔진을 실행하는 모듈임.
 
@@ -45,35 +45,106 @@ class NEOExecutor:
                 except Exception as dep_error:
                     print(f"DLL 분석 실패: {str(dep_error)}")
 
-    def execute_query(self, query: str, result_buffer: str) -> int:
+    def execute_query(self, query: str, result_buffer: str = None):
         """
         NEO 엔진에 쿼리를 실행합니다.
         
         Args:
             query: 실행할 쿼리 문자열
-            result_buffer: 결과를 저장할 버퍼
+            result_buffer: 결과를 저장할 버퍼 (기본값: None)
             
         Returns:
-            실행 결과 코드
+            (실행 결과 코드, 결과 문자열) 튜플
         """
-        return self.neoEventEngine(
-            query.encode('utf-8'),
-            result_buffer.encode('utf-8')
-        )
+        print(f"🔍 실행할 쿼리: {query}")
+        print(f"📝 쿼리 바이트: {query.encode('utf-8')}")
+        
+        query_bytes = query.encode('utf-8')
+        
+        # 기본 버퍼 크기 설정
+        if result_buffer is None:
+            result_buffer = " " * 1024
+            
+        buffer_bytes = create_string_buffer(len(result_buffer) + 1)  # +1 for null terminator
+        
+        result = self.neoEventEngine(query_bytes, buffer_bytes)
+        return result, buffer_bytes.value.decode('utf-8')
 
     def cleanup(self):
         """NEO 엔진을 종료합니다."""
         if hasattr(self, 'neoExit'):
             self.neoExit()
+            
+    def load_kb_file(self, kb_file_path):
+        """
+        KB 파일을 로드하고 각 줄을 실행합니다.
+        
+        Args:
+            kb_file_path: KB 파일의 경로
+            
+        Returns:
+            성공 여부
+        """
+        try:
+            print(f"KB 파일 로드 시도: {kb_file_path}")
+            print(f"KB 파일 존재 여부: {os.path.exists(kb_file_path)}")
+            
+            # 파일을 직접 열어서 각 줄을 실행
+            with open(kb_file_path, 'r', encoding='utf-8') as kb_file:
+                file_contents = kb_file.read()
+                print(f"KB 파일 내용 미리보기: {file_contents[:100]}...")
+                
+                lines = file_contents.splitlines()
+                for line in lines:
+                    line = line.strip()
+                    if not line or line.startswith(';'):  # 빈 줄이나 주석 건너뛰기
+                        continue
+                    
+                    # 각 줄을 NEO 엔진에 전달
+                    result, output = self.execute_query(line)
+                    if result != 1:  # 오류 발생 시 
+                        print(f"  라인 실행 오류: {line} -> {result}, {output}")
+                        return False
+                
+            print(f"KB 파일 '{os.path.basename(kb_file_path)}' 로드 완료")
+            return True
+            
+        except FileNotFoundError:
+            print(f"KB 파일을 찾을 수 없음: {kb_file_path}")
+            return False
+        except Exception as e:
+            print(f"KB 파일 로드 중 오류 발생: {str(e)}")
+            return False
 
 if __name__ == "__main__":
     try:
+        # 현재 작업 디렉토리 출력
+        cwd = os.getcwd()
+        print(f"현재 작업 디렉토리: {cwd}")
+        
         executor = NEOExecutor()
         
-        # Info: 테스트 쿼리 실행
-        result_buffer = " " * 1024  # Info: 결과를 저장할 버퍼
-        result = executor.execute_query("(load-kb \"facts.kb\")", result_buffer)
-        print(f"쿼리 실행 결과: {result}")
+        # KB 파일 경로 정의 (두 곳 모두 시도)
+        kb_paths = [
+            os.path.join(cwd, "facts.kb"),               # 현재 디렉토리
+            os.path.join(cwd, "NEO", "facts.kb")         # NEO 디렉토리
+        ]
+        
+        # 로드 성공 여부
+        load_success = False
+        
+        # 각 경로에서 파일 로드 시도
+        for kb_path in kb_paths:
+            if executor.load_kb_file(kb_path):
+                load_success = True
+                print(f"KB 파일 로드 성공: {kb_path}")
+                break
+        
+        if not load_success:
+            print("모든 KB 파일 로드 시도 실패")
+            
+        # 이제 다른 명령어를 실행할 수 있습니다
+        print("\n작업 완료. NEO 엔진이 준비되었습니다.")
         
     except Exception as e:
         print(f"실행 중 오류 발생: {str(e)}")
