@@ -1,0 +1,102 @@
+{
+  "gemma-3-12b-it-Q6_K": {
+    "일반_사실": {
+      "total_time": 40.41112971305847,
+      "avg_time_per_prompt": 8.082225942611695,
+      "total_tokens": 72,
+      "avg_tokens_per_prompt": 14.4,
+      "tokens_per_second": 1.7816873844220664,
+      "accuracy": 1
+    },
+    "인물_정보": {
+      "total_time": 72.6725127696991,
+      "avg_time_per_prompt": 14.53450255393982,
+      "total_tokens": 194,
+      "avg_tokens_per_prompt": 38.8,
+      "tokens_per_second": 2.669510006001727,
+      "accuracy": 1
+    },
+    "관계_설명": {
+      "total_time": 79.37058472633362,
+      "avg_time_per_prompt": 15.874116945266724,
+      "total_tokens": 211,
+      "avg_tokens_per_prompt": 42.2,
+      "tokens_per_second": 2.658415592218691,
+      "accuracy": 1
+    },
+    "규칙_표현": {
+      "total_time": 64.79659700393677,
+      "avg_time_per_prompt": 12.959319400787354,
+      "total_tokens": 173,
+      "avg_tokens_per_prompt": 34.6,
+      "tokens_per_second": 2.6698932968576923,
+      "accuracy": 1
+    },
+    "복합_문장": {
+      "total_time": 86.29290461540222,
+      "avg_time_per_prompt": 17.258580923080444,
+      "total_tokens": 260,
+      "avg_tokens_per_prompt": 52,
+      "tokens_per_second": 3.0129939553986596,
+      "accuracy": 1
+    },
+    "전체": {
+      "total_time": 343.5437288284302,
+      "avg_time_per_prompt": 13.741749153137206,
+      "total_tokens": 910,
+      "avg_tokens_per_prompt": 36.4,
+      "tokens_per_second": 2.6488622077408515,
+      "accuracy": 1
+    }
+  },
+  "Meta-Llama-3-8B-Instruct.Q2_K": {
+    "일반_사실": {
+      "total_time": 6.106278657913208,
+      "avg_time_per_prompt": 1.2212557315826416,
+      "total_tokens": 297,
+      "avg_tokens_per_prompt": 59.4,
+      "tokens_per_second": 48.63846159642809,
+      "accuracy": 1
+    },
+    "인물_정보": {
+      "total_time": 15.886999607086182,
+      "avg_time_per_prompt": 3.177399921417236,
+      "total_tokens": 875,
+      "avg_tokens_per_prompt": 175,
+      "tokens_per_second": 55.07647898535341,
+      "accuracy": 1
+    },
+    "관계_설명": {
+      "total_time": 12.634476900100708,
+      "avg_time_per_prompt": 2.5268953800201417,
+      "total_tokens": 738,
+      "avg_tokens_per_prompt": 147.6,
+      "tokens_per_second": 58.41159913744569,
+      "accuracy": 1
+    },
+    "규칙_표현": {
+      "total_time": 13.26082444190979,
+      "avg_time_per_prompt": 2.652164888381958,
+      "total_tokens": 774,
+      "avg_tokens_per_prompt": 154.8,
+      "tokens_per_second": 58.3674117239524,
+      "accuracy": 1
+    },
+    "복합_문장": {
+      "total_time": 15.002984046936035,
+      "avg_time_per_prompt": 3.000596809387207,
+      "total_tokens": 872,
+      "avg_tokens_per_prompt": 174.4,
+      "tokens_per_second": 58.12177079386304,
+      "accuracy": 1
+    },
+    "전체": {
+      "total_time": 62.89156365394592,
+      "avg_time_per_prompt": 2.515662546157837,
+      "total_tokens": 3556,
+      "avg_tokens_per_prompt": 142.24,
+      "tokens_per_second": 56.54176479959233,
+      "accuracy": 1
+    }
+  }
+}

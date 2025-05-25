@@ -1,0 +1,262 @@
+{
+  "일반_사실": [
+    {
+      "model": "gemma-3-12b-it-Q6_K",
+      "prompt": "서울은 대한민국의 수도이다.",
+      "output": "(keep '(서울 이다 대한민국 수도))",
+      "elapsed_time": 18.143961429595947,
+      "tokens_generated": 10,
+      "tokens_prompt": 1757,
+      "tokens_total": 1767,
+      "category": "일반_사실"
+    },
+    {
+      "model": "gemma-3-12b-it-Q6_K",
+      "prompt": "지구는 태양계의 세 번째 행성이다.",
+      "output": "(keep '(지구 이다 태양계 행성))",
+      "elapsed_time": 5.009140968322754,
+      "tokens_generated": 14,
+      "tokens_prompt": 1762,
+      "tokens_total": 1776,
+      "category": "일반_사실"
+    },
+    {
+      "model": "gemma-3-12b-it-Q6_K",
+      "prompt": "물의 화학식은 H2O이다.",
+      "output": "(keep '(물 이다 H2O))\n",
+      "elapsed_time": 4.432987451553345,
+      "tokens_generated": 12,
+      "tokens_prompt": 1758,
+      "tokens_total": 1770,
+      "category": "일반_사실"
+    },
+    {
+      "model": "gemma-3-12b-it-Q6_K",
+      "prompt": "인간의 뇌는 약 860억 개의 뉴런으로 구성되어 있다.",
+      "output": "(keep '(인간의 뇌 이다 뉴런))\n",
+      "elapsed_time": 5.329533338546753,
+      "tokens_generated": 15,
+      "tokens_prompt": 1769,
+      "tokens_total": 1784,
+      "category": "일반_사실"
+    },
+    {
+      "model": "gemma-3-12b-it-Q6_K",
+      "prompt": "마라톤 경기의 거리는 42.195km이다.",
+      "output": "(keep '(마라톤 경기 거리가 42.195km이다))\n",
+      "elapsed_time": 7.495506525039673,
+      "tokens_generated": 21,
+      "tokens_prompt": 1766,
+      "tokens_total": 1787,
+      "category": "일반_사실"
+    }
+  ],
+  "인물_정보": [
+    {
+      "model": "gemma-3-12b-it-Q6_K",
+      "prompt": "아인슈타인은 1879년에 태어났으며, 상대성 이론으로 유명한 물리학자이다.",
+      "output": "(keep '(아인슈타인 이다 물리학자))\n(keep '(아인슈타인 태어남 1879년))\n(keep '(아인슈타인 유명함 상대성 이론))",
+      "elapsed_time": 18.058684587478638,
+      "tokens_generated": 49,
+      "tokens_prompt": 1776,
+      "tokens_total": 1825,
+      "category": "인물_정보"
+    },
+    {
+      "model": "gemma-3-12b-it-Q6_K",
+      "prompt": "세종대왕은 조선의 4대 왕으로 한글을 창제했다.",
+      "output": "(keep '(세종대왕 이다 조선의 4대 왕))\n(keep '(세종대왕 창제했다 한글))\n",
+      "elapsed_time": 12.046315670013428,
+      "tokens_generated": 32,
+      "tokens_prompt": 1768,
+      "tokens_total": 1800,
+      "category": "인물_정보"
+    },
+    {
+      "model": "gemma-3-12b-it-Q6_K",
+      "prompt": "스티브 잡스는 애플의 공동 창업자로 아이폰을 개발했다.",
+      "output": "```plaintext\n(keep '(스티브 잡스 이다 애플의 공동 창업자))\n(keep '(스티브 잡스 개발했다 아이폰))\n```",
+      "elapsed_time": 13.041679382324219,
+      "tokens_generated": 35,
+      "tokens_prompt": 1765,
+      "tokens_total": 1800,
+      "category": "인물_정보"
+    },
+    {
+      "model": "gemma-3-12b-it-Q6_K",
+      "prompt": "마리 퀴리는 방사능 연구로 노벨상을 두 번 수상한 최초의 여성 과학자이다.",
+      "output": "(keep '(마리 퀴리 이다 과학자))",
+      "elapsed_time": 5.418661594390869,
+      "tokens_generated": 14,
+      "tokens_prompt": 1773,
+      "tokens_total": 1787,
+      "category": "인물_정보"
+    },
+    {
+      "model": "gemma-3-12b-it-Q6_K",
+      "prompt": "이순신 장군은 임진왜란 당시 한산도 해전에서 승리한 조선의 명장이다.",
+      "output": "(keep '(이순신 이다 장군))\n(keep '(이순신 이다 조선))\n(keep '(이순신 승리한 한산도 해전))\n(keep '(이순신 이다 명장))\n(keep '(이순신 당시 임진왜란))",
+      "elapsed_time": 24.107171535491943,
+      "tokens_generated": 64,
+      "tokens_prompt": 1774,
+      "tokens_total": 1838,
+      "category": "인물_정보"
+    }
+  ],
+  "관계_설명": [
+    {
+      "model": "gemma-3-12b-it-Q6_K",
+      "prompt": "고양이는 포유류에 속하는 동물로 고양잇과의 일종이다.",
+      "output": "(keep '(고양이 이다 동물))\n(keep '(고양이 속하다 포유류))\n(keep '(고양이 속하다 고양잇과))",
+      "elapsed_time": 13.014188766479492,
+      "tokens_generated": 35,
+      "tokens_prompt": 1768,
+      "tokens_total": 1803,
+      "category": "관계_설명"
+    },
+    {
+      "model": "gemma-3-12b-it-Q6_K",
+      "prompt": "컴퓨터는 CPU, 메모리, 저장장치로 구성된 전자 기기이다.",
+      "output": "(keep '(컴퓨터 이다 전자 기기))\n(keep '(컴퓨터 이다 CPU))\n(keep '(컴퓨터 이다 메모리))\n(keep '(컴퓨터 이다 저장장치))",
+      "elapsed_time": 18.46158266067505,
+      "tokens_generated": 49,
+      "tokens_prompt": 1769,
+      "tokens_total": 1818,
+      "category": "관계_설명"
+    },
+    {
+      "model": "gemma-3-12b-it-Q6_K",
+      "prompt": "사과나무는 장미과에 속하는 식물로 가을에 사과 열매를 맺는다.",
+      "output": "(keep '(사과나무 속하다 장미과))\n(keep '(사과나무 식물이다))\n(keep '(사과나무 가을에 사과 열매맺는다))\n",
+      "elapsed_time": 16.0475914478302,
+      "tokens_generated": 42,
+      "tokens_prompt": 1774,
+      "tokens_total": 1816,
+      "category": "관계_설명"
+    },
+    {
+      "model": "gemma-3-12b-it-Q6_K",
+      "prompt": "비행기는 제트 엔진이나 프로펠러를 이용해 하늘을 나는 운송 수단이다.",
+      "output": "(keep '(비행기 이다 제트 엔진))\n(keep '(비행기 이다 프로펠러))\n(keep '(비행기 이용해 하늘을 나는 운송 수단))",
+      "elapsed_time": 16.097022533416748,
+      "tokens_generated": 43,
+      "tokens_prompt": 1771,
+      "tokens_total": 1814,
+      "category": "관계_설명"
+    },
+    {
+      "model": "gemma-3-12b-it-Q6_K",
+      "prompt": "바이올린은 4개의 현을 가진 현악기로 현을 활로 문질러 소리를 낸다.",
+      "output": "(keep '(바이올린 이다 4개의 현을 가진 현악기))\n(keep '(바이올린 이다 현을 활로 문질러 소리를 낸다))\n",
+      "elapsed_time": 15.750199317932129,
+      "tokens_generated": 42,
+      "tokens_prompt": 1775,
+      "tokens_total": 1817,
+      "category": "관계_설명"
+    }
+  ],
+  "규칙_표현": [
+    {
+      "model": "gemma-3-12b-it-Q6_K",
+      "prompt": "모든 포유류는 척추동물이다.",
+      "output": "(keep '(모든 포유류는 척추동물이다))\n",
+      "elapsed_time": 6.855232238769531,
+      "tokens_generated": 18,
+      "tokens_prompt": 1762,
+      "tokens_total": 1780,
+      "category": "규칙_표현"
+    },
+    {
+      "model": "gemma-3-12b-it-Q6_K",
+      "prompt": "삼각형의 내각의 합은 180도이다.",
+      "output": "(keep '(삼각형 이다 도형))\n(keep '(내각 이다 각))\n(keep '(내각의 합 이다 각의 합))\n(keep '(내각의 합 이다 180도))\n",
+      "elapsed_time": 19.231651544570923,
+      "tokens_generated": 51,
+      "tokens_prompt": 1764,
+      "tokens_total": 1815,
+      "category": "규칙_표현"
+    },
+    {
+      "model": "gemma-3-12b-it-Q6_K",
+      "prompt": "만약 물체에 힘이 가해지면, 가속도는 힘에 비례하고 질량에 반비례한다.",
+      "output": "(keep '(물체에 힘이 가해지면 가속도는 힘에 비례하고 질량에 반비례한다))",
+      "elapsed_time": 11.181418180465698,
+      "tokens_generated": 29,
+      "tokens_prompt": 1777,
+      "tokens_total": 1806,
+      "category": "규칙_표현"
+    },
+    {
+      "model": "gemma-3-12b-it-Q6_K",
+      "prompt": "빛이 매질을 통과할 때, 입사각의 사인과 굴절각의 사인의 비는 일정하다.",
+      "output": "(keep '(빛이 매질을 통과할 때))\n(keep '(rule1 if (입사각의 사인)))\n(keep '(rule1 then (굴절각의 사인)))\n(keep '(rule1 then (일정하다)))\n",
+      "elapsed_time": 20.958054780960083,
+      "tokens_generated": 55,
+      "tokens_prompt": 1777,
+      "tokens_total": 1832,
+      "category": "규칙_표현"
+    },
+    {
+      "model": "gemma-3-12b-it-Q6_K",
+      "prompt": "모든 금속은 전기를 전도한다.",
+      "output": "```plaintext\n(keep '(모든 금속은 전기를 전도한다))\n```",
+      "elapsed_time": 6.570240259170532,
+      "tokens_generated": 20,
+      "tokens_prompt": 1760,
+      "tokens_total": 1780,
+      "category": "규칙_표현"
+    }
+  ],
+  "복합_문장": [
+    {
+      "model": "gemma-3-12b-it-Q6_K",
+      "prompt": "태양은 지구로부터 약 1억 5천만 km 떨어져 있으며, 핵융합 반응으로 에너지를 생성하는 항성이다.",
+      "output": "```plaintext\n(keep '(태양 이다 항성))\n(keep '(태양 생성한다 에너지))\n(keep '(태양 떨어져 있다 약 1억 5천만 km 지구로부터))\n```",
+      "elapsed_time": 16.687971115112305,
+      "tokens_generated": 47,
+      "tokens_prompt": 1781,
+      "tokens_total": 1828,
+      "category": "복합_문장"
+    },
+    {
+      "model": "gemma-3-12b-it-Q6_K",
+      "prompt": "인간의 심장은 하루에 약 10만 번 뛰고, 일생 동안 약 30억 번의 심장 박동을 한다.",
+      "output": "(keep '(인간의 심장 뛰다))\n(keep '(하루 약 10만 번))\n(keep '(일생 약 30억 번의 심장 박동))\n",
+      "elapsed_time": 15.302626132965088,
+      "tokens_generated": 43,
+      "tokens_prompt": 1782,
+      "tokens_total": 1825,
+      "category": "복합_문장"
+    },
+    {
+      "model": "gemma-3-12b-it-Q6_K",
+      "prompt": "뉴턴은 만유인력의 법칙을 발견했으며, 이 법칙은 두 물체 사이의 인력이 질량의 곱에 비례하고 거리의 제곱에 반비례한다고 설명한다.",
+      "output": "```plaintext\n(keep '(뉴턴 이다 사람))\n(keep '(뉴턴 발견하다 (만유인력의 법칙)))\n(keep '(rule1 if (?x 이다 (만유인력의 법칙))) )\n(keep '(rule1 then (?x 설명하다 (두 물체 사이의 인력))) )\n(keep '(rule1 then (?x 설명하다 (질량의 곱에 비례))) )\n(keep '(rule1 then (?x 설명하다 (거리의 제곱에 반비례))))\n```",
+      "elapsed_time": 36.05872559547424,
+      "tokens_generated": 113,
+      "tokens_prompt": 1791,
+      "tokens_total": 1904,
+      "category": "복합_문장"
+    },
+    {
+      "model": "gemma-3-12b-it-Q6_K",
+      "prompt": "공룡은 약 6500만 년 전 소행성 충돌로 멸종했으며, 조류는 공룡의 후손으로 여겨진다.",
+      "output": "```plaintext\n(keep '(공룡 이다 약 6500만 년 전 소행성 충돌로 멸종))\n(keep '(조류 이다 공룡의 후손))\n```",
+      "elapsed_time": 14.618859767913818,
+      "tokens_generated": 46,
+      "tokens_prompt": 1785,
+      "tokens_total": 1831,
+      "category": "복합_문장"
+    },
+    {
+      "model": "gemma-3-12b-it-Q6_K",
+      "prompt": "인터넷은 1969년 ARPANET으로 시작되었으며, 현재는 전 세계 수십억 대의 컴퓨터를 연결하는 글로벌 네트워크이다.",
+      "output": "(keep '(인터넷 이다 네트워크))",
+      "elapsed_time": 3.6247220039367676,
+      "tokens_generated": 11,
+      "tokens_prompt": 1784,
+      "tokens_total": 1795,
+      "category": "복합_문장"
+    }
+  ]
+}

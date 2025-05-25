@@ -1,0 +1,54 @@
+{
+  "일반_사실": [
+    {
+      "model": "Meta-Llama-3-8B-Instruct.Q2_K",
+      "prompt": "서울은 대한민국의 수도이다.",
+      "output": "Here is the converted NEO code:\n\n```plaintext\n(keep '(서울 이다 대한민국의 수도)))\n```",
+      "elapsed_time": 1.425063133239746,
+      "tokens_generated": 22,
+      "tokens_prompt": 1743,
+      "tokens_total": 1765,
+      "category": "일반_사실"
+    },
+    {
+      "model": "Meta-Llama-3-8B-Instruct.Q2_K",
+      "prompt": "지구는 태양계의 세 번째 행성이다.",
+      "output": "Here is the converted NEO code:\n\n```\n(keep '(지구 이다 태양계의 세 번째 행성)))\n```\n\nThis represents the fact that Earth is the third planet in the Solar System.",
+      "elapsed_time": 0.742922306060791,
+      "tokens_generated": 43,
+      "tokens_prompt": 1749,
+      "tokens_total": 1792,
+      "category": "일반_사실"
+    },
+    {
+      "model": "Meta-Llama-3-8B-Instruct.Q2_K",
+      "prompt": "물의 화학식은 H2O이다.",
+      "output": "😊\n\nYou're providing a simple fact statement, and I'll respond accordingly.\n\n**Output:**\n\n\n```plaintext\n(keep '(물 이다 H2O)))\n```\n\nThis NEO code represents a simple fact stating that the chemical formula of water is indeed H2O.\n\n**Note:** The model should only produce this code snippet and not any additional text, explanation, or translation.",
+      "elapsed_time": 1.3246233463287354,
+      "tokens_generated": 79,
+      "tokens_prompt": 1747,
+      "tokens_total": 1826,
+      "category": "일반_사실"
+    },
+    {
+      "model": "Meta-Llama-3-8B-Instruct.Q2_K",
+      "prompt": "인간의 뇌는 약 860억 개의 뉴런으로 구성되어 있다.",
+      "output": "That's a great topic! 🧠\n\nThe human brain is estimated to have around 86 billion neurons, which are the building blocks of our nervous system. These neurons work together to transmit information and enable us to think, learn, and remember.\n\nHowever, it's important to note that the actual number of neurons in the brain is still a topic of ongoing research and debate. The estimate of 86 billion neurons is based on studies and averages from various sources, but it's likely that the actual number may vary depending on factors like age, sex, and specific brain regions.\n\nRegardless, the brain is an incredibly complex and dynamic system, and the exact number of neurons is just one aspect of its amazing capabilities! 💫",
+      "elapsed_time": 2.4709312915802,
+      "tokens_generated": 147,
+      "tokens_prompt": 1755,
+      "tokens_total": 1902,
+      "category": "일반_사실"
+    },
+    {
+      "model": "Meta-Llama-3-8B-Instruct.Q2_K",
+      "prompt": "마라톤 경기의 거리는 42.195km이다.",
+      "output": "Based on the input sentence \"마라톤 경기의 거리는 42.195km이다.\", the model's output should be:\n\n```\n(keep '(marathon is 42.195km)))\n```\n\nThis NEO code represents the fact that the distance of a marathon is 42.195km.",
+      "elapsed_time": 1.0701792240142822,
+      "tokens_generated": 63,
+      "tokens_prompt": 1750,
+      "tokens_total": 1813,
+      "category": "일반_사실"
+    }
+  ]
+}

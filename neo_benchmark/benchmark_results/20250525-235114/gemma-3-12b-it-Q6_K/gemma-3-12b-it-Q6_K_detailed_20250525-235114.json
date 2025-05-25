@@ -1,0 +1,54 @@
+{
+  "일반_사실": [
+    {
+      "model": "gemma-3-12b-it-Q6_K",
+      "prompt": "서울은 대한민국의 수도이다.",
+      "output": "(keep '(서울 이다 대한민국의 수도))\n",
+      "elapsed_time": 17.634517908096313,
+      "tokens_generated": 13,
+      "tokens_prompt": 1757,
+      "tokens_total": 1770,
+      "category": "일반_사실"
+    },
+    {
+      "model": "gemma-3-12b-it-Q6_K",
+      "prompt": "지구는 태양계의 세 번째 행성이다.",
+      "output": "(keep '(지구 이다 태양계의 세 번째 행성))\n",
+      "elapsed_time": 5.435970783233643,
+      "tokens_generated": 18,
+      "tokens_prompt": 1762,
+      "tokens_total": 1780,
+      "category": "일반_사실"
+    },
+    {
+      "model": "gemma-3-12b-it-Q6_K",
+      "prompt": "물의 화학식은 H2O이다.",
+      "output": "(keep '(물 이다 H2O))\n",
+      "elapsed_time": 3.714154005050659,
+      "tokens_generated": 12,
+      "tokens_prompt": 1758,
+      "tokens_total": 1770,
+      "category": "일반_사실"
+    },
+    {
+      "model": "gemma-3-12b-it-Q6_K",
+      "prompt": "인간의 뇌는 약 860억 개의 뉴런으로 구성되어 있다.",
+      "output": "(keep '(인간의 뇌 이다 뉴런))",
+      "elapsed_time": 4.1813788414001465,
+      "tokens_generated": 14,
+      "tokens_prompt": 1769,
+      "tokens_total": 1783,
+      "category": "일반_사실"
+    },
+    {
+      "model": "gemma-3-12b-it-Q6_K",
+      "prompt": "마라톤 경기의 거리는 42.195km이다.",
+      "output": "(keep '(마라톤 경기 이다 42.195km))",
+      "elapsed_time": 5.664301872253418,
+      "tokens_generated": 19,
+      "tokens_prompt": 1766,
+      "tokens_total": 1785,
+      "category": "일반_사실"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "gemma-3-12b-it-Q6_K": {
+    "일반_사실": {
+      "total_time": 36.63032341003418,
+      "avg_time_per_prompt": 7.326064682006836,
+      "total_tokens": 76,
+      "avg_tokens_per_prompt": 15.2,
+      "tokens_per_second": 2.0747837563230807,
+      "accuracy": 1
+    },
+    "전체": {
+      "total_time": 36.63032341003418,
+      "avg_time_per_prompt": 7.326064682006836,
+      "total_tokens": 76,
+      "avg_tokens_per_prompt": 15.2,
+      "tokens_per_second": 2.0747837563230807,
+      "accuracy": 1
+    }
+  },
+  "Meta-Llama-3-8B-Instruct.Q2_K": {
+    "일반_사실": {
+      "total_time": 7.033719301223755,
+      "avg_time_per_prompt": 1.406743860244751,
+      "total_tokens": 354,
+      "avg_tokens_per_prompt": 70.8,
+      "tokens_per_second": 50.328991652881236,
+      "accuracy": 1
+    },
+    "전체": {
+      "total_time": 7.033719301223755,
+      "avg_time_per_prompt": 1.406743860244751,
+      "total_tokens": 354,
+      "avg_tokens_per_prompt": 70.8,
+      "tokens_per_second": 50.328991652881236,
+      "accuracy": 1
+    }
+  }
+}

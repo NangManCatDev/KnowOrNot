@@ -1,0 +1,262 @@
+{
+  "일반_사실": [
+    {
+      "model": "Meta-Llama-3-8B-Instruct.Q2_K",
+      "prompt": "서울은 대한민국의 수도이다.",
+      "output": "Here is the converted NEO code:\n\n```\n(keep '(서울 이다 대한민국의 수도)))\n```\n\nPlease note that the output is a single code line, which is the converted NEO expression.",
+      "elapsed_time": 1.782331943511963,
+      "tokens_generated": 40,
+      "tokens_prompt": 1743,
+      "tokens_total": 1783,
+      "category": "일반_사실"
+    },
+    {
+      "model": "Meta-Llama-3-8B-Instruct.Q2_K",
+      "prompt": "지구는 태양계의 세 번째 행성이다.",
+      "output": "Here is the converted NEO code:\n\n```\n(keep '(지구 이다 태양계의 세 번째 행성)))\n```\n\nThis corresponds to: If an entity is part of the solar system's third planet, **then** that entity is Earth.",
+      "elapsed_time": 0.9343917369842529,
+      "tokens_generated": 53,
+      "tokens_prompt": 1749,
+      "tokens_total": 1802,
+      "category": "일반_사실"
+    },
+    {
+      "model": "Meta-Llama-3-8B-Instruct.Q2_K",
+      "prompt": "물의 화학식은 H2O이다.",
+      "output": "🎉\n\nYou've provided a statement that is a simple fact statement, and the model should convert it into a Neo knowledge base code. Here's the breakdown:\n\n* Your statement: \"\"물의 화학식은 H2O이다.\"\".\n* The model should identify the statement as a simple fact statement, which states a basic property or characteristic.\n* The model should convert the statement into a Neo knowledge base code using the correct list format.\n\nThe model's output should consist of a single line of Neo code, which represents the converted statement. The output should be:\n\n```plaintext\n(keep '(water is H2O)))\n```\n\nThis Neo code represents the knowledge that water has the chemical formula H2O.",
+      "elapsed_time": 2.5667788982391357,
+      "tokens_generated": 147,
+      "tokens_prompt": 1747,
+      "tokens_total": 1894,
+      "category": "일반_사실"
+    },
+    {
+      "model": "Meta-Llama-3-8B-Instruct.Q2_K",
+      "prompt": "인간의 뇌는 약 860억 개의 뉴런으로 구성되어 있다.",
+      "output": "🤯 That's a fascinating fact! 🤯\n\nYou're referring to the estimated number of neurons in the human brain. According to various studies and estimates, the human brain is believed to have around 86 billion neurons, also known as neurons. This is a remarkably large number, considering the complexity and intricacy of the brain's neural networks.\n\nThis number is often cited as a rough estimate, as the exact count can vary depending on the source and method of calculation. Nevertheless, it's a staggering figure that speaks to the remarkable capacity of human cognition and the brain's incredible ability to process information.\n\nWould you like to know more about the human brain's neural networks, or perhaps explore the intricacies of neuron communication and synaptic learning? 🤔",
+      "elapsed_time": 2.690978527069092,
+      "tokens_generated": 154,
+      "tokens_prompt": 1755,
+      "tokens_total": 1909,
+      "category": "일반_사실"
+    },
+    {
+      "model": "Meta-Llama-3-8B-Instruct.Q2_K",
+      "prompt": "마라톤 경기의 거리는 42.195km이다.",
+      "output": "Here is the converted NEO code:\n\n```\n(keep '(marathon is 42.195km)))\n```",
+      "elapsed_time": 0.4430100917816162,
+      "tokens_generated": 23,
+      "tokens_prompt": 1750,
+      "tokens_total": 1773,
+      "category": "일반_사실"
+    }
+  ],
+  "인물_정보": [
+    {
+      "model": "Meta-Llama-3-8B-Instruct.Q2_K",
+      "prompt": "아인슈타인은 1879년에 태어났으며, 상대성 이론으로 유명한 물리학자이다.",
+      "output": "Here is the converted NEO code:\n\n```\n(keep '(ainst Einstein if (...)))\n(keep '(Einstein then (...))))\n```\n\nPlease note that this code represents the conversion of the input sentence into a NEO knowledge base representation, where the entity `ainst Einstein` is replaced with a variable `?x` in both the `if` and `then` parts.",
+      "elapsed_time": 1.3796207904815674,
+      "tokens_generated": 77,
+      "tokens_prompt": 1764,
+      "tokens_total": 1841,
+      "category": "인물_정보"
+    },
+    {
+      "model": "Meta-Llama-3-8B-Instruct.Q2_K",
+      "prompt": "세종대왕은 조선의 4대 왕으로 한글을 창제했다.",
+      "output": "Here is the converted NEO code:\n\n```\n(keep '(세종대왕 이다 조선의 왕)))\n```\n\nThis NEO code represents the rule: \"If someone is King Sejong, then they are a king of the Joseon Dynasty\".",
+      "elapsed_time": 0.9095375537872314,
+      "tokens_generated": 51,
+      "tokens_prompt": 1755,
+      "tokens_total": 1806,
+      "category": "인물_정보"
+    },
+    {
+      "model": "Meta-Llama-3-8B-Instruct.Q2_K",
+      "prompt": "스티브 잡스는 애플의 공동 창업자로 아이폰을 개발했다.",
+      "output": "Here is the converted NEO code:\n\n(keep '(스티브 잡스는 애플의 공동 창업자로 아이폰을 개발했다.))\n\nThis corresponds to: If Steve Jobs is the co-founder of Apple, **then** he developed the iPhone.",
+      "elapsed_time": 0.9643230438232422,
+      "tokens_generated": 54,
+      "tokens_prompt": 1756,
+      "tokens_total": 1810,
+      "category": "인물_정보"
+    },
+    {
+      "model": "Meta-Llama-3-8B-Instruct.Q2_K",
+      "prompt": "마리 퀴리는 방사능 연구로 노벨상을 두 번 수상한 최초의 여성 과학자이다.",
+      "output": "Here is the converted NEO code:\n\n```\n(keep '(marie curie 이다 방사능연구소 이다 노벨상 이다 두번 수상한 최초의 여성 과학자 이다)))\n```\n\nPlease note that this NEO code represents the converted sentence:\n\n\"Marie Curie is the first woman to have won twice the Nobel Prize in the field of radiation research.\"\n\nThe output is solely the NEO code with no additional text or explanations.",
+      "elapsed_time": 1.6942822933197021,
+      "tokens_generated": 95,
+      "tokens_prompt": 1762,
+      "tokens_total": 1857,
+      "category": "인물_정보"
+    },
+    {
+      "model": "Meta-Llama-3-8B-Instruct.Q2_K",
+      "prompt": "이순신 장군은 임진왜란 당시 한산도 해전에서 승리한 조선의 명장이다.",
+      "output": "Here's the output:\n\n```\n(keep '(이순신 이다 장군)))\n```\n\nNote that the output is just a single line of NEO code, with no additional text or explanation.",
+      "elapsed_time": 0.7401187419891357,
+      "tokens_generated": 41,
+      "tokens_prompt": 1763,
+      "tokens_total": 1804,
+      "category": "인물_정보"
+    }
+  ],
+  "관계_설명": [
+    {
+      "model": "Meta-Llama-3-8B-Instruct.Q2_K",
+      "prompt": "고양이는 포유류에 속하는 동물로 고양잇과의 일종이다.",
+      "output": "Based on the input sentence:\n\n\"고양이는 포유류에 속하는 동물로 고양잇과의 일종이다.\"\n\nThe output should be:\n\n```plaintext\n(keep '(고양이 이다 포유류) (if (?x 이다 포유류) (?x 이다 동물)))\n```\n\nThis NEO code represents the fact that the cat (고양이) is a member of the mammalian family (포유류) and belongs to the species of domestic cat (고양잇과) together with its kind.\n\nHowever, please note that the output NEO code is subject to change based on the specific requirements and scope of the system prompt.",
+      "elapsed_time": 2.4870903491973877,
+      "tokens_generated": 140,
+      "tokens_prompt": 1757,
+      "tokens_total": 1897,
+      "category": "관계_설명"
+    },
+    {
+      "model": "Meta-Llama-3-8B-Instruct.Q2_K",
+      "prompt": "컴퓨터는 CPU, 메모리, 저장장치로 구성된 전자 기기이다.",
+      "output": "Here is the converted NEO code:\n\n```\n(keep '(컴퓨터 이다 전자 기기)))\n```\n\nThis represents the fact that a computer is an electronic device composed of CPU, memory, and storage devices.",
+      "elapsed_time": 0.8170721530914307,
+      "tokens_generated": 45,
+      "tokens_prompt": 1757,
+      "tokens_total": 1802,
+      "category": "관계_설명"
+    },
+    {
+      "model": "Meta-Llama-3-8B-Instruct.Q2_K",
+      "prompt": "사과나무는 장미과에 속하는 식물로 가을에 사과 열매를 맺는다.",
+      "output": "Based on the input sentence, I will generate the corresponding NEO knowledge base code.\n\nHere is the output:\n```\n(keep '(사과 이다 장미식물) \n  (keep '(rule1 if (?x 이다 장미식물))) \n  (keep '(rule2 then (?x 이다 사과)) \n    (keep '(rule3 if (?x 이다 사과 이다 장미식물))) \n    (keep '(rule3 then (?x 이다 장미식물)) \n      (keep '(rule4 if (?x 이다 장미식물 이다 사과)) \n        (keep '(rule4 then (?x 이다 사과)) \n          (keep '(rule5 if (?x 이다 사과 이다 장미식물)) \n            (keep '(rule5 then (?x 이다 장미식물)) \n              ...\n```\n\nNote that the output is a set of nested rules that reflect the relationships between the concepts described in the input sentence.",
+      "elapsed_time": 3.743100643157959,
+      "tokens_generated": 208,
+      "tokens_prompt": 1761,
+      "tokens_total": 1969,
+      "category": "관계_설명"
+    },
+    {
+      "model": "Meta-Llama-3-8B-Instruct.Q2_K",
+      "prompt": "비행기는 제트 엔진이나 프로펠러를 이용해 하늘을 나는 운송 수단이다.",
+      "output": "Here's the converted NEO code:\n\n```\n(keep '(if (?x is an aircraft) then (?x uses either a jet engine or propeller)))\n```\n\nThis NEO rule corresponds to the sentence: \"비행기는 제트 엔진이나 프로펠러를 이용해 하늘을 나는 운송 수단이다.\"\n\nIn this output, the variable `?x` represents an arbitrary instance of an aircraft.",
+      "elapsed_time": 1.648568868637085,
+      "tokens_generated": 86,
+      "tokens_prompt": 1761,
+      "tokens_total": 1847,
+      "category": "관계_설명"
+    },
+    {
+      "model": "Meta-Llama-3-8B-Instruct.Q2_K",
+      "prompt": "바이올린은 4개의 현을 가진 현악기로 현을 활로 문질러 소리를 낸다.",
+      "output": "Here's the output:\n\n```\n(keep '(바이올린 이다 현악기)))\n```\n\nThis is the converted NEO code for the input sentence \"바이올린은 4개의 현을 가진 현악기로 현을 활로 문질려 소리를 낸다.\"",
+      "elapsed_time": 1.0864126682281494,
+      "tokens_generated": 59,
+      "tokens_prompt": 1762,
+      "tokens_total": 1821,
+      "category": "관계_설명"
+    }
+  ],
+  "규칙_표현": [
+    {
+      "model": "Meta-Llama-3-8B-Instruct.Q2_K",
+      "prompt": "모든 포유류는 척추동물이다.",
+      "output": "Here is the converted NEO code:\n\n```\n(keep '(rule1 if (?x 이다 포유류))) \n(keep '(rule1 then (?x 이다 척추동물))) \n```\n\nNote that this is a rule, where the condition is `(?x 이다 포유류)` and the conclusion is `(?x 이다 척추동물)`.",
+      "elapsed_time": 1.4493136405944824,
+      "tokens_generated": 80,
+      "tokens_prompt": 1749,
+      "tokens_total": 1829,
+      "category": "규칙_표현"
+    },
+    {
+      "model": "Meta-Llama-3-8B-Instruct.Q2_K",
+      "prompt": "삼각형의 내각의 합은 180도이다.",
+      "output": "Here's the converted NEO knowledge base representation:\n\n(keep '(triangle if (?x 이다 삼각형)))  \n(keep '(triangle then (?x 이다 등))')\n\nThis corresponds to: If `?x` is a triangle, **then** `?x` is an angle of 180 degrees.\n\nHere's the breakdown:\n\n1. Rule: The sentence \"삼각형의 내각의 합은 180도이다.\" is a simple fact statement about triangles.\n2. NEO representation: The `if` part represents the condition, `?x 이다 삼각형`, indicating that the subject is a triangle. The `then` part represents the conclusion, `?x 이다 등`, indicating that the angle is 180 degrees.\n\nPlease note that this output is a single NEO representation, without any explanatory text.",
+      "elapsed_time": 3.0257155895233154,
+      "tokens_generated": 170,
+      "tokens_prompt": 1750,
+      "tokens_total": 1920,
+      "category": "규칙_표현"
+    },
+    {
+      "model": "Meta-Llama-3-8B-Instruct.Q2_K",
+      "prompt": "만약 물체에 힘이 가해지면, 가속도는 힘에 비례하고 질량에 반비례한다.",
+      "output": "You've provided a sentence that describes a natural phenomenon, and I'll help you convert it into NEO knowledge base code.\n\nHere's the breakdown:\n\n* **Input:** `만약 물체에 힘이 가해지면, 가속도는 힘에 비례하고 질량에 반비례한다.`\n* **Output:**\n\n```plaintext\n(keep '(rule1 if (?x 이다 물체) (?x 이다 힘))))\n(keep '(rule1 then (?x 이다 질량) (?x 이다 힘) 비례)))\n```\n\nThe output represents the converted NEO knowledge base code, which captures the relationship between the strength of the object and the motion it describes.\n\n**Explanation:**\n\nThe input sentence describes a natural phenomenon, where the strength of the object (`?x 이다 물체`) affects both the motion (`?x 이다 질량`) and the force (`?x 이다 힘`) it describes. The NEO code represents the relationship between these concepts, using variables (`?x`) to represent arbitrary instances of each concept.\n\nIn this example, the NEO code is structured to reflect the condition-conclusion pattern, where the condition is the strength of the object and the conclusion is the relationship between the motion and the force.\n\nPlease note that this is a straightforward factual sentence, and the NEO code represents the knowledge base code for this type of statement.\n\n---\n\nWould you like me to help with another example or stop here?",
+      "elapsed_time": 5.201560020446777,
+      "tokens_generated": 295,
+      "tokens_prompt": 1765,
+      "tokens_total": 2060,
+      "category": "규칙_표현"
+    },
+    {
+      "model": "Meta-Llama-3-8B-Instruct.Q2_K",
+      "prompt": "빛이 매질을 통과할 때, 입사각의 사인과 굴절각의 사인의 비는 일정하다.",
+      "output": "Based on the provided sentence, I will convert it to the corresponding NEO code.\n\nThe sentence appears to be describing a general rule or a fact about the relationship between two concepts. As such, I will use the `if` and `then` structures to represent this information.\n\nHere is the converted code:\n\n```plaintext\n(keep '(rule1 if (?x 이다 빛) (?x 이다 매질) (?x 이다 매질) then (?x 이다 매질)))\n```\n\nIn this code, `(?x 이다 빛)` represents the condition that the subject is related to light, `(?x 이다 매질)` represents the condition that the subject is related to the medium, and `(?x 이다 매질)` represents the conclusion that the subject is always related to the medium.\n\nPlease note that this code is just a representation of the input sentence and may not be a direct translation of it. It is meant to be a valid NEO code snippet.",
+      "elapsed_time": 4.58899188041687,
+      "tokens_generated": 199,
+      "tokens_prompt": 1765,
+      "tokens_total": 1964,
+      "category": "규칙_표현"
+    },
+    {
+      "model": "Meta-Llama-3-8B-Instruct.Q2_K",
+      "prompt": "모든 금속은 전기를 전도한다.",
+      "output": "Here's the output:\n\n(keep '(rule1 if (?x 이다 금속)))  \n(keep '(rule1 then (?x 이다 전기)))) \n\nThis corresponds to: If `?x` is a metal, then `?x` can transmit electricity.",
+      "elapsed_time": 0.9962749481201172,
+      "tokens_generated": 56,
+      "tokens_prompt": 1747,
+      "tokens_total": 1803,
+      "category": "규칙_표현"
+    }
+  ],
+  "복합_문장": [
+    {
+      "model": "Meta-Llama-3-8B-Instruct.Q2_K",
+      "prompt": "태양은 지구로부터 약 1억 5천만 km 떨어져 있으며, 핵융합 반응으로 에너지를 생성하는 항성이다.",
+      "output": "Here is the converted NEO code:\n\n```\n(keep '(태양 이다 항성 if (?x 이다 태양)))\n(keep '(태양 then (?x 이다 핵융합 반응))))\n```\n\nThis corresponds to: If `?x` is a star, **then** `?x` is a star that generates energy through nuclear fusion.",
+      "elapsed_time": 1.3357012271881104,
+      "tokens_generated": 75,
+      "tokens_prompt": 1770,
+      "tokens_total": 1845,
+      "category": "복합_문장"
+    },
+    {
+      "model": "Meta-Llama-3-8B-Instruct.Q2_K",
+      "prompt": "인간의 심장은 하루에 약 10만 번 뛰고, 일생 동안 약 30억 번의 심장 박동을 한다.",
+      "output": "That's a fascinating topic!\n\nIt appears that the sentence is describing the heart's activity. Here's my breakdown:\n\n**Literal Translation:** \"A person's heart beats around 10,000 times a day, and for an entire lifetime, it beats around 30 billion times.\"\n\n**NEO Conversion:** Since this is a descriptive statement about the heart's activity, I'll convert it to NEO code using the format `(keep '(...))`. Here's the output:\n\n```plaintext\n(keep '(rule1 if (?x 이다 심장)))\n(keep '(rule1 then (?x 이다 심장))))\n```\n\nThis NEO code represents the heart's activity, where `?x` is an arbitrary instance of a heart. The model can now process this code to generate new knowledge about the heart's activity.\n\n---\n\nPlease note that the model's output should be a code snippet, with no explanatory text, comments, or additional context. The model should strictly produce only the NEO code lines as instructed.",
+      "elapsed_time": 3.5930893421173096,
+      "tokens_generated": 203,
+      "tokens_prompt": 1767,
+      "tokens_total": 1970,
+      "category": "복합_문장"
+    },
+    {
+      "model": "Meta-Llama-3-8B-Instruct.Q2_K",
+      "prompt": "뉴턴은 만유인력의 법칙을 발견했으며, 이 법칙은 두 물체 사이의 인력이 질량의 곱에 비례하고 거리의 제곱에 반비례한다고 설명한다.",
+      "output": "Here's the conversion:\n\n(keep '(newton if (?m1 ?m2) (?F ?F0)))\n\nThis corresponds to: \"If two objects are connected by a force and there is no net force between them, then they will not move.\"",
+      "elapsed_time": 0.9705386161804199,
+      "tokens_generated": 53,
+      "tokens_prompt": 1785,
+      "tokens_total": 1838,
+      "category": "복합_문장"
+    },
+    {
+      "model": "Meta-Llama-3-8B-Instruct.Q2_K",
+      "prompt": "공룡은 약 6500만 년 전 소행성 충돌로 멸종했으며, 조류는 공룡의 후손으로 여겨진다.",
+      "output": "Based on the input, I'll convert it into a NEO knowledge base code. Here's the result:\n\n```plaintext\n(keep '(dinosaur if (?x 이다 공룡))  \n(keep '(dinosaur then (?x 이다 조류 후손)))  \n```\n\nThis corresponds to the statement: \"If `?x` is a dinosaur, **then** `?x` is a descendant of the dinosaurs.\"",
+      "elapsed_time": 1.5755534172058105,
+      "tokens_generated": 87,
+      "tokens_prompt": 1772,
+      "tokens_total": 1859,
+      "category": "복합_문장"
+    },
+    {
+      "model": "Meta-Llama-3-8B-Instruct.Q2_K",
+      "prompt": "인터넷은 1969년 ARPANET으로 시작되었으며, 현재는 전 세계 수십억 대의 컴퓨터를 연결하는 글로벌 네트워크이다.",
+      "output": "Here's the converted NEO code:\n\n(keep '(internet is connected to computers)))\n\nThis NEO code represents the fact that the internet is connected to computers.",
+      "elapsed_time": 0.5705575942993164,
+      "tokens_generated": 31,
+      "tokens_prompt": 1774,
+      "tokens_total": 1805,
+      "category": "복합_문장"
+    }
+  ]
+}
