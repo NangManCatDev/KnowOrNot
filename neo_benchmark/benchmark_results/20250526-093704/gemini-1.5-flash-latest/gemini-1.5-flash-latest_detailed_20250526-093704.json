@@ -1,0 +1,296 @@
+{
+  "일반_사실": [
+    {
+      "model": "gemini-1.5-flash-latest",
+      "prompt": "서울은 대한민국의 수도이다.",
+      "output": "네, 맞습니다. 서울은 대한민국의 수도입니다.\n",
+      "elapsed_time": 0.5819995403289795,
+      "tokens_generated": 6,
+      "tokens_prompt": 3,
+      "tokens_total": 9,
+      "category": "일반_사실"
+    },
+    {
+      "model": "gemini-1.5-flash-latest",
+      "prompt": "지구는 태양계의 세 번째 행성이다.",
+      "output": "네, 맞습니다. 지구는 태양으로부터 세 번째 행성입니다.\n",
+      "elapsed_time": 0.5983023643493652,
+      "tokens_generated": 9,
+      "tokens_prompt": 6,
+      "tokens_total": 15,
+      "category": "일반_사실"
+    },
+    {
+      "model": "gemini-1.5-flash-latest",
+      "prompt": "물의 화학식은 H2O이다.",
+      "output": "맞습니다. 물의 화학식은 H₂O입니다.  H는 수소를, O는 산소를 나타내며, 숫자 2는 물 분자 하나에 수소 원자가 두 개 있다는 것을 의미합니다.\n",
+      "elapsed_time": 0.7959997653961182,
+      "tokens_generated": 27,
+      "tokens_prompt": 3,
+      "tokens_total": 30,
+      "category": "일반_사실"
+    },
+    {
+      "model": "gemini-1.5-flash-latest",
+      "prompt": "인간의 뇌는 약 860억 개의 뉴런으로 구성되어 있다.",
+      "output": "네, 맞습니다.  인간의 뇌는 대략 860억 개의 뉴런으로 구성되어 있다는 것이 현재 가장 널리 받아들여지는 추정치입니다.  하지만 이 숫자는 연구 방법에 따라 약간의 차이가 있을 수 있으며,  정확한 숫자를 말하기는 어렵습니다.  중요한 것은 엄청난 수의 뉴런이 복잡한 네트워크를 형성하여 인간의 사고, 감정, 행동 등 모든 것을 가능하게 한다는 것입니다.\n",
+      "elapsed_time": 1.3689777851104736,
+      "tokens_generated": 63,
+      "tokens_prompt": 10,
+      "tokens_total": 73,
+      "category": "일반_사실"
+    },
+    {
+      "model": "gemini-1.5-flash-latest",
+      "prompt": "마라톤 경기의 거리는 42.195km이다.",
+      "output": "네, 맞습니다. 마라톤 경기의 거리는 42.195km입니다.\n",
+      "elapsed_time": 0.6670000553131104,
+      "tokens_generated": 7,
+      "tokens_prompt": 5,
+      "tokens_total": 12,
+      "category": "일반_사실"
+    }
+  ],
+  "인물_정보": [
+    {
+      "model": "gemini-1.5-flash-latest",
+      "prompt": "아인슈타인은 1879년에 태어났으며, 상대성 이론으로 유명한 물리학자이다.",
+      "output": "네, 맞습니다. 알베르트 아인슈타인은 1879년 3월 14일에 태어났으며, 특수상대성이론과 일반상대성이론으로 유명한 이론 물리학자입니다.\n",
+      "elapsed_time": 0.8880009651184082,
+      "tokens_generated": 16,
+      "tokens_prompt": 9,
+      "tokens_total": 25,
+      "category": "인물_정보"
+    },
+    {
+      "model": "gemini-1.5-flash-latest",
+      "prompt": "세종대왕은 조선의 4대 왕으로 한글을 창제했다.",
+      "output": "틀렸습니다. 세종대왕은 조선의 **4대 왕이 아니라 4대 국왕**입니다.  한글을 창제한 것은 맞습니다.\n",
+      "elapsed_time": 0.7283580303192139,
+      "tokens_generated": 15,
+      "tokens_prompt": 7,
+      "tokens_total": 22,
+      "category": "인물_정보"
+    },
+    {
+      "model": "gemini-1.5-flash-latest",
+      "prompt": "스티브 잡스는 애플의 공동 창업자로 아이폰을 개발했다.",
+      "output": "맞는 말입니다. 하지만 스티브 잡스는 아이폰을 *개발*한 것이 아니라, 아이폰의 *개발을 주도하고 출시를 진두지휘*한 것입니다.  아이폰의 개발에는 수많은 엔지니어와 디자이너들이 참여했습니다.  스티브 잡스는 그 과정을 이끌고 최종 제품의 비전을 제시한 핵심 인물이었죠.\n",
+      "elapsed_time": 1.2080144882202148,
+      "tokens_generated": 41,
+      "tokens_prompt": 9,
+      "tokens_total": 50,
+      "category": "인물_정보"
+    },
+    {
+      "model": "gemini-1.5-flash-latest",
+      "prompt": "마리 퀴리는 방사능 연구로 노벨상을 두 번 수상한 최초의 여성 과학자이다.",
+      "output": "네, 맞습니다.  마리 퀴리는 방사능 연구로 물리학상(1903년)과 화학상(1911년)을 수상한 최초의 여성 과학자입니다.  두 번의 노벨상을 수상한 최초의 사람이기도 합니다.\n",
+      "elapsed_time": 1.003269910812378,
+      "tokens_generated": 24,
+      "tokens_prompt": 14,
+      "tokens_total": 38,
+      "category": "인물_정보"
+    },
+    {
+      "model": "gemini-1.5-flash-latest",
+      "prompt": "이순신 장군은 임진왜란 당시 한산도 해전에서 승리한 조선의 명장이다.",
+      "output": "네, 맞습니다. 이순신 장군은 임진왜란 당시 한산도 해전을 비롯한 여러 해전에서 승리하여 조선을 구한 위대한 명장입니다.\n",
+      "elapsed_time": 0.7920012474060059,
+      "tokens_generated": 20,
+      "tokens_prompt": 11,
+      "tokens_total": 31,
+      "category": "인물_정보"
+    }
+  ],
+  "관계_설명": [
+    {
+      "model": "gemini-1.5-flash-latest",
+      "prompt": "고양이는 포유류에 속하는 동물로 고양잇과의 일종이다.",
+      "output": "네, 맞습니다. 고양이는 포유류이며 고양잇과(Felidae)에 속하는 동물입니다.\n",
+      "elapsed_time": 0.6840007305145264,
+      "tokens_generated": 9,
+      "tokens_prompt": 7,
+      "tokens_total": 16,
+      "category": "관계_설명"
+    },
+    {
+      "model": "gemini-1.5-flash-latest",
+      "prompt": "컴퓨터는 CPU, 메모리, 저장장치로 구성된 전자 기기이다.",
+      "output": "맞습니다. 컴퓨터는 일반적으로 CPU(중앙 처리 장치), 메모리(RAM, 주기억장치), 그리고 저장장치(하드 드라이브, SSD, 등, 보조기억장치)를 포함한 여러 구성 요소로 이루어진 전자 기기입니다.  하지만 이 세 가지 외에도 마더보드, 그래픽 카드, 전원 공급 장치 등 다른 중요한 구성 요소들도 있습니다.  위 문장은 컴퓨터의 가장 기본적인 구성 요소를 간결하게 설명하고 있습니다.\n",
+      "elapsed_time": 1.3505308628082275,
+      "tokens_generated": 62,
+      "tokens_prompt": 9,
+      "tokens_total": 71,
+      "category": "관계_설명"
+    },
+    {
+      "model": "gemini-1.5-flash-latest",
+      "prompt": "사과나무는 장미과에 속하는 식물로 가을에 사과 열매를 맺는다.",
+      "output": "네, 맞습니다.  사과나무는 장미과(Rosaceae)에 속하는 과수로 가을에 사과 열매를 맺습니다.\n",
+      "elapsed_time": 0.7729990482330322,
+      "tokens_generated": 13,
+      "tokens_prompt": 10,
+      "tokens_total": 23,
+      "category": "관계_설명"
+    },
+    {
+      "model": "gemini-1.5-flash-latest",
+      "prompt": "비행기는 제트 엔진이나 프로펠러를 이용해 하늘을 나는 운송 수단이다.",
+      "output": "네, 맞습니다. 비행기는 제트 엔진이나 프로펠러를 이용하여 추력을 얻고, 양력을 발생시켜 하늘을 나는 운송 수단입니다.\n",
+      "elapsed_time": 0.7463209629058838,
+      "tokens_generated": 19,
+      "tokens_prompt": 11,
+      "tokens_total": 30,
+      "category": "관계_설명"
+    },
+    {
+      "model": "gemini-1.5-flash-latest",
+      "prompt": "바이올린은 4개의 현을 가진 현악기로 현을 활로 문질러 소리를 낸다.",
+      "output": "네, 맞습니다. 바이올린은 활을 사용하여 네 개의 현을 진동시켜 소리를 내는 현악기입니다.\n",
+      "elapsed_time": 0.7095613479614258,
+      "tokens_generated": 15,
+      "tokens_prompt": 13,
+      "tokens_total": 28,
+      "category": "관계_설명"
+    }
+  ],
+  "규칙_표현": [
+    {
+      "model": "gemini-1.5-flash-latest",
+      "prompt": "모든 포유류는 척추동물이다.",
+      "output": "맞습니다. 모든 포유류는 척추를 가지고 있기 때문에 척추동물입니다.\n",
+      "elapsed_time": 0.6540005207061768,
+      "tokens_generated": 10,
+      "tokens_prompt": 3,
+      "tokens_total": 13,
+      "category": "규칙_표현"
+    },
+    {
+      "model": "gemini-1.5-flash-latest",
+      "prompt": "삼각형의 내각의 합은 180도이다.",
+      "output": "맞습니다. 삼각형의 세 내각의 합은 항상 180도입니다.\n",
+      "elapsed_time": 0.6599998474121094,
+      "tokens_generated": 9,
+      "tokens_prompt": 5,
+      "tokens_total": 14,
+      "category": "규칙_표현"
+    },
+    {
+      "error": "Gemini API 오류: 429 - {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.QuotaFailure\",\n        \"violations\": [\n          {\n            \"quotaMetric\": \"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\n            \"quotaId\": \"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\n            \"quotaDimensions\": {\n              \"location\": \"global\",\n              \"model\": \"gemini-1.5-flash\"\n            },\n            \"quotaValue\": \"15\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quotas\",\n            \"url\": \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.RetryInfo\",\n        \"retryDelay\": \"2s\"\n      }\n    ]\n  }\n}\n",
+      "prompt": "만약 물체에 힘이 가해지면, 가속도는 힘에 비례하고 질량에 반비례한다.",
+      "model": "gemini-1.5-flash-latest",
+      "category": "규칙_표현"
+    },
+    {
+      "error": "Gemini API 오류: 429 - {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.QuotaFailure\",\n        \"violations\": [\n          {\n            \"quotaMetric\": \"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\n            \"quotaId\": \"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\n            \"quotaDimensions\": {\n              \"location\": \"global\",\n              \"model\": \"gemini-1.5-flash\"\n            },\n            \"quotaValue\": \"15\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quotas\",\n            \"url\": \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.RetryInfo\",\n        \"retryDelay\": \"2s\"\n      }\n    ]\n  }\n}\n",
+      "prompt": "빛이 매질을 통과할 때, 입사각의 사인과 굴절각의 사인의 비는 일정하다.",
+      "model": "gemini-1.5-flash-latest",
+      "category": "규칙_표현"
+    },
+    {
+      "model": "gemini-1.5-flash-latest",
+      "prompt": "모든 금속은 전기를 전도한다.",
+      "output": "모든 금속이 전기를 전도하는 것은 사실입니다.  금속의 원자들은 자유롭게 움직일 수 있는 전자들을 가지고 있고, 이 전자들이 전류의 흐름을 가능하게 합니다.  하지만 전도도의 정도는 금속의 종류에 따라 다릅니다.  은과 구리는 매우 좋은 전도체이지만, 다른 금속들은 전도성이 낮을 수 있습니다.\n",
+      "elapsed_time": 1.200000524520874,
+      "tokens_generated": 50,
+      "tokens_prompt": 5,
+      "tokens_total": 55,
+      "category": "규칙_표현"
+    }
+  ],
+  "복합_문장": [
+    {
+      "error": "Gemini API 오류: 429 - {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.QuotaFailure\",\n        \"violations\": [\n          {\n            \"quotaMetric\": \"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\n            \"quotaId\": \"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\n            \"quotaDimensions\": {\n              \"location\": \"global\",\n              \"model\": \"gemini-1.5-flash\"\n            },\n            \"quotaValue\": \"15\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quotas\",\n            \"url\": \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.RetryInfo\",\n        \"retryDelay\": \"0s\"\n      }\n    ]\n  }\n}\n",
+      "prompt": "태양은 지구로부터 약 1억 5천만 km 떨어져 있으며, 핵융합 반응으로 에너지를 생성하는 항성이다.",
+      "model": "gemini-1.5-flash-latest",
+      "category": "복합_문장"
+    },
+    {
+      "error": "Gemini API 오류: 429 - {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.QuotaFailure\",\n        \"violations\": [\n          {\n            \"quotaMetric\": \"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\n            \"quotaId\": \"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\n            \"quotaDimensions\": {\n              \"location\": \"global\",\n              \"model\": \"gemini-1.5-flash\"\n            },\n            \"quotaValue\": \"15\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quotas\",\n            \"url\": \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.RetryInfo\",\n        \"retryDelay\": \"0s\"\n      }\n    ]\n  }\n}\n",
+      "prompt": "인간의 심장은 하루에 약 10만 번 뛰고, 일생 동안 약 30억 번의 심장 박동을 한다.",
+      "model": "gemini-1.5-flash-latest",
+      "category": "복합_문장"
+    },
+    {
+      "error": "Gemini API 오류: 429 - {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.QuotaFailure\",\n        \"violations\": [\n          {\n            \"quotaMetric\": \"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\n            \"quotaId\": \"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\n            \"quotaDimensions\": {\n              \"location\": \"global\",\n              \"model\": \"gemini-1.5-flash\"\n            },\n            \"quotaValue\": \"15\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quotas\",\n            \"url\": \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.RetryInfo\",\n        \"retryDelay\": \"0s\"\n      }\n    ]\n  }\n}\n",
+      "prompt": "뉴턴은 만유인력의 법칙을 발견했으며, 이 법칙은 두 물체 사이의 인력이 질량의 곱에 비례하고 거리의 제곱에 반비례한다고 설명한다.",
+      "model": "gemini-1.5-flash-latest",
+      "category": "복합_문장"
+    },
+    {
+      "error": "Gemini API 오류: 429 - {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.QuotaFailure\",\n        \"violations\": [\n          {\n            \"quotaMetric\": \"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\n            \"quotaId\": \"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\n            \"quotaDimensions\": {\n              \"location\": \"global\",\n              \"model\": \"gemini-1.5-flash\"\n            },\n            \"quotaValue\": \"15\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quotas\",\n            \"url\": \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.RetryInfo\",\n        \"retryDelay\": \"59s\"\n      }\n    ]\n  }\n}\n",
+      "prompt": "공룡은 약 6500만 년 전 소행성 충돌로 멸종했으며, 조류는 공룡의 후손으로 여겨진다.",
+      "model": "gemini-1.5-flash-latest",
+      "category": "복합_문장"
+    },
+    {
+      "error": "Gemini API 오류: 429 - {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.QuotaFailure\",\n        \"violations\": [\n          {\n            \"quotaMetric\": \"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\n            \"quotaId\": \"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\n            \"quotaDimensions\": {\n              \"location\": \"global\",\n              \"model\": \"gemini-1.5-flash\"\n            },\n            \"quotaValue\": \"15\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quotas\",\n            \"url\": \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.RetryInfo\",\n        \"retryDelay\": \"59s\"\n      }\n    ]\n  }\n}\n",
+      "prompt": "인터넷은 1969년 ARPANET으로 시작되었으며, 현재는 전 세계 수십억 대의 컴퓨터를 연결하는 글로벌 네트워크이다.",
+      "model": "gemini-1.5-flash-latest",
+      "category": "복합_문장"
+    }
+  ],
+  "국민건강보험": [
+    {
+      "error": "Gemini API 오류: 429 - {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.QuotaFailure\",\n        \"violations\": [\n          {\n            \"quotaMetric\": \"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\n            \"quotaId\": \"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\n            \"quotaDimensions\": {\n              \"location\": \"global\",\n              \"model\": \"gemini-1.5-flash\"\n            },\n            \"quotaValue\": \"15\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quotas\",\n            \"url\": \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.RetryInfo\",\n        \"retryDelay\": \"59s\"\n      }\n    ]\n  }\n}\n",
+      "prompt": "국민건강보험은 대한민국의 공적 의료보험 제도이다.",
+      "model": "gemini-1.5-flash-latest",
+      "category": "국민건강보험"
+    },
+    {
+      "error": "Gemini API 오류: 429 - {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.QuotaFailure\",\n        \"violations\": [\n          {\n            \"quotaMetric\": \"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\n            \"quotaId\": \"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\n            \"quotaDimensions\": {\n              \"location\": \"global\",\n              \"model\": \"gemini-1.5-flash\"\n            },\n            \"quotaValue\": \"15\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quotas\",\n            \"url\": \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.RetryInfo\",\n        \"retryDelay\": \"59s\"\n      }\n    ]\n  }\n}\n",
+      "prompt": "직장가입자는 근로자와 사용자 모두가 보험료를 부담한다.",
+      "model": "gemini-1.5-flash-latest",
+      "category": "국민건강보험"
+    },
+    {
+      "error": "Gemini API 오류: 429 - {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.QuotaFailure\",\n        \"violations\": [\n          {\n            \"quotaMetric\": \"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\n            \"quotaId\": \"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\n            \"quotaDimensions\": {\n              \"location\": \"global\",\n              \"model\": \"gemini-1.5-flash\"\n            },\n            \"quotaValue\": \"15\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quotas\",\n            \"url\": \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.RetryInfo\",\n        \"retryDelay\": \"58s\"\n      }\n    ]\n  }\n}\n",
+      "prompt": "지역가입자의 보험료는 소득, 재산, 생활수준 등을 기준으로 산정된다.",
+      "model": "gemini-1.5-flash-latest",
+      "category": "국민건강보험"
+    },
+    {
+      "error": "Gemini API 오류: 429 - {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.QuotaFailure\",\n        \"violations\": [\n          {\n            \"quotaMetric\": \"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\n            \"quotaId\": \"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\n            \"quotaDimensions\": {\n              \"location\": \"global\",\n              \"model\": \"gemini-1.5-flash\"\n            },\n            \"quotaValue\": \"15\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quotas\",\n            \"url\": \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.RetryInfo\",\n        \"retryDelay\": \"58s\"\n      }\n    ]\n  }\n}\n",
+      "prompt": "건강보험료는 매월 10일까지 납부해야 한다.",
+      "model": "gemini-1.5-flash-latest",
+      "category": "국민건강보험"
+    },
+    {
+      "error": "Gemini API 오류: 429 - {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.QuotaFailure\",\n        \"violations\": [\n          {\n            \"quotaMetric\": \"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\n            \"quotaId\": \"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\n            \"quotaDimensions\": {\n              \"location\": \"global\",\n              \"model\": \"gemini-1.5-flash\"\n            },\n            \"quotaValue\": \"15\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quotas\",\n            \"url\": \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.RetryInfo\",\n        \"retryDelay\": \"58s\"\n      }\n    ]\n  }\n}\n",
+      "prompt": "건강보험 피부양자는 일정 요건을 충족해야 등록할 수 있다.",
+      "model": "gemini-1.5-flash-latest",
+      "category": "국민건강보험"
+    },
+    {
+      "error": "Gemini API 오류: 429 - {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.QuotaFailure\",\n        \"violations\": [\n          {\n            \"quotaMetric\": \"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\n            \"quotaId\": \"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\n            \"quotaDimensions\": {\n              \"location\": \"global\",\n              \"model\": \"gemini-1.5-flash\"\n            },\n            \"quotaValue\": \"15\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quotas\",\n            \"url\": \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.RetryInfo\",\n        \"retryDelay\": \"57s\"\n      }\n    ]\n  }\n}\n",
+      "prompt": "건강보험 급여에는 진료, 입원, 약제비 등이 포함된다.",
+      "model": "gemini-1.5-flash-latest",
+      "category": "국민건강보험"
+    },
+    {
+      "error": "Gemini API 오류: 429 - {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.QuotaFailure\",\n        \"violations\": [\n          {\n            \"quotaMetric\": \"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\n            \"quotaId\": \"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\n            \"quotaDimensions\": {\n              \"model\": \"gemini-1.5-flash\",\n              \"location\": \"global\"\n            },\n            \"quotaValue\": \"15\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quotas\",\n            \"url\": \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.RetryInfo\",\n        \"retryDelay\": \"57s\"\n      }\n    ]\n  }\n}\n",
+      "prompt": "본인부담금은 진료비의 일부를 가입자가 직접 부담하는 금액이다.",
+      "model": "gemini-1.5-flash-latest",
+      "category": "국민건강보험"
+    },
+    {
+      "error": "Gemini API 오류: 429 - {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.QuotaFailure\",\n        \"violations\": [\n          {\n            \"quotaMetric\": \"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\n            \"quotaId\": \"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\n            \"quotaDimensions\": {\n              \"location\": \"global\",\n              \"model\": \"gemini-1.5-flash\"\n            },\n            \"quotaValue\": \"15\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quotas\",\n            \"url\": \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.RetryInfo\",\n        \"retryDelay\": \"57s\"\n      }\n    ]\n  }\n}\n",
+      "prompt": "일정 소득 이하의 가입자는 건강보험료 경감 혜택을 받을 수 있다.",
+      "model": "gemini-1.5-flash-latest",
+      "category": "국민건강보험"
+    },
+    {
+      "error": "Gemini API 오류: 429 - {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.QuotaFailure\",\n        \"violations\": [\n          {\n            \"quotaMetric\": \"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\n            \"quotaId\": \"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\n            \"quotaDimensions\": {\n              \"model\": \"gemini-1.5-flash\",\n              \"location\": \"global\"\n            },\n            \"quotaValue\": \"15\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quotas\",\n            \"url\": \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.RetryInfo\",\n        \"retryDelay\": \"57s\"\n      }\n    ]\n  }\n}\n",
+      "prompt": "자격을 상실하면 건강보험 혜택을 받을 수 없다.",
+      "model": "gemini-1.5-flash-latest",
+      "category": "국민건강보험"
+    },
+    {
+      "error": "Gemini API 오류: 429 - {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.QuotaFailure\",\n        \"violations\": [\n          {\n            \"quotaMetric\": \"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\n            \"quotaId\": \"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\n            \"quotaDimensions\": {\n              \"location\": \"global\",\n              \"model\": \"gemini-1.5-flash\"\n            },\n            \"quotaValue\": \"15\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quotas\",\n            \"url\": \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.RetryInfo\",\n        \"retryDelay\": \"56s\"\n      }\n    ]\n  }\n}\n",
+      "prompt": "건강보험증은 가까운 국민건강보험공단 지사에서 재발급받을 수 있다.",
+      "model": "gemini-1.5-flash-latest",
+      "category": "국민건강보험"
+    }
+  ]
+}

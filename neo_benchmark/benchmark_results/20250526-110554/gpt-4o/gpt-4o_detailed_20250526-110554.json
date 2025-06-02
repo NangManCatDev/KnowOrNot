@@ -1,0 +1,364 @@
+{
+  "일반_사실": [
+    {
+      "model": "gpt-4o",
+      "prompt": "서울은 대한민국의 수도이다.",
+      "output": "```plaintext\n(keep '(서울 이다 대한민국의 수도))\n```",
+      "elapsed_time": 0.8159999847412109,
+      "tokens_generated": 14,
+      "tokens_prompt": 2785,
+      "tokens_total": 2799,
+      "category": "일반_사실"
+    },
+    {
+      "model": "gpt-4o",
+      "prompt": "지구는 태양계의 세 번째 행성이다.",
+      "output": "```plaintext\n(keep '(지구 이다 태양계의 세 번째 행성))\n```",
+      "elapsed_time": 0.7940006256103516,
+      "tokens_generated": 20,
+      "tokens_prompt": 2791,
+      "tokens_total": 2811,
+      "category": "일반_사실"
+    },
+    {
+      "model": "gpt-4o",
+      "prompt": "물의 화학식은 H2O이다.",
+      "output": "```plaintext\n(keep '(물 이다 H2O))\n```",
+      "elapsed_time": 0.833998441696167,
+      "tokens_generated": 14,
+      "tokens_prompt": 2789,
+      "tokens_total": 2803,
+      "category": "일반_사실"
+    },
+    {
+      "model": "gpt-4o",
+      "prompt": "인간의 뇌는 약 860억 개의 뉴런으로 구성되어 있다.",
+      "output": "```plaintext\n(keep '(인간의 뇌 구성하다 약 860억 개의 뉴런))\n```",
+      "elapsed_time": 0.9050025939941406,
+      "tokens_generated": 23,
+      "tokens_prompt": 2797,
+      "tokens_total": 2820,
+      "category": "일반_사실"
+    },
+    {
+      "model": "gpt-4o",
+      "prompt": "마라톤 경기의 거리는 42.195km이다.",
+      "output": "```plaintext\n(keep '(마라톤 경기의 거리 이다 42.195km))\n```",
+      "elapsed_time": 0.8664040565490723,
+      "tokens_generated": 21,
+      "tokens_prompt": 2792,
+      "tokens_total": 2813,
+      "category": "일반_사실"
+    }
+  ],
+  "인물_정보": [
+    {
+      "model": "gpt-4o",
+      "prompt": "아인슈타인은 1879년에 태어났으며, 상대성 이론으로 유명한 물리학자이다.",
+      "output": "```plaintext\n(keep '(아인슈타인 태어나다 1879년))\n(keep '(아인슈타인 이다 유명한 물리학자))\n(keep '(아인슈타인 관련되다 상대성 이론))\n```",
+      "elapsed_time": 1.81931471824646,
+      "tokens_generated": 53,
+      "tokens_prompt": 2805,
+      "tokens_total": 2858,
+      "category": "인물_정보"
+    },
+    {
+      "model": "gpt-4o",
+      "prompt": "세종대왕은 조선의 4대 왕으로 한글을 창제했다.",
+      "output": "```plaintext\n(keep '(세종대왕 이다 조선의 4대 왕))\n(keep '(세종대왕 창제하다 한글))\n```",
+      "elapsed_time": 0.9930002689361572,
+      "tokens_generated": 34,
+      "tokens_prompt": 2798,
+      "tokens_total": 2832,
+      "category": "인물_정보"
+    },
+    {
+      "model": "gpt-4o",
+      "prompt": "스티브 잡스는 애플의 공동 창업자로 아이폰을 개발했다.",
+      "output": "```plaintext\n(keep '(스티브 잡스 이다 공동 창업자))\n(keep '(스티브 잡스 개발했다 아이폰))\n```",
+      "elapsed_time": 2.086519956588745,
+      "tokens_generated": 32,
+      "tokens_prompt": 2797,
+      "tokens_total": 2829,
+      "category": "인물_정보"
+    },
+    {
+      "model": "gpt-4o",
+      "prompt": "마리 퀴리는 방사능 연구로 노벨상을 두 번 수상한 최초의 여성 과학자이다.",
+      "output": "```plaintext\n(keep '(마리퀴리 이다 여성과학자))\n(keep '(마리퀴리 연구하다 방사능))\n(keep '(마리퀴리 수상하다 노벨상))\n```",
+      "elapsed_time": 1.1311359405517578,
+      "tokens_generated": 48,
+      "tokens_prompt": 2805,
+      "tokens_total": 2853,
+      "category": "인물_정보"
+    },
+    {
+      "model": "gpt-4o",
+      "prompt": "이순신 장군은 임진왜란 당시 한산도 해전에서 승리한 조선의 명장이다.",
+      "output": "```plaintext\n(keep '(이순신 장군 이다 조선의 명장))\n```",
+      "elapsed_time": 0.9484984874725342,
+      "tokens_generated": 20,
+      "tokens_prompt": 2805,
+      "tokens_total": 2825,
+      "category": "인물_정보"
+    }
+  ],
+  "관계_설명": [
+    {
+      "model": "gpt-4o",
+      "prompt": "고양이는 포유류에 속하는 동물로 고양잇과의 일종이다.",
+      "output": "```plaintext\n(keep '(고양이 이다 동물))\n(keep '(고양이 속하다 포유류))\n(keep '(고양이 속하다 고양잇과))\n```",
+      "elapsed_time": 1.8236610889434814,
+      "tokens_generated": 41,
+      "tokens_prompt": 2800,
+      "tokens_total": 2841,
+      "category": "관계_설명"
+    },
+    {
+      "model": "gpt-4o",
+      "prompt": "컴퓨터는 CPU, 메모리, 저장장치로 구성된 전자 기기이다.",
+      "output": "```plaintext\n(keep '(컴퓨터 이다 전자 기기))\n(keep '(컴퓨터 구성되다 CPU 메모리 저장장치))\n```",
+      "elapsed_time": 0.9262542724609375,
+      "tokens_generated": 32,
+      "tokens_prompt": 2799,
+      "tokens_total": 2831,
+      "category": "관계_설명"
+    },
+    {
+      "model": "gpt-4o",
+      "prompt": "사과나무는 장미과에 속하는 식물로 가을에 사과 열매를 맺는다.",
+      "output": "```plaintext\n(keep '(사과나무 속하다 장미과))\n(keep '(rule1 if (?x 이다 사과나무)) (then (?x 맺다 사과열매 가을)))\n```",
+      "elapsed_time": 1.0969176292419434,
+      "tokens_generated": 46,
+      "tokens_prompt": 2804,
+      "tokens_total": 2850,
+      "category": "관계_설명"
+    },
+    {
+      "model": "gpt-4o",
+      "prompt": "비행기는 제트 엔진이나 프로펠러를 이용해 하늘을 나는 운송 수단이다.",
+      "output": "```plaintext\n(keep '(비행기 이다 운송 수단))\n(keep '(비행기 이용하다 제트 엔진))\n(keep '(비행기 이용하다 프로펠러))\n(keep '(비행기 하늘 을 날다))\n```",
+      "elapsed_time": 1.2879924774169922,
+      "tokens_generated": 55,
+      "tokens_prompt": 2803,
+      "tokens_total": 2858,
+      "category": "관계_설명"
+    },
+    {
+      "model": "gpt-4o",
+      "prompt": "바이올린은 4개의 현을 가진 현악기로 현을 활로 문질러 소리를 낸다.",
+      "output": "```plaintext\n(keep '(바이올린 이다 현악기))\n(keep '(바이올린 has 4 현))\n(keep '(바이올린 use 활))\n```",
+      "elapsed_time": 1.066404104232788,
+      "tokens_generated": 39,
+      "tokens_prompt": 2805,
+      "tokens_total": 2844,
+      "category": "관계_설명"
+    }
+  ],
+  "규칙_표현": [
+    {
+      "model": "gpt-4o",
+      "prompt": "모든 포유류는 척추동물이다.",
+      "output": "```\n(keep '(rule1 if (?x 이다 포유류)))\n(keep '(rule1 then (?x 이다 척추동물)))\n```",
+      "elapsed_time": 1.223954200744629,
+      "tokens_generated": 33,
+      "tokens_prompt": 2791,
+      "tokens_total": 2824,
+      "category": "규칙_표현"
+    },
+    {
+      "model": "gpt-4o",
+      "prompt": "삼각형의 내각의 합은 180도이다.",
+      "output": "```plaintext\n(keep '(rule1 if (?x 이다 삼각형)))\n(keep '(rule1 then (?x 내각의 합은 180도)))\n```",
+      "elapsed_time": 1.1871418952941895,
+      "tokens_generated": 35,
+      "tokens_prompt": 2792,
+      "tokens_total": 2827,
+      "category": "규칙_표현"
+    },
+    {
+      "model": "gpt-4o",
+      "prompt": "만약 물체에 힘이 가해지면, 가속도는 힘에 비례하고 질량에 반비례한다.",
+      "output": "```plaintext\n(keep '(rule1 if (?x 물체) (?x 힘이 가해지면)))\n(keep '(rule1 then (가속도 비례 힘) (가속도 반비례 질량)))\n```",
+      "elapsed_time": 1.7126176357269287,
+      "tokens_generated": 48,
+      "tokens_prompt": 2807,
+      "tokens_total": 2855,
+      "category": "규칙_표현"
+    },
+    {
+      "model": "gpt-4o",
+      "prompt": "빛이 매질을 통과할 때, 입사각의 사인과 굴절각의 사인의 비는 일정하다.",
+      "output": "```plaintext\n(keep '(rule1 if (?x 이다 매질)))\n(keep '(rule1 then (입사각 사인 비례 굴절각 사인)))\n```",
+      "elapsed_time": 1.0860011577606201,
+      "tokens_generated": 38,
+      "tokens_prompt": 2807,
+      "tokens_total": 2845,
+      "category": "규칙_표현"
+    },
+    {
+      "model": "gpt-4o",
+      "prompt": "모든 금속은 전기를 전도한다.",
+      "output": "```\n(keep '(rule1 if (?x 이다 금속)))\n(keep '(rule1 then (?x 전도하다 전기)))\n```",
+      "elapsed_time": 1.1855111122131348,
+      "tokens_generated": 30,
+      "tokens_prompt": 2789,
+      "tokens_total": 2819,
+      "category": "규칙_표현"
+    }
+  ],
+  "복합_문장": [
+    {
+      "model": "gpt-4o",
+      "prompt": "태양은 지구로부터 약 1억 5천만 km 떨어져 있으며, 핵융합 반응으로 에너지를 생성하는 항성이다.",
+      "output": "```plaintext\n(keep '(태양 떨어져있다 1억5천만km 지구))\n(keep '(태양 이다 항성))\n(keep '(태양 생성한다 에너지 핵융합반응))\n```",
+      "elapsed_time": 1.2820003032684326,
+      "tokens_generated": 48,
+      "tokens_prompt": 2813,
+      "tokens_total": 2861,
+      "category": "복합_문장"
+    },
+    {
+      "model": "gpt-4o",
+      "prompt": "인간의 심장은 하루에 약 10만 번 뛰고, 일생 동안 약 30억 번의 심장 박동을 한다.",
+      "output": "```plaintext\n(keep '(인간의 심장 하루에 약 10만 번 뛴다))\n(keep '(인간의 심장 일생 동안 약 30억 번의 심장 박동을 한다))\n```",
+      "elapsed_time": 1.053514003753662,
+      "tokens_generated": 48,
+      "tokens_prompt": 2809,
+      "tokens_total": 2857,
+      "category": "복합_문장"
+    },
+    {
+      "model": "gpt-4o",
+      "prompt": "뉴턴은 만유인력의 법칙을 발견했으며, 이 법칙은 두 물체 사이의 인력이 질량의 곱에 비례하고 거리의 제곱에 반비례한다고 설명한다.",
+      "output": "I'm sorry, I can only convert simple factual or rule-based Korean sentences into NEO code. Complex scientific statements like this one are beyond my scope.",
+      "elapsed_time": 0.9070000648498535,
+      "tokens_generated": 30,
+      "tokens_prompt": 2826,
+      "tokens_total": 2856,
+      "category": "복합_문장"
+    },
+    {
+      "model": "gpt-4o",
+      "prompt": "공룡은 약 6500만 년 전 소행성 충돌로 멸종했으며, 조류는 공룡의 후손으로 여겨진다.",
+      "output": "```plaintext\n(keep '(공룡 멸종 약 6500만 년 전 소행성 충돌))\n(keep '(조류 후손 공룡))\n```",
+      "elapsed_time": 1.275001049041748,
+      "tokens_generated": 37,
+      "tokens_prompt": 2816,
+      "tokens_total": 2853,
+      "category": "복합_문장"
+    },
+    {
+      "model": "gpt-4o",
+      "prompt": "인터넷은 1969년 ARPANET으로 시작되었으며, 현재는 전 세계 수십억 대의 컴퓨터를 연결하는 글로벌 네트워크이다.",
+      "output": "I'm sorry, I can only process simple factual or rule-based sentences. Could you provide a straightforward statement or rule for conversion into NEO format?",
+      "elapsed_time": 1.096999168395996,
+      "tokens_generated": 29,
+      "tokens_prompt": 2814,
+      "tokens_total": 2843,
+      "category": "복합_문장"
+    }
+  ],
+  "국민건강보험": [
+    {
+      "model": "gpt-4o",
+      "prompt": "국민건강보험은 대한민국의 공적 의료보험 제도이다.",
+      "output": "```plaintext\n(keep '(국민건강보험 이다 대한민국의 공적 의료보험 제도))\n```",
+      "elapsed_time": 1.9287428855895996,
+      "tokens_generated": 23,
+      "tokens_prompt": 2794,
+      "tokens_total": 2817,
+      "category": "국민건강보험"
+    },
+    {
+      "model": "gpt-4o",
+      "prompt": "직장가입자는 근로자와 사용자 모두가 보험료를 부담한다.",
+      "output": "```plaintext\n(keep '(rule1 if (?x 이다 직장가입자)))\n(keep '(rule1 then (?x 부담하다 보험료 근로자 사용자)))\n```",
+      "elapsed_time": 1.136641502380371,
+      "tokens_generated": 36,
+      "tokens_prompt": 2795,
+      "tokens_total": 2831,
+      "category": "국민건강보험"
+    },
+    {
+      "model": "gpt-4o",
+      "prompt": "지역가입자의 보험료는 소득, 재산, 생활수준 등을 기준으로 산정된다.",
+      "output": "```plaintext\n(keep '(rule1 if (?x 이다 지역가입자)))  \n(keep '(rule1 then (?x 의 보험료 이다 소득 기준)))  \n(keep '(rule1 then (?x 의 보험료 이다 재산 기준)))  \n(keep '(rule1 then (?x 의 보험료 이다 생활수준 기준)))  \n```",
+      "elapsed_time": 1.238476276397705,
+      "tokens_generated": 74,
+      "tokens_prompt": 2800,
+      "tokens_total": 2874,
+      "category": "국민건강보험"
+    },
+    {
+      "model": "gpt-4o",
+      "prompt": "건강보험료는 매월 10일까지 납부해야 한다.",
+      "output": "```plaintext\n(keep '(rule1 if (?x 건강보험료이다) (?x 매월 10일까지 납부해야한다)))\n(keep '(rule1 then (?x 납부해야한다)))\n```",
+      "elapsed_time": 1.572523832321167,
+      "tokens_generated": 44,
+      "tokens_prompt": 2794,
+      "tokens_total": 2838,
+      "category": "국민건강보험"
+    },
+    {
+      "model": "gpt-4o",
+      "prompt": "건강보험 피부양자는 일정 요건을 충족해야 등록할 수 있다.",
+      "output": "```plaintext\n(keep '(rule1 if (?x 이다 건강보험 피부양자)))\n(keep '(rule1 then (?x 충족하다 일정 요건)))\n```",
+      "elapsed_time": 1.2059986591339111,
+      "tokens_generated": 35,
+      "tokens_prompt": 2796,
+      "tokens_total": 2831,
+      "category": "국민건강보험"
+    },
+    {
+      "model": "gpt-4o",
+      "prompt": "건강보험 급여에는 진료, 입원, 약제비 등이 포함된다.",
+      "output": "```plaintext\n(keep '(건강보험급여 포함하다 진료))\n(keep '(건강보험급여 포함하다 입원))\n(keep '(건강보험급여 포함하다 약제비))\n```",
+      "elapsed_time": 1.0490012168884277,
+      "tokens_generated": 44,
+      "tokens_prompt": 2797,
+      "tokens_total": 2841,
+      "category": "국민건강보험"
+    },
+    {
+      "model": "gpt-4o",
+      "prompt": "본인부담금은 진료비의 일부를 가입자가 직접 부담하는 금액이다.",
+      "output": "```plaintext\n(keep '(본인부담금 이다 (일부 진료비 가입자 직접 부담)))\n```",
+      "elapsed_time": 1.1220295429229736,
+      "tokens_generated": 25,
+      "tokens_prompt": 2799,
+      "tokens_total": 2824,
+      "category": "국민건강보험"
+    },
+    {
+      "model": "gpt-4o",
+      "prompt": "일정 소득 이하의 가입자는 건강보험료 경감 혜택을 받을 수 있다.",
+      "output": "```plaintext\n(keep '(rule1 if (?x 이다 가입자) (?x 소득 이다 적다)))  \n(keep '(rule1 then (?x receive health-insurance-benefit-reduction)))  \n```",
+      "elapsed_time": 1.7430028915405273,
+      "tokens_generated": 45,
+      "tokens_prompt": 2799,
+      "tokens_total": 2844,
+      "category": "국민건강보험"
+    },
+    {
+      "model": "gpt-4o",
+      "prompt": "자격을 상실하면 건강보험 혜택을 받을 수 없다.",
+      "output": "```plaintext\n(keep '(rule1 if (?x 자격을 상실한다)))\n(keep '(rule1 then (?x cannot receive health insurance benefits)))\n```",
+      "elapsed_time": 1.089325189590454,
+      "tokens_generated": 33,
+      "tokens_prompt": 2794,
+      "tokens_total": 2827,
+      "category": "국민건강보험"
+    },
+    {
+      "model": "gpt-4o",
+      "prompt": "건강보험증은 가까운 국민건강보험공단 지사에서 재발급받을 수 있다.",
+      "output": "```plaintext\n(keep '(건강보험증 재발급받을 수 있다 국민건강보험공단 지사에서))\n```",
+      "elapsed_time": 0.9430019855499268,
+      "tokens_generated": 28,
+      "tokens_prompt": 2802,
+      "tokens_total": 2830,
+      "category": "국민건강보험"
+    }
+  ]
+}

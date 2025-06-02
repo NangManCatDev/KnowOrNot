@@ -210,95 +210,162 @@ class ModelBenchmark:
     
     def generate(self, model_name: str, prompt: str, max_tokens: int = 512, 
                  temperature: float = 0.7, top_p: float = 0.95, 
-                 use_system_prompt: bool = True) -> Dict[str, Any]:
+                 use_system_prompt: bool = True, 
+                 openai_api_key: Optional[str] = None, gemini_api_key: Optional[str] = None) -> Dict[str, Any]:
         """
         모델을 사용하여 텍스트를 생성합니다.
-        
-        Args:
-            model_name: 사용할 모델 이름
-            prompt: 입력 프롬프트
-            max_tokens: 생성할 최대 토큰 수
-            temperature: 생성 온도
-            top_p: Top-p 샘플링 파라미터
-            use_system_prompt: 시스템 프롬프트 사용 여부
-            
-        Returns:
-            생성 결과와 메타데이터를 포함하는 딕셔너리
+        (GPT, Gemini는 llama.cpp 서버를 사용하지 않고 API로 직접 요청)
         """
-        # 서버 시작
-        if not self.start_server(model_name):
-            raise Exception(f"llama-server 시작 실패: {model_name}")
-        
-        # 시스템 프롬프트 적용
-        if use_system_prompt and model_name in self.system_prompts:
-            system_prompt = self.system_prompts[model_name]
-        else:
-            system_prompt = ""
-        
-        start_time = time.time()
-        
-        # API 요청 구성
-        api_url = f"{API_BASE_URL}/chat/completions"
-        headers = {
-            "Content-Type": "application/json"
-        }
-        
-        # 메시지 구성
-        messages = []
-        if system_prompt:
-            messages.append({
-                "role": "system",
-                "content": system_prompt
-            })
-        
-        messages.append({
-            "role": "user",
-            "content": prompt
-        })
-        
-        data = {
-            "model": model_name,
-            "messages": messages,
-            "max_tokens": max_tokens,
-            "temperature": temperature,
-            "top_p": top_p,
-            "stream": False
-        }
-        
-        try:
-            # API 요청
+        import requests
+        import time
+        # 1. OpenAI GPT 계열
+        if model_name.startswith("gpt-"):
+            if not openai_api_key:
+                raise Exception("OpenAI API 키가 필요합니다.")
+            start_time = time.time()
+            api_url = "https://api.openai.com/v1/chat/completions"
+            headers = {
+                "Content-Type": "application/json",
+                "Authorization": f"Bearer {openai_api_key}"
+            }
+            messages = []
+            if use_system_prompt and hasattr(self, 'system_prompts') and model_name in self.system_prompts:
+                messages.append({"role": "system", "content": self.system_prompts[model_name]})
+            messages.append({"role": "user", "content": prompt})
+            data = {
+                "model": model_name,
+                "messages": messages,
+                "max_tokens": max_tokens,
+                "temperature": temperature,
+                "top_p": top_p,
+                "stream": False
+            }
             response = requests.post(api_url, headers=headers, json=data)
-            
             if response.status_code != 200:
-                raise Exception(f"API 요청 오류: {response.status_code} - {response.text}")
-            
+                raise Exception(f"OpenAI API 오류: {response.status_code} - {response.text}")
             response_data = response.json()
             end_time = time.time()
             elapsed_time = end_time - start_time
-            
-            # 응답 파싱
             model_output = response_data['choices'][0]['message']['content']
-            
-            # 토큰 정보
             tokens_prompt = response_data.get('usage', {}).get('prompt_tokens', int(len(prompt.split()) * 1.3))
             tokens_generated = response_data.get('usage', {}).get('completion_tokens', int(len(model_output.split()) * 1.3))
             tokens_total = response_data.get('usage', {}).get('total_tokens', tokens_prompt + tokens_generated)
-            
-            result = {
+            return {
                 "model": model_name,
                 "prompt": prompt,
-                "system_prompt": system_prompt if use_system_prompt else "",
+                "system_prompt": self.system_prompts[model_name] if use_system_prompt and hasattr(self, 'system_prompts') and model_name in self.system_prompts else "",
                 "output": model_output,
                 "elapsed_time": elapsed_time,
                 "tokens_generated": tokens_generated,
                 "tokens_prompt": tokens_prompt,
                 "tokens_total": tokens_total
             }
-            
-            return result
-            
-        except Exception as e:
-            raise Exception(f"API 요청 오류: {str(e)}")
+        # 2. Gemini 계열
+        elif model_name.startswith("gemini"):
+            if not gemini_api_key:
+                raise Exception("Gemini API 키가 필요합니다.")
+            start_time = time.time()
+            # 시스템 프롬프트를 프롬프트 앞에 합쳐서 전달
+            if use_system_prompt and model_name in self.system_prompts:
+                full_prompt = self.system_prompts[model_name].strip() + "\n" + prompt
+            else:
+                full_prompt = prompt
+            url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent"
+            headers = {"Content-Type": "application/json"}
+            params = {"key": gemini_api_key}
+            data = {
+                "contents": [{"parts": [{"text": full_prompt}]}],
+                "generationConfig": {
+                    "maxOutputTokens": max_tokens,
+                    "temperature": temperature,
+                    "topP": top_p,
+                }
+            }
+            response = requests.post(url, headers=headers, params=params, json=data)
+            if response.status_code != 200:
+                raise Exception(f"Gemini API 오류: {response.status_code} - {response.text}")
+            response_data = response.json()
+            end_time = time.time()
+            elapsed_time = end_time - start_time
+            # Gemini 응답 파싱
+            try:
+                model_output = response_data['candidates'][0]['content']['parts'][0]['text']
+            except Exception:
+                model_output = str(response_data)
+            tokens_generated = int(len(model_output.split()) * 1.3)
+            tokens_prompt = int(len(prompt.split()) * 1.3)
+            tokens_total = tokens_prompt + tokens_generated
+            return {
+                "model": model_name,
+                "prompt": prompt,
+                "system_prompt": self.system_prompts[model_name] if use_system_prompt and hasattr(self, 'system_prompts') and model_name in self.system_prompts else "",
+                "output": model_output,
+                "elapsed_time": elapsed_time,
+                "tokens_generated": tokens_generated,
+                "tokens_prompt": tokens_prompt,
+                "tokens_total": tokens_total
+            }
+        # 3. 로컬 llama.cpp
+        else:
+            # 서버 시작
+            if not self.start_server(model_name):
+                raise Exception(f"llama-server 시작 실패: {model_name}")
+            # 시스템 프롬프트 적용
+            if use_system_prompt and model_name in self.system_prompts:
+                system_prompt = self.system_prompts[model_name]
+            else:
+                system_prompt = ""
+            start_time = time.time()
+            api_url = f"{API_BASE_URL}/chat/completions"
+            headers = {
+                "Content-Type": "application/json"
+            }
+            messages = []
+            if system_prompt:
+                messages.append({
+                    "role": "system",
+                    "content": system_prompt
+                })
+            messages.append({
+                "role": "user",
+                "content": prompt
+            })
+            data = {
+                "model": model_name,
+                "messages": messages,
+                "max_tokens": max_tokens,
+                "temperature": temperature,
+                "top_p": top_p,
+                "stream": False
+            }
+            try:
+                response = requests.post(api_url, headers=headers, json=data)
+                if response.status_code != 200:
+                    raise Exception(f"API 요청 오류: {response.status_code} - {response.text}")
+                response_data = response.json()
+                end_time = time.time()
+                elapsed_time = end_time - start_time
+                model_output = response_data['choices'][0]['message']['content']
+                tokens_prompt = response_data.get('usage', {}).get('prompt_tokens', int(len(prompt.split()) * 1.3))
+                tokens_generated = response_data.get('usage', {}).get('completion_tokens', int(len(model_output.split()) * 1.3))
+                tokens_total = response_data.get('usage', {}).get('total_tokens', tokens_prompt + tokens_generated)
+                result = {
+                    "model": model_name,
+                    "prompt": prompt,
+                    "system_prompt": system_prompt if use_system_prompt else "",
+                    "output": model_output,
+                    "elapsed_time": elapsed_time,
+                    "tokens_generated": tokens_generated,
+                    "tokens_prompt": tokens_prompt,
+                    "tokens_total": tokens_total
+                }
+                # 결과를 neo_benchmark/test.nkb로 자동 저장 (출력만 텍스트로 저장)
+                save_dir = os.path.join(os.path.dirname(__file__), "test.nkb")
+                with open(save_dir, 'w', encoding='utf-8') as f:
+                    f.write(str(result["output"]))
+                return result
+            except Exception as e:
+                raise Exception(f"API 요청 오류: {str(e)}")
     
     def benchmark(self, prompts: List[str], model_names: Optional[List[str]] = None, 
                  use_system_prompt: bool = True) -> Dict[str, Any]:
@@ -358,48 +425,39 @@ def create_benchmark_interface(model_paths: Dict[str, str], system_prompt_dir: s
     # 사용 가능한 템플릿 목록 가져오기
     available_templates = benchmark.get_available_templates()
     
+    # 2. API 키 관리 탭 추가
+    openai_api_key_state = gr.State("")
+    gemini_api_key_state = gr.State("")
+    
     with gr.Blocks(title="sLLM 벤치마크") as demo:
         gr.Markdown("# sLLM 모델 벤치마크")
         gr.Markdown("llama.cpp를 사용한 소형 언어 모델 벤치마크 도구입니다.")
         
         with gr.Tab("단일 모델 테스트"):
             with gr.Row():
+                # 왼쪽: .nkb 생성용
                 with gr.Column():
+                    gr.Markdown("#### 1. 지식(.nkb) 생성")
                     model_dropdown = gr.Dropdown(
                         choices=list(model_paths.keys()),
                         label="모델 선택"
                     )
-                    
-                    # 시스템 프롬프트 입력 추가
-                    system_prompt_checkbox = gr.Checkbox(
-                        value=True,
-                        label="시스템 프롬프트 사용"
-                    )
-                    
-                    # 템플릿 선택 드롭다운 추가
-                    template_dropdown = gr.Dropdown(
+                    # 시스템 프롬프트 템플릿 선택 드롭다운 추가
+                    system_prompt_template = gr.Dropdown(
                         choices=[""] + available_templates,
                         value="",
-                        label="시스템 프롬프트 템플릿 선택",
+                        label="시스템 프롬프트 템플릿",
                         allow_custom_value=False
                     )
-                    
-                    # 템플릿 적용 버튼
-                    apply_template_button = gr.Button("템플릿 적용")
-                    
                     system_prompt_input = gr.Textbox(
                         lines=4,
                         label="시스템 프롬프트",
                         placeholder="시스템 프롬프트를 입력하세요..."
                     )
-                    
-                    # 시스템 프롬프트 저장 버튼
-                    save_system_prompt_button = gr.Button("시스템 프롬프트 저장")
-                    
                     prompt_input = gr.Textbox(
                         lines=5,
                         label="프롬프트",
-                        placeholder="테스트할 프롬프트를 입력하세요..."
+                        placeholder="지식(.nkb)로 저장할 프롬프트를 입력하세요..."
                     )
                     with gr.Row():
                         temperature = gr.Slider(
@@ -414,85 +472,79 @@ def create_benchmark_interface(model_paths: Dict[str, str], system_prompt_dir: s
                         minimum=16, maximum=2048, value=512, step=16,
                         label="최대 토큰 수"
                     )
-                    run_button = gr.Button("실행")
-                
-                with gr.Column():
+                    run_button = gr.Button("지식 생성 및 저장")
                     output_text = gr.Textbox(lines=10, label="모델 출력")
-                    with gr.Row():
-                        elapsed_time = gr.Number(label="소요 시간 (초)")
-                        tokens_sec = gr.Number(label="토큰/초")
-                    
-                    with gr.Row():
-                        prompt_tokens = gr.Number(label="프롬프트 토큰 수")
-                        output_tokens = gr.Number(label="출력 토큰 수")
-                        total_tokens = gr.Number(label="총 토큰 수")
-            
-            # 모델 선택 시 해당 모델의 시스템 프롬프트 로드
-            def load_system_prompt(model_name):
-                if model_name:
-                    return benchmark.get_system_prompt(model_name)
-                return ""
-            
-            model_dropdown.change(
-                load_system_prompt,
-                inputs=[model_dropdown],
-                outputs=[system_prompt_input]
-            )
-            
-            # 템플릿 적용
-            def apply_template(template_name):
-                if template_name:
-                    content = benchmark.load_template_content(template_name)
-                    return content, f"템플릿 '{template_name}'이(가) 로드되었습니다."
-                return "", "템플릿을 선택해주세요."
-            
-            apply_template_button.click(
-                apply_template,
-                inputs=[template_dropdown],
-                outputs=[system_prompt_input, gr.Textbox(label="상태")]
-            )
-            
-            # 시스템 프롬프트 저장
-            def save_system_prompt(model_name, system_prompt):
-                if model_name:
-                    benchmark.set_system_prompt(model_name, system_prompt)
-                    benchmark.save_system_prompt(model_name)
-                    return f"'{model_name}'의 시스템 프롬프트가 저장되었습니다."
-                return "모델을 선택해주세요."
-            
-            save_system_prompt_button.click(
-                save_system_prompt,
-                inputs=[model_dropdown, system_prompt_input],
-                outputs=[gr.Textbox(label="상태")]
-            )
-            
-            def run_single_model(model_name, system_prompt, use_system_prompt, prompt, max_tokens, temperature, top_p):
+
+                # 오른쪽: RAG
+                with gr.Column():
+                    gr.Markdown("#### 2. RAG(검색 기반 생성)")
+                    rag_model_dropdown = gr.Dropdown(
+                        choices=list(model_paths.keys()),
+                        label="RAG용 모델 선택",
+                        value=list(model_paths.keys())[0]
+                    )
+                    # RAG용 시스템 프롬프트 템플릿 선택 드롭다운 추가
+                    rag_system_prompt_template = gr.Dropdown(
+                        choices=[""] + available_templates,
+                        value="",
+                        label="RAG용 시스템 프롬프트 템플릿",
+                        allow_custom_value=False
+                    )
+                    rag_system_prompt_input = gr.Textbox(
+                        lines=4,
+                        label="RAG용 시스템 프롬프트",
+                        placeholder="RAG용 시스템 프롬프트를 입력하세요..."
+                    )
+                    rag_prompt_input = gr.Textbox(
+                        lines=3,
+                        label="RAG 프롬프트",
+                        placeholder="test.nkb를 참고하여 답변할 프롬프트를 입력하세요."
+                    )
+                    rag_run_button = gr.Button("nkb 기반 응답 실행")
+                    rag_output_text = gr.Textbox(lines=10, label="RAG 출력 결과")
+
+            # 왼쪽: .nkb 생성 및 저장 함수
+            def run_single_model(model_name, system_prompt, prompt, max_tokens, temperature, top_p):
                 try:
-                    # 현재 입력된 시스템 프롬프트로 업데이트
-                    if use_system_prompt:
-                        benchmark.set_system_prompt(model_name, system_prompt)
-                    
+                    benchmark.set_system_prompt(model_name, system_prompt)
                     result = benchmark.generate(
-                        model_name, prompt, max_tokens, temperature, top_p, use_system_prompt
+                        model_name, prompt, max_tokens, temperature, top_p, True
                     )
-                    tokens_per_second = result["tokens_generated"] / result["elapsed_time"] if result["elapsed_time"] > 0 else 0
-                    
-                    return (
-                        result["output"],
-                        result["elapsed_time"],
-                        tokens_per_second,
-                        result["tokens_prompt"],
-                        result["tokens_generated"],
-                        result["tokens_total"]
-                    )
+                    # 결과를 neo_benchmark/test.nkb로 자동 저장 (출력만 텍스트로 저장)
+                    save_dir = os.path.join(os.path.dirname(__file__), "test.nkb")
+                    with open(save_dir, 'w', encoding='utf-8') as f:
+                        f.write(str(result["output"]))
+                    return result["output"]
                 except Exception as e:
-                    return str(e), 0, 0, 0, 0, 0
-            
+                    return str(e)
             run_button.click(
                 run_single_model,
-                inputs=[model_dropdown, system_prompt_input, system_prompt_checkbox, 
-                        prompt_input, max_tokens, temperature, top_p],
-                outputs=[output_text, elapsed_time, tokens_sec, prompt_tokens, output_tokens, total_tokens]
+                inputs=[model_dropdown, system_prompt_input, prompt_input, max_tokens, temperature, top_p],
+                outputs=[output_text]
+            )
+
+            # 오른쪽: RAG 실행 함수
+            def run_rag_model(rag_model, rag_system_prompt, rag_prompt):
+                try:
+                    # test.nkb 파일 읽기
+                    test_nkb_path = os.path.join(os.path.dirname(__file__), "test.nkb")
+                    if not os.path.exists(test_nkb_path):
+                        return "test.nkb 파일이 존재하지 않습니다."
+                    with open(test_nkb_path, 'r', encoding='utf-8') as f:
+                        kb_content = f.read().strip()
+                    # RAG용 시스템 프롬프트: 참고 문서 + 입력 시스템 프롬프트
+                    rag_full_system_prompt = f"아래는 참고 문서입니다.\n{kb_content}\n\n{rag_system_prompt}"
+                    benchmark.set_system_prompt(rag_model, rag_full_system_prompt)
+                    result = benchmark.generate(
+                        rag_model, rag_prompt, 512, 0.7, 0.95, True
+                    )
+                    return result["output"]
+                except Exception as e:
+                    return str(e)
+            rag_run_button.click(
+                run_rag_model,
+                inputs=[rag_model_dropdown, rag_system_prompt_input, rag_prompt_input],
+                outputs=[rag_output_text]
             )
         
         with gr.Tab("모델 비교 벤치마크"):
@@ -521,7 +573,7 @@ def create_benchmark_interface(model_paths: Dict[str, str], system_prompt_dir: s
                     benchmark_output = gr.JSON(label="벤치마크 결과")
                     result_status = gr.Textbox(label="상태")
             
-            def run_benchmark(models, use_system_prompt, prompts_text):
+            def run_benchmark(models, use_system_prompt, prompts_text, openai_api_key_state, gemini_api_key_state):
                 print("[DEBUG] run_benchmark 함수 진입 (벤치마크 실행 탭)")
                 try:
                     prompts = [p.strip() for p in prompts_text.split('\n') if p.strip()]
@@ -535,7 +587,7 @@ def create_benchmark_interface(model_paths: Dict[str, str], system_prompt_dir: s
             
             compare_button.click(
                 run_benchmark,
-                inputs=[model_checkboxes, benchmark_system_prompt_checkbox, benchmark_prompts],
+                inputs=[model_checkboxes, benchmark_system_prompt_checkbox, benchmark_prompts, openai_api_key_state, gemini_api_key_state],
                 outputs=[benchmark_output, result_status]
             )
         
@@ -581,15 +633,14 @@ def create_benchmark_interface(model_paths: Dict[str, str], system_prompt_dir: s
                     )
             
             # 모델 선택 시 해당 모델의 시스템 프롬프트 로드
-            manage_model_dropdown.change(
-                load_system_prompt,
-                inputs=[manage_model_dropdown],
-                outputs=[manage_system_prompt]
-            )
+            # manage_model_dropdown.change(
+            #     load_system_prompt,
+            #     inputs=[manage_model_dropdown],
+            #     outputs=[manage_system_prompt]
+            # )
             
             # 템플릿 로드
             load_template_button.click(
-                apply_template,
                 inputs=[manage_template_dropdown],
                 outputs=[manage_system_prompt, system_prompt_status]
             )
@@ -627,6 +678,19 @@ def create_benchmark_interface(model_paths: Dict[str, str], system_prompt_dir: s
                 outputs=[system_prompt_status]
             )
             
+        with gr.Tab("API 키 관리"):
+            openai_key = gr.Textbox(label="OpenAI API Key", type="password")
+            gemini_key = gr.Textbox(label="Gemini API Key", type="password")
+            save_button = gr.Button("저장")
+            status = gr.Textbox(label="상태")
+            def save_keys(openai, gemini):
+                return "API 키가 저장되었습니다.", gr.update(value=openai), gr.update(value=gemini)
+            save_button.click(
+                save_keys,
+                inputs=[openai_key, gemini_key],
+                outputs=[status, openai_key, gemini_key]
+            )
+        
         with gr.Tab("벤치마크 실행"):
             with gr.Row():
                 with gr.Column():
@@ -740,7 +804,7 @@ def create_benchmark_interface(model_paths: Dict[str, str], system_prompt_dir: s
                 outputs=[benchmark_prompts]
             )
             
-            def run_benchmark(models, use_system_prompt, query_file_obj, selected_categories, prompts_text, temperature, top_p, max_tokens):
+            def run_benchmark(models, use_system_prompt, query_file_obj, selected_categories, prompts_text, temperature, top_p, max_tokens, openai_key, gemini_key):
                 print("[DEBUG] run_benchmark 함수 진입 (벤치마크 실행 탭)")
                 print(f"[DEBUG] models: {models}")
                 print(f"[DEBUG] prompts_text: {prompts_text}")
@@ -772,7 +836,8 @@ def create_benchmark_interface(model_paths: Dict[str, str], system_prompt_dir: s
                                     print(f"[DEBUG] generate 호출: model={model}, query={query}")
                                     try:
                                         result = benchmark.generate(
-                                            model, query, max_tokens, temperature, top_p, use_system_prompt
+                                            model, query, max_tokens, temperature, top_p, use_system_prompt,
+                                            openai_api_key=openai_key, gemini_api_key=gemini_key
                                         )
                                         result['category'] = category
                                         category_results.append(result)
@@ -933,7 +998,9 @@ def create_benchmark_interface(model_paths: Dict[str, str], system_prompt_dir: s
                     benchmark_prompts,
                     benchmark_temperature,
                     benchmark_top_p,
-                    benchmark_max_tokens
+                    benchmark_max_tokens,
+                    openai_key,
+                    gemini_key
                 ],
                 outputs=[progress, benchmark_results, save_status]
             )
@@ -986,18 +1053,22 @@ def create_benchmark_interface(model_paths: Dict[str, str], system_prompt_dir: s
                         is_summary = '성공률' in df.columns and '평균 처리 시간(초)' in df.columns
                         if is_summary:
                             # summary CSV 시각화 옵션
-                            if viz_type == "성공률":
-                                plt.figure(figsize=(12, 8))
-                                for model in df['모델'].unique():
+                            if viz_type == "성공/실패 건수":
+                                plt.figure(figsize=(14, 8))
+                                bar_width = 0.35
+                                categories = df['카테고리'].unique()
+                                x = np.arange(len(categories))
+                                for idx, model in enumerate(df['모델'].unique()):
                                     model_data = df[df['모델'] == model]
-                                    plt.bar(
-                                        [f"{cat} ({model})" for cat in model_data['카테고리']],
-                                        model_data['성공률'],
-                                        label=model
-                                    )
-                                plt.title('Success Rate by Model and Category')
-                                plt.xlabel('Category (Model)')
-                                plt.ylabel('Success Rate (%)')
+                                    success = model_data['성공'].values
+                                    fail = model_data['실패'].values
+                                    plt.bar(x + idx * bar_width, success, width=bar_width, label=f"{model} - 성공")
+                                    plt.bar(x + idx * bar_width, fail, width=bar_width, bottom=success, label=f"{model} - 실패", alpha=0.5, hatch='//')
+                                plt.xticks(x + bar_width * (len(df['모델'].unique())-1)/2, categories, rotation=45)
+                                plt.title('성공/실패 건수 (모델별, 카테고리별)')
+                                plt.xlabel('카테고리')
+                                plt.ylabel('건수')
+                                plt.legend()
                             elif viz_type == "평균 처리 시간":
                                 plt.figure(figsize=(12, 8))
                                 for model in df['모델'].unique():
@@ -1131,7 +1202,7 @@ def create_benchmark_interface(model_paths: Dict[str, str], system_prompt_dir: s
                     inputs=[benchmark_results, visualization_type],
                     outputs=[save_status, benchmark_file, visualization_output, comparison_table]
                 )
-        
+            
         # Gradio 종료 시 서버 중지
         demo.load(lambda: None)
         demo.close(lambda: benchmark.stop_server())
@@ -1185,12 +1256,29 @@ def main():
         print("올바른 경로를 지정해주세요.")
         return
     
-    # 여러 디렉토리에서 모델 파일 찾기
-    model_paths = find_model_files([args.models_dir, args.external_models_dir])
+    # Gemini 텍스트 모델 최신 공식 모델명만 남김 (404 발생 모델 제거)
+    model_paths = {
+        "gpt-3.5-turbo": "openai",
+        "gpt-4": "openai",
+        "gpt-4o": "openai",
+        "gemini-1.5-pro-latest": "google",
+        "gemini-1.5-flash-latest": "google",
+        "gemini-1.0-pro": "google",
+        "gemini-1.0-pro-001": "google",
+    }
+    # 2. 로컬 모델 자동 추가
+    model_paths.update(find_model_files([args.models_dir, args.external_models_dir]))
     
     if not model_paths:
         # 예제 모델 경로 (사용자가 수정해야 함)
         model_paths = {
+            "gpt-3.5-turbo": "openai",
+            "gpt-4": "openai",
+            "gpt-4o": "openai",
+            "gemini-1.5-pro-latest": "google",
+            "gemini-1.5-flash-latest": "google",
+            "gemini-1.0-pro": "google",
+            "gemini-1.0-pro-001": "google",
             "llama-2-7b-chat-q4_K_M": "C:/Users/1/Desktop/wAIfu_llama/llama.cpp/models/downloads/llama-2-7b-chat.Q4_K_M.gguf",
             "mistral-7b-instruct-q4_K_M": "C:/Users/1/Desktop/wAIfu_llama/llama.cpp/models/downloads/mistral-7b-instruct-v0.2.Q4_K_M.gguf",
         }

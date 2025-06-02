@@ -1,0 +1,524 @@
+{
+  "gpt-3.5-turbo": {
+    "일반_사실": {
+      "total_time": 3.92386794090271,
+      "avg_time_per_prompt": 0.784773588180542,
+      "total_tokens": 126,
+      "avg_tokens_per_prompt": 25.2,
+      "tokens_per_second": 32.111172419073036,
+      "accuracy": 1
+    },
+    "인물_정보": {
+      "total_time": 5.428411960601807,
+      "avg_time_per_prompt": 1.0856823921203613,
+      "total_tokens": 260,
+      "avg_tokens_per_prompt": 52,
+      "tokens_per_second": 47.89614382383311,
+      "accuracy": 1
+    },
+    "관계_설명": {
+      "total_time": 5.3603808879852295,
+      "avg_time_per_prompt": 1.072076177597046,
+      "total_tokens": 316,
+      "avg_tokens_per_prompt": 63.2,
+      "tokens_per_second": 58.951034749840844,
+      "accuracy": 1
+    },
+    "규칙_표현": {
+      "total_time": 8.453136205673218,
+      "avg_time_per_prompt": 1.6906272411346435,
+      "total_tokens": 166,
+      "avg_tokens_per_prompt": 33.2,
+      "tokens_per_second": 19.63768191604332,
+      "accuracy": 1
+    },
+    "복합_문장": {
+      "total_time": 5.7302727699279785,
+      "avg_time_per_prompt": 1.1460545539855957,
+      "total_tokens": 347,
+      "avg_tokens_per_prompt": 69.4,
+      "tokens_per_second": 60.55558154596562,
+      "accuracy": 1
+    },
+    "국민건강보험": {
+      "total_time": 8.445663213729858,
+      "avg_time_per_prompt": 0.8445663213729858,
+      "total_tokens": 309,
+      "avg_tokens_per_prompt": 30.9,
+      "tokens_per_second": 36.58682476204688,
+      "accuracy": 1
+    },
+    "전체": {
+      "total_time": 37.3417329788208,
+      "avg_time_per_prompt": 1.0669066565377372,
+      "total_tokens": 1524,
+      "avg_tokens_per_prompt": 43.542857142857144,
+      "tokens_per_second": 40.81224620358061,
+      "accuracy": 1
+    }
+  },
+  "gpt-4": {
+    "일반_사실": {
+      "total_time": 15.454724311828613,
+      "avg_time_per_prompt": 3.0909448623657227,
+      "total_tokens": 127,
+      "avg_tokens_per_prompt": 25.4,
+      "tokens_per_second": 8.217551956122424,
+      "accuracy": 1
+    },
+    "인물_정보": {
+      "total_time": 15.784318685531616,
+      "avg_time_per_prompt": 3.156863737106323,
+      "total_tokens": 332,
+      "avg_tokens_per_prompt": 66.4,
+      "tokens_per_second": 21.033533763121575,
+      "accuracy": 1
+    },
+    "관계_설명": {
+      "total_time": 0,
+      "avg_time_per_prompt": 0,
+      "total_tokens": 0,
+      "avg_tokens_per_prompt": 0,
+      "tokens_per_second": 0,
+      "accuracy": 0
+    },
+    "규칙_표현": {
+      "total_time": 0,
+      "avg_time_per_prompt": 0,
+      "total_tokens": 0,
+      "avg_tokens_per_prompt": 0,
+      "tokens_per_second": 0,
+      "accuracy": 0
+    },
+    "복합_문장": {
+      "total_time": 2.603130340576172,
+      "avg_time_per_prompt": 0.5206260681152344,
+      "total_tokens": 60,
+      "avg_tokens_per_prompt": 12,
+      "tokens_per_second": 23.049172400149473,
+      "accuracy": 0.2
+    },
+    "국민건강보험": {
+      "total_time": 0,
+      "avg_time_per_prompt": 0,
+      "total_tokens": 0,
+      "avg_tokens_per_prompt": 0,
+      "tokens_per_second": 0,
+      "accuracy": 0
+    },
+    "전체": {
+      "total_time": 33.8421733379364,
+      "avg_time_per_prompt": 0.9669192382267543,
+      "total_tokens": 519,
+      "avg_tokens_per_prompt": 14.82857142857143,
+      "tokens_per_second": 15.33589450114338,
+      "accuracy": 0.3142857142857143
+    }
+  },
+  "gpt-4o": {
+    "일반_사실": {
+      "total_time": 4.215405702590942,
+      "avg_time_per_prompt": 0.8430811405181885,
+      "total_tokens": 92,
+      "avg_tokens_per_prompt": 18.4,
+      "tokens_per_second": 21.824708341466028,
+      "accuracy": 1
+    },
+    "인물_정보": {
+      "total_time": 6.978469371795654,
+      "avg_time_per_prompt": 1.395693874359131,
+      "total_tokens": 187,
+      "avg_tokens_per_prompt": 37.4,
+      "tokens_per_second": 26.796707134057733,
+      "accuracy": 1
+    },
+    "관계_설명": {
+      "total_time": 6.201229572296143,
+      "avg_time_per_prompt": 1.2402459144592286,
+      "total_tokens": 213,
+      "avg_tokens_per_prompt": 42.6,
+      "tokens_per_second": 34.34802687382722,
+      "accuracy": 1
+    },
+    "규칙_표현": {
+      "total_time": 6.395226001739502,
+      "avg_time_per_prompt": 1.2790452003479005,
+      "total_tokens": 184,
+      "avg_tokens_per_prompt": 36.8,
+      "tokens_per_second": 28.77146170439512,
+      "accuracy": 1
+    },
+    "복합_문장": {
+      "total_time": 5.614514589309692,
+      "avg_time_per_prompt": 1.1229029178619385,
+      "total_tokens": 192,
+      "avg_tokens_per_prompt": 38.4,
+      "tokens_per_second": 34.19707918571933,
+      "accuracy": 1
+    },
+    "국민건강보험": {
+      "total_time": 13.028743982315063,
+      "avg_time_per_prompt": 1.3028743982315063,
+      "total_tokens": 387,
+      "avg_tokens_per_prompt": 38.7,
+      "tokens_per_second": 29.703553966929235,
+      "accuracy": 1
+    },
+    "전체": {
+      "total_time": 42.433589220047,
+      "avg_time_per_prompt": 1.2123882634299141,
+      "total_tokens": 1255,
+      "avg_tokens_per_prompt": 35.857142857142854,
+      "tokens_per_second": 29.575626834015196,
+      "accuracy": 1
+    }
+  },
+  "gemini-1.5-pro-latest": {
+    "일반_사실": {
+      "total_time": 0,
+      "avg_time_per_prompt": 0,
+      "total_tokens": 0,
+      "avg_tokens_per_prompt": 0,
+      "tokens_per_second": 0,
+      "accuracy": 0
+    },
+    "인물_정보": {
+      "total_time": 0,
+      "avg_time_per_prompt": 0,
+      "total_tokens": 0,
+      "avg_tokens_per_prompt": 0,
+      "tokens_per_second": 0,
+      "accuracy": 0
+    },
+    "관계_설명": {
+      "total_time": 0,
+      "avg_time_per_prompt": 0,
+      "total_tokens": 0,
+      "avg_tokens_per_prompt": 0,
+      "tokens_per_second": 0,
+      "accuracy": 0
+    },
+    "규칙_표현": {
+      "total_time": 0,
+      "avg_time_per_prompt": 0,
+      "total_tokens": 0,
+      "avg_tokens_per_prompt": 0,
+      "tokens_per_second": 0,
+      "accuracy": 0
+    },
+    "복합_문장": {
+      "total_time": 0,
+      "avg_time_per_prompt": 0,
+      "total_tokens": 0,
+      "avg_tokens_per_prompt": 0,
+      "tokens_per_second": 0,
+      "accuracy": 0
+    },
+    "국민건강보험": {
+      "total_time": 0,
+      "avg_time_per_prompt": 0,
+      "total_tokens": 0,
+      "avg_tokens_per_prompt": 0,
+      "tokens_per_second": 0,
+      "accuracy": 0
+    },
+    "전체": {
+      "total_time": 0,
+      "avg_time_per_prompt": 0,
+      "total_tokens": 0,
+      "avg_tokens_per_prompt": 0,
+      "tokens_per_second": 0,
+      "accuracy": 0
+    }
+  },
+  "gemini-1.5-flash-latest": {
+    "일반_사실": {
+      "total_time": 4.46352744102478,
+      "avg_time_per_prompt": 0.8927054882049561,
+      "total_tokens": 53,
+      "avg_tokens_per_prompt": 10.6,
+      "tokens_per_second": 11.874016839881183,
+      "accuracy": 1
+    },
+    "인물_정보": {
+      "total_time": 5.8221118450164795,
+      "avg_time_per_prompt": 1.164422369003296,
+      "total_tokens": 80,
+      "avg_tokens_per_prompt": 16,
+      "tokens_per_second": 13.740718510668453,
+      "accuracy": 1
+    },
+    "관계_설명": {
+      "total_time": 5.0343382358551025,
+      "avg_time_per_prompt": 1.0068676471710205,
+      "total_tokens": 71,
+      "avg_tokens_per_prompt": 14.2,
+      "tokens_per_second": 14.103144579029337,
+      "accuracy": 1
+    },
+    "규칙_표현": {
+      "total_time": 5.458001375198364,
+      "avg_time_per_prompt": 1.091600275039673,
+      "total_tokens": 95,
+      "avg_tokens_per_prompt": 19,
+      "tokens_per_second": 17.40563870718104,
+      "accuracy": 1
+    },
+    "복합_문장": {
+      "total_time": 5.724883794784546,
+      "avg_time_per_prompt": 1.144976758956909,
+      "total_tokens": 128,
+      "avg_tokens_per_prompt": 25.6,
+      "tokens_per_second": 22.358532432852158,
+      "accuracy": 1
+    },
+    "국민건강보험": {
+      "total_time": 10.87423849105835,
+      "avg_time_per_prompt": 1.087423849105835,
+      "total_tokens": 154,
+      "avg_tokens_per_prompt": 15.4,
+      "tokens_per_second": 14.161911211220065,
+      "accuracy": 1
+    },
+    "전체": {
+      "total_time": 37.37710118293762,
+      "avg_time_per_prompt": 1.0679171766553606,
+      "total_tokens": 581,
+      "avg_tokens_per_prompt": 16.6,
+      "tokens_per_second": 15.544276618894735,
+      "accuracy": 1
+    }
+  },
+  "gemini-1.0-pro": {
+    "일반_사실": {
+      "total_time": 0,
+      "avg_time_per_prompt": 0,
+      "total_tokens": 0,
+      "avg_tokens_per_prompt": 0,
+      "tokens_per_second": 0,
+      "accuracy": 0
+    },
+    "인물_정보": {
+      "total_time": 0,
+      "avg_time_per_prompt": 0,
+      "total_tokens": 0,
+      "avg_tokens_per_prompt": 0,
+      "tokens_per_second": 0,
+      "accuracy": 0
+    },
+    "관계_설명": {
+      "total_time": 0,
+      "avg_time_per_prompt": 0,
+      "total_tokens": 0,
+      "avg_tokens_per_prompt": 0,
+      "tokens_per_second": 0,
+      "accuracy": 0
+    },
+    "규칙_표현": {
+      "total_time": 0,
+      "avg_time_per_prompt": 0,
+      "total_tokens": 0,
+      "avg_tokens_per_prompt": 0,
+      "tokens_per_second": 0,
+      "accuracy": 0
+    },
+    "복합_문장": {
+      "total_time": 0,
+      "avg_time_per_prompt": 0,
+      "total_tokens": 0,
+      "avg_tokens_per_prompt": 0,
+      "tokens_per_second": 0,
+      "accuracy": 0
+    },
+    "국민건강보험": {
+      "total_time": 0,
+      "avg_time_per_prompt": 0,
+      "total_tokens": 0,
+      "avg_tokens_per_prompt": 0,
+      "tokens_per_second": 0,
+      "accuracy": 0
+    },
+    "전체": {
+      "total_time": 0,
+      "avg_time_per_prompt": 0,
+      "total_tokens": 0,
+      "avg_tokens_per_prompt": 0,
+      "tokens_per_second": 0,
+      "accuracy": 0
+    }
+  },
+  "gemini-1.0-pro-001": {
+    "일반_사실": {
+      "total_time": 0,
+      "avg_time_per_prompt": 0,
+      "total_tokens": 0,
+      "avg_tokens_per_prompt": 0,
+      "tokens_per_second": 0,
+      "accuracy": 0
+    },
+    "인물_정보": {
+      "total_time": 0,
+      "avg_time_per_prompt": 0,
+      "total_tokens": 0,
+      "avg_tokens_per_prompt": 0,
+      "tokens_per_second": 0,
+      "accuracy": 0
+    },
+    "관계_설명": {
+      "total_time": 0,
+      "avg_time_per_prompt": 0,
+      "total_tokens": 0,
+      "avg_tokens_per_prompt": 0,
+      "tokens_per_second": 0,
+      "accuracy": 0
+    },
+    "규칙_표현": {
+      "total_time": 0,
+      "avg_time_per_prompt": 0,
+      "total_tokens": 0,
+      "avg_tokens_per_prompt": 0,
+      "tokens_per_second": 0,
+      "accuracy": 0
+    },
+    "복합_문장": {
+      "total_time": 0,
+      "avg_time_per_prompt": 0,
+      "total_tokens": 0,
+      "avg_tokens_per_prompt": 0,
+      "tokens_per_second": 0,
+      "accuracy": 0
+    },
+    "국민건강보험": {
+      "total_time": 0,
+      "avg_time_per_prompt": 0,
+      "total_tokens": 0,
+      "avg_tokens_per_prompt": 0,
+      "tokens_per_second": 0,
+      "accuracy": 0
+    },
+    "전체": {
+      "total_time": 0,
+      "avg_time_per_prompt": 0,
+      "total_tokens": 0,
+      "avg_tokens_per_prompt": 0,
+      "tokens_per_second": 0,
+      "accuracy": 0
+    }
+  },
+  "gemma-3-12b-it-Q6_K": {
+    "일반_사실": {
+      "total_time": 34.48956775665283,
+      "avg_time_per_prompt": 6.897913551330566,
+      "total_tokens": 66,
+      "avg_tokens_per_prompt": 13.2,
+      "tokens_per_second": 1.9136221267159543,
+      "accuracy": 1
+    },
+    "인물_정보": {
+      "total_time": 60.37445092201233,
+      "avg_time_per_prompt": 12.074890184402467,
+      "total_tokens": 187,
+      "avg_tokens_per_prompt": 37.4,
+      "tokens_per_second": 3.097336657215385,
+      "accuracy": 1
+    },
+    "관계_설명": {
+      "total_time": 71.88675236701965,
+      "avg_time_per_prompt": 14.377350473403931,
+      "total_tokens": 224,
+      "avg_tokens_per_prompt": 44.8,
+      "tokens_per_second": 3.1160122362512954,
+      "accuracy": 1
+    },
+    "규칙_표현": {
+      "total_time": 36.4553747177124,
+      "avg_time_per_prompt": 7.291074943542481,
+      "total_tokens": 111,
+      "avg_tokens_per_prompt": 22.2,
+      "tokens_per_second": 3.0448185174206683,
+      "accuracy": 1
+    },
+    "복합_문장": {
+      "total_time": 79.45553469657898,
+      "avg_time_per_prompt": 15.891106939315796,
+      "total_tokens": 246,
+      "avg_tokens_per_prompt": 49.2,
+      "tokens_per_second": 3.0960712924456817,
+      "accuracy": 1
+    },
+    "국민건강보험": {
+      "total_time": 77.29806447029114,
+      "avg_time_per_prompt": 7.729806447029114,
+      "total_tokens": 236,
+      "avg_tokens_per_prompt": 23.6,
+      "tokens_per_second": 3.0531165510710117,
+      "accuracy": 1
+    },
+    "전체": {
+      "total_time": 359.95974493026733,
+      "avg_time_per_prompt": 10.28456414086478,
+      "total_tokens": 1070,
+      "avg_tokens_per_prompt": 30.571428571428573,
+      "tokens_per_second": 2.972554612203329,
+      "accuracy": 1
+    }
+  },
+  "Meta-Llama-3-8B-Instruct.Q2_K": {
+    "일반_사실": {
+      "total_time": 7.496734142303467,
+      "avg_time_per_prompt": 1.4993468284606934,
+      "total_tokens": 341,
+      "avg_tokens_per_prompt": 68.2,
+      "tokens_per_second": 45.486473646672955,
+      "accuracy": 1
+    },
+    "인물_정보": {
+      "total_time": 13.75139856338501,
+      "avg_time_per_prompt": 2.7502797126770018,
+      "total_tokens": 763,
+      "avg_tokens_per_prompt": 152.6,
+      "tokens_per_second": 55.485265479221326,
+      "accuracy": 1
+    },
+    "관계_설명": {
+      "total_time": 11.215693712234497,
+      "avg_time_per_prompt": 2.2431387424468996,
+      "total_tokens": 631,
+      "avg_tokens_per_prompt": 126.2,
+      "tokens_per_second": 56.260452201158245,
+      "accuracy": 1
+    },
+    "규칙_표현": {
+      "total_time": 11.427648067474365,
+      "avg_time_per_prompt": 2.285529613494873,
+      "total_tokens": 626,
+      "avg_tokens_per_prompt": 125.2,
+      "tokens_per_second": 54.779425854190904,
+      "accuracy": 1
+    },
+    "복합_문장": {
+      "total_time": 11.60022783279419,
+      "avg_time_per_prompt": 2.320045566558838,
+      "total_tokens": 648,
+      "avg_tokens_per_prompt": 129.6,
+      "tokens_per_second": 55.860971813681516,
+      "accuracy": 1
+    },
+    "국민건강보험": {
+      "total_time": 21.3925359249115,
+      "avg_time_per_prompt": 2.13925359249115,
+      "total_tokens": 1177,
+      "avg_tokens_per_prompt": 117.7,
+      "tokens_per_second": 55.0191900638292,
+      "accuracy": 1
+    },
+    "전체": {
+      "total_time": 76.88423824310303,
+      "avg_time_per_prompt": 2.196692521231515,
+      "total_tokens": 4186,
+      "avg_tokens_per_prompt": 119.6,
+      "tokens_per_second": 54.44548968234733,
+      "accuracy": 1
+    }
+  }
+}

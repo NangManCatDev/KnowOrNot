@@ -1,0 +1,60 @@
+{
+  "gemini-pro": {
+    "일반_사실": {
+      "total_time": 0,
+      "avg_time_per_prompt": 0,
+      "total_tokens": 0,
+      "avg_tokens_per_prompt": 0,
+      "tokens_per_second": 0,
+      "accuracy": 0
+    },
+    "인물_정보": {
+      "total_time": 0,
+      "avg_time_per_prompt": 0,
+      "total_tokens": 0,
+      "avg_tokens_per_prompt": 0,
+      "tokens_per_second": 0,
+      "accuracy": 0
+    },
+    "관계_설명": {
+      "total_time": 0,
+      "avg_time_per_prompt": 0,
+      "total_tokens": 0,
+      "avg_tokens_per_prompt": 0,
+      "tokens_per_second": 0,
+      "accuracy": 0
+    },
+    "규칙_표현": {
+      "total_time": 0,
+      "avg_time_per_prompt": 0,
+      "total_tokens": 0,
+      "avg_tokens_per_prompt": 0,
+      "tokens_per_second": 0,
+      "accuracy": 0
+    },
+    "복합_문장": {
+      "total_time": 0,
+      "avg_time_per_prompt": 0,
+      "total_tokens": 0,
+      "avg_tokens_per_prompt": 0,
+      "tokens_per_second": 0,
+      "accuracy": 0
+    },
+    "국민건강보험": {
+      "total_time": 0,
+      "avg_time_per_prompt": 0,
+      "total_tokens": 0,
+      "avg_tokens_per_prompt": 0,
+      "tokens_per_second": 0,
+      "accuracy": 0
+    },
+    "전체": {
+      "total_time": 0,
+      "avg_time_per_prompt": 0,
+      "total_tokens": 0,
+      "avg_tokens_per_prompt": 0,
+      "tokens_per_second": 0,
+      "accuracy": 0
+    }
+  }
+}
