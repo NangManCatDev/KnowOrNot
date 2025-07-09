@@ -9,6 +9,7 @@ NEO
 dev
 .gradio
 PRIVACY.md
+.env
 
 
 # Byte-compiled / optimized / DLL files

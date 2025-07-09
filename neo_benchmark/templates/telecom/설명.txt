@@ -1,0 +1,25 @@
+./workflows : 워크플로우 정의서
+
+tasks_full.json : 전체 데이터
+tasks.json : Oracle에 사용되는 데이터로 추정
+tasks_small.json : 데이터 예시
+
+db.toml : 어시스턴트 쪽에서 Function을 호출 하여 조회가 가능한 DB 데이터들
+user_db.toml : user 쪽에서  Function을 호출 하여 조회가 가능한 DB 데이터들
+
+main_policy.md : 
+	1. 내가 tool을 이용해서 알수 있는 정보들에대한 설명
+	2. 각 지침에 대한 정보 ( 가입 변경 등 )
+
+tech_support_manual.md : 각 펑션에 대한 설명 및 각 종 문제에 대한 해결 방침
+
+---
+
+main_policy._solo.md : 사용자 커뮤니케이션 없이 펑션 콜 평가만 할때 씀 (No-User mode)
+tech_support_workflow_solo.md : 위와 동일
+
+---
+
+tech_support_workflow.md : Orcale 모드에 사용되는 각 문제 마다의 해결 방법
+
+---

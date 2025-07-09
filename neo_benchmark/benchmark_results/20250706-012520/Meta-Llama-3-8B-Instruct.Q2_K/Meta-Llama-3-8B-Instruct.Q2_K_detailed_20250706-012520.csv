@@ -1,0 +1,1167 @@
+error,prompt,model,system_prompt,category,is_error,attempts,final_score,evaluation_model,evaluation_feedback,output,elapsed_time,tokens_generated,tokens_prompt,tokens_total
+,직장을 이번 달에 그만두고 아직 취업을 못 했어요. 다음 달부터는 건강보험료를 어떻게 내야 하나요?,Meta-Llama-3-8B-Instruct.Q2_K,"[RAG 문서]
+(keep '(근로자 이다 직업_종류와_관계없이_보수를_받아_생활하는_사람))
+
+당신은 NEO 언어 지식베이스(Knowledge Base, KB) 쿼리 변환기입니다.
+KB는 `(keep '(주어 동사 목적어))` 또는 `(keep '(주어 동사 속성 값))`과 같은 리스트 형태의 사실들로 구성됩니다. 동사나 속성명은 필요에 따라 언더스코어(`_`)로 연결된 복합 심볼로 표현됩니다.
+예시: `(keep '(서울 이다 대한민국의_수도))`
+
+사용자가 자연어로 질문을 하면, 당신은 그 질문을 분석하여 주어진 NEO KB 형식에 맞는 NEO 쿼리 언어로만 변환하여 출력해야 합니다. 어떠한 추가 설명이나 답변 생성 없이, 오직 NEO 쿼리 자체만 출력하세요.
+
+**NEO 쿼리 언어 규칙:**
+- **패턴 매칭:** `(kb-match '(패턴))` 또는 `(kb-unit-match '패턴)`을 주로 사용합니다.
+- **바인딩 변수:** 질문하는 대상을 `?변수명` (예: `?x`)으로 표현합니다.
+- **리터럴 심볼:** 심볼 자체가 값으로 사용될 때는 `'심볼` 또는 `(quote 심볼)`을 사용합니다.
+- **리스트 구조:** 쿼리도 리스트 형태로 작성됩니다.
+- **연산자:** 숫자 비교 (`>`, `<`, `>=`, `<=`), 산술 연산 (`+`, `-`, `*`, `/`) 등은 쿼리 내에서 직접 사용될 수 있습니다.
+
+**지침:**
+1.  사용자의 질문에서 핵심적인 주어, 동사, 목적어 또는 속성-값 쌍을 식별하세요.
+2.  식별된 요소를 NEO KB의 심볼 및 리스트 구조에 맞게 변환하세요.
+3.  질문하는 부분은 `?변수명`으로 대체하세요.
+4.  가능한 한 간결하고 정확한 NEO 쿼리를 생성하세요.
+5.  모든 쿼리는 `(kb-match ...)` 또는 `(kb-unit-match ...)` 형태로 시작해야 합니다.
+6.  결과가 여러 개일 수 있음을 고려하여 일반적인 패턴을 사용하세요.
+7.  KB에 직접적인 정보가 없는 질문이라도, 가장 유사하거나 관련 있는 정보를 찾을 수 있는 쿼리를 시도하여 생성하세요.
+8.  keep은 사용하지 마세요.
+
+**예시:**
+- 사용자 질문: ""NEO의 특징은 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((neo 특징 ?x)))
+
+- 사용자 질문: ""공단의 재정운영위원회 위원 임기는 몇 년인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((재정운영위원회 위원_임기 ?x 년)))
+
+- 사용자 질문: ""추론 엔진의 역할은 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((추론_엔진_역할 ?x)))
+
+- 사용자 질문: ""전향 추론에 사용되는 명령어는 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((전향추론_명령어 ?x)))",상황기반_보험료질문,0,1,N/A,N/A,N/A,"I understand you're concerned about how to pay your health insurance premiums after your employer stopped covering it.
+
+First, congratulations are in order! You're taking the initiative to plan ahead.
+
+Now, let's tackle your concern. In Korea, there are two main options to consider when it comes to health insurance:
+
+1. **National Health Insurance** (Korean: ): This is a government-run public health insurance system that covers almost all Koreans. It's mandatory for citizens and foreign residents who have a certain income level. You can apply for it through the Korean Ministry of Health and Welfare website.
+2. **Private Health Insurance** (Korean: ): These are private health insurance companies that offer additional coverage or specialized plans. You can choose from various private health insurance companies.
+
+To pay your health insurance premiums after your employer stopped covering it, you can consider the following options:
+
+1. **National Health Insurance**: You can enroll in the National Health Insurance system, which may provide coverage for your health insurance needs.
+2. **Private Health Insurance**: You can choose a private health insurance plan that suits your needs and budget.
+3. **Individual Health Insurance**: You can apply for an individual health insurance plan, which may offer coverage for specific health concerns or conditions.
+
+Before making a decision, consider the following:
+
+1. **Premium costs**: Calculate the costs of your health insurance premiums and ensure you can afford them.
+2. **Coverage**: Review the coverage offered by your health insurance provider to ensure it meets your health needs.
+3. **Application process**: Understand the application process and any required documents for your chosen health insurance plan.
+
+Remember to prioritize your health insurance needs and budget accordingly. I hope this helps you make an informed decision about your health insurance plans!",10.174222469329834,351.0,41.0,392.0
+,지금은 아르바이트만 하고 있고 소득이 거의 없어요. 이런 경우에도 지역가입자로 보험료를 내야 하나요?,Meta-Llama-3-8B-Instruct.Q2_K,"[RAG 문서]
+(keep '(근로자 이다 직업_종류와_관계없이_보수를_받아_생활하는_사람))
+
+당신은 NEO 언어 지식베이스(Knowledge Base, KB) 쿼리 변환기입니다.
+KB는 `(keep '(주어 동사 목적어))` 또는 `(keep '(주어 동사 속성 값))`과 같은 리스트 형태의 사실들로 구성됩니다. 동사나 속성명은 필요에 따라 언더스코어(`_`)로 연결된 복합 심볼로 표현됩니다.
+예시: `(keep '(서울 이다 대한민국의_수도))`
+
+사용자가 자연어로 질문을 하면, 당신은 그 질문을 분석하여 주어진 NEO KB 형식에 맞는 NEO 쿼리 언어로만 변환하여 출력해야 합니다. 어떠한 추가 설명이나 답변 생성 없이, 오직 NEO 쿼리 자체만 출력하세요.
+
+**NEO 쿼리 언어 규칙:**
+- **패턴 매칭:** `(kb-match '(패턴))` 또는 `(kb-unit-match '패턴)`을 주로 사용합니다.
+- **바인딩 변수:** 질문하는 대상을 `?변수명` (예: `?x`)으로 표현합니다.
+- **리터럴 심볼:** 심볼 자체가 값으로 사용될 때는 `'심볼` 또는 `(quote 심볼)`을 사용합니다.
+- **리스트 구조:** 쿼리도 리스트 형태로 작성됩니다.
+- **연산자:** 숫자 비교 (`>`, `<`, `>=`, `<=`), 산술 연산 (`+`, `-`, `*`, `/`) 등은 쿼리 내에서 직접 사용될 수 있습니다.
+
+**지침:**
+1.  사용자의 질문에서 핵심적인 주어, 동사, 목적어 또는 속성-값 쌍을 식별하세요.
+2.  식별된 요소를 NEO KB의 심볼 및 리스트 구조에 맞게 변환하세요.
+3.  질문하는 부분은 `?변수명`으로 대체하세요.
+4.  가능한 한 간결하고 정확한 NEO 쿼리를 생성하세요.
+5.  모든 쿼리는 `(kb-match ...)` 또는 `(kb-unit-match ...)` 형태로 시작해야 합니다.
+6.  결과가 여러 개일 수 있음을 고려하여 일반적인 패턴을 사용하세요.
+7.  KB에 직접적인 정보가 없는 질문이라도, 가장 유사하거나 관련 있는 정보를 찾을 수 있는 쿼리를 시도하여 생성하세요.
+8.  keep은 사용하지 마세요.
+
+**예시:**
+- 사용자 질문: ""NEO의 특징은 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((neo 특징 ?x)))
+
+- 사용자 질문: ""공단의 재정운영위원회 위원 임기는 몇 년인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((재정운영위원회 위원_임기 ?x 년)))
+
+- 사용자 질문: ""추론 엔진의 역할은 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((추론_엔진_역할 ?x)))
+
+- 사용자 질문: ""전향 추론에 사용되는 명령어는 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((전향추론_명령어 ?x)))",상황기반_보험료질문,0,1,N/A,N/A,N/A,"A great question! 🤔
+
+In Korea, where you live is indeed related to your insurance premium. As a ""local resident"" (지금), you are required to pay a premium called ""local insurance"" () to support the insurance system.
+
+Here's the situation:
+
+1. **Local Insurance**: In Korea, all foreign nationals who live in the country are required to pay a local insurance premium, which is used to cover any medical expenses incurred by foreigners. This premium is usually deducted from your paycheck or paid separately.
+2. **Health Insurance**: Korea's National Health Insurance System provides comprehensive coverage to its citizens. However, foreigners are not automatically covered. As a local resident, you are required to purchase private health insurance, which is usually more expensive than the local insurance.
+3. **Premium**: The premium rate varies depending on your age, health, and other factors. The rate is usually around 0.5% to 1.5% of your annual income.
+
+In your case, since you are working as an ArBayer and not earning much, you may not be required to pay the local insurance premium. However, it's best to consult with your employer or local authorities to confirm the exact requirements.
+
+Keep in mind that these rules might vary depending on your specific situation and the local regulations. If you're unsure, it's always best to double-check with the authorities.
+
+I hope this helps you navigate the complexities of Korean insurance policies! 😊",4.479539632797241,297.0,44.0,341.0
+,"연 소득이 100만 원도 안 되는 대학생인데, 부모님과 따로 살고 있어요. 이 경우 건강보험 피부양자로 인정받을 수 있나요?",Meta-Llama-3-8B-Instruct.Q2_K,"[RAG 문서]
+(keep '(근로자 이다 직업_종류와_관계없이_보수를_받아_생활하는_사람))
+
+당신은 NEO 언어 지식베이스(Knowledge Base, KB) 쿼리 변환기입니다.
+KB는 `(keep '(주어 동사 목적어))` 또는 `(keep '(주어 동사 속성 값))`과 같은 리스트 형태의 사실들로 구성됩니다. 동사나 속성명은 필요에 따라 언더스코어(`_`)로 연결된 복합 심볼로 표현됩니다.
+예시: `(keep '(서울 이다 대한민국의_수도))`
+
+사용자가 자연어로 질문을 하면, 당신은 그 질문을 분석하여 주어진 NEO KB 형식에 맞는 NEO 쿼리 언어로만 변환하여 출력해야 합니다. 어떠한 추가 설명이나 답변 생성 없이, 오직 NEO 쿼리 자체만 출력하세요.
+
+**NEO 쿼리 언어 규칙:**
+- **패턴 매칭:** `(kb-match '(패턴))` 또는 `(kb-unit-match '패턴)`을 주로 사용합니다.
+- **바인딩 변수:** 질문하는 대상을 `?변수명` (예: `?x`)으로 표현합니다.
+- **리터럴 심볼:** 심볼 자체가 값으로 사용될 때는 `'심볼` 또는 `(quote 심볼)`을 사용합니다.
+- **리스트 구조:** 쿼리도 리스트 형태로 작성됩니다.
+- **연산자:** 숫자 비교 (`>`, `<`, `>=`, `<=`), 산술 연산 (`+`, `-`, `*`, `/`) 등은 쿼리 내에서 직접 사용될 수 있습니다.
+
+**지침:**
+1.  사용자의 질문에서 핵심적인 주어, 동사, 목적어 또는 속성-값 쌍을 식별하세요.
+2.  식별된 요소를 NEO KB의 심볼 및 리스트 구조에 맞게 변환하세요.
+3.  질문하는 부분은 `?변수명`으로 대체하세요.
+4.  가능한 한 간결하고 정확한 NEO 쿼리를 생성하세요.
+5.  모든 쿼리는 `(kb-match ...)` 또는 `(kb-unit-match ...)` 형태로 시작해야 합니다.
+6.  결과가 여러 개일 수 있음을 고려하여 일반적인 패턴을 사용하세요.
+7.  KB에 직접적인 정보가 없는 질문이라도, 가장 유사하거나 관련 있는 정보를 찾을 수 있는 쿼리를 시도하여 생성하세요.
+8.  keep은 사용하지 마세요.
+
+**예시:**
+- 사용자 질문: ""NEO의 특징은 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((neo 특징 ?x)))
+
+- 사용자 질문: ""공단의 재정운영위원회 위원 임기는 몇 년인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((재정운영위원회 위원_임기 ?x 년)))
+
+- 사용자 질문: ""추론 엔진의 역할은 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((추론_엔진_역할 ?x)))
+
+- 사용자 질문: ""전향 추론에 사용되는 명령어는 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((전향추론_명령어 ?x)))",상황기반_보험료질문,0,1,N/A,N/A,N/A,"A sensitive topic indeed! 🤝
+
+In Korea, the National Health Insurance Corporation (NHIC) provides health insurance coverage to individuals who are not eligible for employment-based health insurance due to various reasons, such as being a student or having a part-time job. This is known as ""health insurance for the uninsured"" (의료보험 피부양자).
+
+To be eligible for this program, you need to meet certain requirements:
+
+1. Be a Korean citizen or a foreign citizen who has been living in Korea for more than 5 years.
+2. Be under the age of 65.
+3. Not be eligible for employment-based health insurance due to reasons such as part-time job, student, or other.
+
+If you meet these requirements and are living separately from your parents, you can apply for health insurance through the ""Health Insurance for the Uninsured"" program.
+
+To apply, you will need to submit the following documents:
+
+1. Identification card (such as a student ID card or a part-time job contract)
+2. Proof of age (such as a birth certificate or a copy of your ID card)
+3. Certificate of residency (if you're a foreign citizen living in Korea)
+
+Once you've submitted your application, you'll receive a response from the NHIC within a few weeks. If your application is approved, you'll be eligible for health insurance coverage.
+
+Keep in mind that this program is subject to change, so it's always best to check with the NHIC for the latest information.
+
+I hope this helps, and I'm here if you have any other questions! 💕",4.924005508422852,323.0,52.0,375.0
+,"부모님이 국민연금만 받으면서 사시고, 다른 소득이 없어요. 제가 부모님을 피부양자로 등록하려면 어떤 조건이 필요한가요?",Meta-Llama-3-8B-Instruct.Q2_K,"[RAG 문서]
+(keep '(근로자 이다 직업_종류와_관계없이_보수를_받아_생활하는_사람))
+
+당신은 NEO 언어 지식베이스(Knowledge Base, KB) 쿼리 변환기입니다.
+KB는 `(keep '(주어 동사 목적어))` 또는 `(keep '(주어 동사 속성 값))`과 같은 리스트 형태의 사실들로 구성됩니다. 동사나 속성명은 필요에 따라 언더스코어(`_`)로 연결된 복합 심볼로 표현됩니다.
+예시: `(keep '(서울 이다 대한민국의_수도))`
+
+사용자가 자연어로 질문을 하면, 당신은 그 질문을 분석하여 주어진 NEO KB 형식에 맞는 NEO 쿼리 언어로만 변환하여 출력해야 합니다. 어떠한 추가 설명이나 답변 생성 없이, 오직 NEO 쿼리 자체만 출력하세요.
+
+**NEO 쿼리 언어 규칙:**
+- **패턴 매칭:** `(kb-match '(패턴))` 또는 `(kb-unit-match '패턴)`을 주로 사용합니다.
+- **바인딩 변수:** 질문하는 대상을 `?변수명` (예: `?x`)으로 표현합니다.
+- **리터럴 심볼:** 심볼 자체가 값으로 사용될 때는 `'심볼` 또는 `(quote 심볼)`을 사용합니다.
+- **리스트 구조:** 쿼리도 리스트 형태로 작성됩니다.
+- **연산자:** 숫자 비교 (`>`, `<`, `>=`, `<=`), 산술 연산 (`+`, `-`, `*`, `/`) 등은 쿼리 내에서 직접 사용될 수 있습니다.
+
+**지침:**
+1.  사용자의 질문에서 핵심적인 주어, 동사, 목적어 또는 속성-값 쌍을 식별하세요.
+2.  식별된 요소를 NEO KB의 심볼 및 리스트 구조에 맞게 변환하세요.
+3.  질문하는 부분은 `?변수명`으로 대체하세요.
+4.  가능한 한 간결하고 정확한 NEO 쿼리를 생성하세요.
+5.  모든 쿼리는 `(kb-match ...)` 또는 `(kb-unit-match ...)` 형태로 시작해야 합니다.
+6.  결과가 여러 개일 수 있음을 고려하여 일반적인 패턴을 사용하세요.
+7.  KB에 직접적인 정보가 없는 질문이라도, 가장 유사하거나 관련 있는 정보를 찾을 수 있는 쿼리를 시도하여 생성하세요.
+8.  keep은 사용하지 마세요.
+
+**예시:**
+- 사용자 질문: ""NEO의 특징은 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((neo 특징 ?x)))
+
+- 사용자 질문: ""공단의 재정운영위원회 위원 임기는 몇 년인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((재정운영위원회 위원_임기 ?x 년)))
+
+- 사용자 질문: ""추론 엔진의 역할은 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((추론_엔진_역할 ?x)))
+
+- 사용자 질문: ""전향 추론에 사용되는 명령어는 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((전향추론_명령어 ?x)))",상황기반_보험료질문,0,1,N/A,N/A,N/A,"I see you're asking about the requirements to register your parents as a de facto custodian or filial supporter, respectively.
+
+In Korea, the process of registering your parents as a de facto custodian or filial supporter requires specific conditions to be met. Here are some general guidelines:
+
+1. **De Facto Custodian (부모님)**: Your parents must be receiving public assistance from the Korean National Pension (국민연금) and have no other income source. This means they are relying solely on the national pension for their livelihood.
+2. **Filial Supporter (피부양자)**: Your parents must be aged 65 or above and have no income source other than the national pension. They must also be receiving public assistance from the Korean National Pension.
+
+To register your parents as a de facto custodian or filial supporter, you will need to provide the following documents:
+
+1. Identification documents (e.g., ID card, driver's license)
+2. Proof of your parents' age and income situation (e.g., national pension receipt, proof of age)
+3. Proof of their registration as a de facto custodian or filial supporter
+
+You can register your parents as a de facto custodian or filial supporter at the Korean National Pension office or the relevant authorities in your area. Please note that the specific requirements and procedures may vary depending on your location.
+
+I hope this helps you understand the requirements better. If you have any further questions, feel free to ask!",4.627451419830322,303.0,51.0,354.0
+,"남편이 직장가입자인데, 저는 소득이 없는 프리랜서예요. 남편의 피부양자로 들어갈 수 있나요?",Meta-Llama-3-8B-Instruct.Q2_K,"[RAG 문서]
+(keep '(근로자 이다 직업_종류와_관계없이_보수를_받아_생활하는_사람))
+
+당신은 NEO 언어 지식베이스(Knowledge Base, KB) 쿼리 변환기입니다.
+KB는 `(keep '(주어 동사 목적어))` 또는 `(keep '(주어 동사 속성 값))`과 같은 리스트 형태의 사실들로 구성됩니다. 동사나 속성명은 필요에 따라 언더스코어(`_`)로 연결된 복합 심볼로 표현됩니다.
+예시: `(keep '(서울 이다 대한민국의_수도))`
+
+사용자가 자연어로 질문을 하면, 당신은 그 질문을 분석하여 주어진 NEO KB 형식에 맞는 NEO 쿼리 언어로만 변환하여 출력해야 합니다. 어떠한 추가 설명이나 답변 생성 없이, 오직 NEO 쿼리 자체만 출력하세요.
+
+**NEO 쿼리 언어 규칙:**
+- **패턴 매칭:** `(kb-match '(패턴))` 또는 `(kb-unit-match '패턴)`을 주로 사용합니다.
+- **바인딩 변수:** 질문하는 대상을 `?변수명` (예: `?x`)으로 표현합니다.
+- **리터럴 심볼:** 심볼 자체가 값으로 사용될 때는 `'심볼` 또는 `(quote 심볼)`을 사용합니다.
+- **리스트 구조:** 쿼리도 리스트 형태로 작성됩니다.
+- **연산자:** 숫자 비교 (`>`, `<`, `>=`, `<=`), 산술 연산 (`+`, `-`, `*`, `/`) 등은 쿼리 내에서 직접 사용될 수 있습니다.
+
+**지침:**
+1.  사용자의 질문에서 핵심적인 주어, 동사, 목적어 또는 속성-값 쌍을 식별하세요.
+2.  식별된 요소를 NEO KB의 심볼 및 리스트 구조에 맞게 변환하세요.
+3.  질문하는 부분은 `?변수명`으로 대체하세요.
+4.  가능한 한 간결하고 정확한 NEO 쿼리를 생성하세요.
+5.  모든 쿼리는 `(kb-match ...)` 또는 `(kb-unit-match ...)` 형태로 시작해야 합니다.
+6.  결과가 여러 개일 수 있음을 고려하여 일반적인 패턴을 사용하세요.
+7.  KB에 직접적인 정보가 없는 질문이라도, 가장 유사하거나 관련 있는 정보를 찾을 수 있는 쿼리를 시도하여 생성하세요.
+8.  keep은 사용하지 마세요.
+
+**예시:**
+- 사용자 질문: ""NEO의 특징은 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((neo 특징 ?x)))
+
+- 사용자 질문: ""공단의 재정운영위원회 위원 임기는 몇 년인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((재정운영위원회 위원_임기 ?x 년)))
+
+- 사용자 질문: ""추론 엔진의 역할은 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((추론_엔진_역할 ?x)))
+
+- 사용자 질문: ""전향 추론에 사용되는 명령어는 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((전향추론_명령어 ?x)))",상황기반_보험료질문,0,1,N/A,N/A,N/A,"I think I see a Korean-style family situation here! 😊
+
+In Korea, the spouse's pension is a common topic of discussion, especially when one spouse is working while the other is not.
+
+In Korea, the spouse's pension is called ""부부상"" () and it is a type of social insurance benefit that allows the spouse who is not working to receive a pension from their working spouse's retirement account.
+
+To be eligible for the spouse's pension, the working spouse must meet certain requirements, such as:
+
+1. Age: The working spouse must be at least 55 years old or older.
+2. Retirement: The working spouse must be fully retired from their job.
+3. Contribution period: The working spouse must have contributed to the retirement account for at least 10 years.
+
+If the non-working spouse meets these requirements, they can apply for the spouse's pension through their local Social Insurance office.
+
+In your case, if your husband is working and you are not, you may be eligible for the spouse's pension. However, you should check with your local Social Insurance office to confirm the eligibility criteria and application process.
+
+I hope this helps! 😊",3.5596158504486084,235.0,46.0,281.0
+,퇴사하고 프리랜서로 소득이 조금 생겼어요. 이 경우 건강보험료는 어떻게 계산되나요?,Meta-Llama-3-8B-Instruct.Q2_K,"[RAG 문서]
+(keep '(근로자 이다 직업_종류와_관계없이_보수를_받아_생활하는_사람))
+
+당신은 NEO 언어 지식베이스(Knowledge Base, KB) 쿼리 변환기입니다.
+KB는 `(keep '(주어 동사 목적어))` 또는 `(keep '(주어 동사 속성 값))`과 같은 리스트 형태의 사실들로 구성됩니다. 동사나 속성명은 필요에 따라 언더스코어(`_`)로 연결된 복합 심볼로 표현됩니다.
+예시: `(keep '(서울 이다 대한민국의_수도))`
+
+사용자가 자연어로 질문을 하면, 당신은 그 질문을 분석하여 주어진 NEO KB 형식에 맞는 NEO 쿼리 언어로만 변환하여 출력해야 합니다. 어떠한 추가 설명이나 답변 생성 없이, 오직 NEO 쿼리 자체만 출력하세요.
+
+**NEO 쿼리 언어 규칙:**
+- **패턴 매칭:** `(kb-match '(패턴))` 또는 `(kb-unit-match '패턴)`을 주로 사용합니다.
+- **바인딩 변수:** 질문하는 대상을 `?변수명` (예: `?x`)으로 표현합니다.
+- **리터럴 심볼:** 심볼 자체가 값으로 사용될 때는 `'심볼` 또는 `(quote 심볼)`을 사용합니다.
+- **리스트 구조:** 쿼리도 리스트 형태로 작성됩니다.
+- **연산자:** 숫자 비교 (`>`, `<`, `>=`, `<=`), 산술 연산 (`+`, `-`, `*`, `/`) 등은 쿼리 내에서 직접 사용될 수 있습니다.
+
+**지침:**
+1.  사용자의 질문에서 핵심적인 주어, 동사, 목적어 또는 속성-값 쌍을 식별하세요.
+2.  식별된 요소를 NEO KB의 심볼 및 리스트 구조에 맞게 변환하세요.
+3.  질문하는 부분은 `?변수명`으로 대체하세요.
+4.  가능한 한 간결하고 정확한 NEO 쿼리를 생성하세요.
+5.  모든 쿼리는 `(kb-match ...)` 또는 `(kb-unit-match ...)` 형태로 시작해야 합니다.
+6.  결과가 여러 개일 수 있음을 고려하여 일반적인 패턴을 사용하세요.
+7.  KB에 직접적인 정보가 없는 질문이라도, 가장 유사하거나 관련 있는 정보를 찾을 수 있는 쿼리를 시도하여 생성하세요.
+8.  keep은 사용하지 마세요.
+
+**예시:**
+- 사용자 질문: ""NEO의 특징은 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((neo 특징 ?x)))
+
+- 사용자 질문: ""공단의 재정운영위원회 위원 임기는 몇 년인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((재정운영위원회 위원_임기 ?x 년)))
+
+- 사용자 질문: ""추론 엔진의 역할은 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((추론_엔진_역할 ?x)))
+
+- 사용자 질문: ""전향 추론에 사용되는 명령어는 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((전향추론_명령어 ?x)))",상황기반_보험료질문,0,1,N/A,N/A,N/A,"Congratulations on your decision to retire and start freelancing! 🎉
+
+Now, regarding your health insurance premium, it's calculated based on your income, age, and other factors. As a freelancer, your income may vary, but you can still get health insurance coverage. Here's a step-by-step guide to help you calculate your health insurance premium:
+
+1. **Determine your income**: As a freelancer, your income may fluctuate. You'll need to estimate your annual income, which will impact your health insurance premium.
+2. **Age and health status**: Your age and any pre-existing medical conditions can affect your health insurance premium. Be prepared to disclose any health issues and their impact on your premium.
+3. **Health insurance provider**: Research and compare health insurance providers to find the best fit for your needs and budget. Some popular options include:
+	* UnitedHealthCare
+	* Cigna
+	* Anthem
+	* Blue Cross
+	* Kaiser Permanente (for those in specific states)
+4. **Calculating your premium**: Based on your income, age, and health status, your health insurance premium will be calculated. This may vary depending on the provider and your specific circumstances.
+
+Some tips to keep in mind:
+
+* **Group rates**: As a freelancer, you may not qualify for group rates, which are often cheaper and more competitive.
+* **Individual rates**: Your health insurance premium will be calculated based on your individual income and health status.
+* **Premium estimates**: Many health insurance providers offer premium estimates based on your income, age, and health status. Be sure to ask about these estimates to get a better understanding of your costs.
+
+Before choosing a health insurance provider, consider factors such as:
+
+* **Network**: Ensure your provider has a network of doctors and hospitals you can access.
+* **Coverage**: Confirm what's covered in your plan, including services like doctor visits, hospital stays, and prescription medications.
+* **Cost**: Calculate the total cost of your health insurance plan, including any deductibles, copays, and out-of-pocket expenses.
+
+When shopping for health insurance, remember to:
+
+* **Compare rates**: Research and compare health insurance premiums from different providers to find the best fit for your needs and budget.
+* **Check your network**: Ensure your provider has a network of doctors and hospitals you can access.
+* **Review coverage**: Confirm what's covered in your plan, including services like doctor visits, hospital stays, and prescription medications.
+
+I hope this helps you navigate the world of health insurance premiums",7.881059885025024,512.0,37.0,549.0
+,"월세 50만 원짜리 원룸에 살고 있는데, 이게 건강보험료 산정에 반영되나요?",Meta-Llama-3-8B-Instruct.Q2_K,"[RAG 문서]
+(keep '(근로자 이다 직업_종류와_관계없이_보수를_받아_생활하는_사람))
+
+당신은 NEO 언어 지식베이스(Knowledge Base, KB) 쿼리 변환기입니다.
+KB는 `(keep '(주어 동사 목적어))` 또는 `(keep '(주어 동사 속성 값))`과 같은 리스트 형태의 사실들로 구성됩니다. 동사나 속성명은 필요에 따라 언더스코어(`_`)로 연결된 복합 심볼로 표현됩니다.
+예시: `(keep '(서울 이다 대한민국의_수도))`
+
+사용자가 자연어로 질문을 하면, 당신은 그 질문을 분석하여 주어진 NEO KB 형식에 맞는 NEO 쿼리 언어로만 변환하여 출력해야 합니다. 어떠한 추가 설명이나 답변 생성 없이, 오직 NEO 쿼리 자체만 출력하세요.
+
+**NEO 쿼리 언어 규칙:**
+- **패턴 매칭:** `(kb-match '(패턴))` 또는 `(kb-unit-match '패턴)`을 주로 사용합니다.
+- **바인딩 변수:** 질문하는 대상을 `?변수명` (예: `?x`)으로 표현합니다.
+- **리터럴 심볼:** 심볼 자체가 값으로 사용될 때는 `'심볼` 또는 `(quote 심볼)`을 사용합니다.
+- **리스트 구조:** 쿼리도 리스트 형태로 작성됩니다.
+- **연산자:** 숫자 비교 (`>`, `<`, `>=`, `<=`), 산술 연산 (`+`, `-`, `*`, `/`) 등은 쿼리 내에서 직접 사용될 수 있습니다.
+
+**지침:**
+1.  사용자의 질문에서 핵심적인 주어, 동사, 목적어 또는 속성-값 쌍을 식별하세요.
+2.  식별된 요소를 NEO KB의 심볼 및 리스트 구조에 맞게 변환하세요.
+3.  질문하는 부분은 `?변수명`으로 대체하세요.
+4.  가능한 한 간결하고 정확한 NEO 쿼리를 생성하세요.
+5.  모든 쿼리는 `(kb-match ...)` 또는 `(kb-unit-match ...)` 형태로 시작해야 합니다.
+6.  결과가 여러 개일 수 있음을 고려하여 일반적인 패턴을 사용하세요.
+7.  KB에 직접적인 정보가 없는 질문이라도, 가장 유사하거나 관련 있는 정보를 찾을 수 있는 쿼리를 시도하여 생성하세요.
+8.  keep은 사용하지 마세요.
+
+**예시:**
+- 사용자 질문: ""NEO의 특징은 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((neo 특징 ?x)))
+
+- 사용자 질문: ""공단의 재정운영위원회 위원 임기는 몇 년인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((재정운영위원회 위원_임기 ?x 년)))
+
+- 사용자 질문: ""추론 엔진의 역할은 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((추론_엔진_역할 ?x)))
+
+- 사용자 질문: ""전향 추론에 사용되는 명령어는 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((전향추론_명령어 ?x)))",상황기반_보험료질문,0,1,N/A,N/A,N/A,"🤔
+
+In Korea, the insurance coverage for health expenses (health insurance) is usually based on the employed worker's income, but it's not directly tied to the specific apartment or housing costs.
+
+The health insurance premium is typically calculated as a percentage of the insured person's income, usually around 4.5% to 5.5%. This percentage is applied to the total income, including the apartment rent.
+
+So, if you're living in a rented apartment costing 50 million won (approximately 42,500 USD), your health insurance premium would be calculated based on your income, not the apartment rent.
+
+For example, if your income is 50 million won per year, your health insurance premium might be around 2.25 million won (approximately 1,900 USD) per year, which is about 4.5% of your income.
+
+In summary, your health insurance premium is calculated based on your income, not the apartment rent, so you wouldn't need to worry about the apartment costs affecting your health insurance premium. 🤩",3.235320568084717,215.0,38.0,253.0
+,"본가에서 부모님과 같이 살고 있는데, 집이 부모님 명의예요. 이럴 경우 저한테도 재산으로 보험료가 부과되나요?",Meta-Llama-3-8B-Instruct.Q2_K,"[RAG 문서]
+(keep '(근로자 이다 직업_종류와_관계없이_보수를_받아_생활하는_사람))
+
+당신은 NEO 언어 지식베이스(Knowledge Base, KB) 쿼리 변환기입니다.
+KB는 `(keep '(주어 동사 목적어))` 또는 `(keep '(주어 동사 속성 값))`과 같은 리스트 형태의 사실들로 구성됩니다. 동사나 속성명은 필요에 따라 언더스코어(`_`)로 연결된 복합 심볼로 표현됩니다.
+예시: `(keep '(서울 이다 대한민국의_수도))`
+
+사용자가 자연어로 질문을 하면, 당신은 그 질문을 분석하여 주어진 NEO KB 형식에 맞는 NEO 쿼리 언어로만 변환하여 출력해야 합니다. 어떠한 추가 설명이나 답변 생성 없이, 오직 NEO 쿼리 자체만 출력하세요.
+
+**NEO 쿼리 언어 규칙:**
+- **패턴 매칭:** `(kb-match '(패턴))` 또는 `(kb-unit-match '패턴)`을 주로 사용합니다.
+- **바인딩 변수:** 질문하는 대상을 `?변수명` (예: `?x`)으로 표현합니다.
+- **리터럴 심볼:** 심볼 자체가 값으로 사용될 때는 `'심볼` 또는 `(quote 심볼)`을 사용합니다.
+- **리스트 구조:** 쿼리도 리스트 형태로 작성됩니다.
+- **연산자:** 숫자 비교 (`>`, `<`, `>=`, `<=`), 산술 연산 (`+`, `-`, `*`, `/`) 등은 쿼리 내에서 직접 사용될 수 있습니다.
+
+**지침:**
+1.  사용자의 질문에서 핵심적인 주어, 동사, 목적어 또는 속성-값 쌍을 식별하세요.
+2.  식별된 요소를 NEO KB의 심볼 및 리스트 구조에 맞게 변환하세요.
+3.  질문하는 부분은 `?변수명`으로 대체하세요.
+4.  가능한 한 간결하고 정확한 NEO 쿼리를 생성하세요.
+5.  모든 쿼리는 `(kb-match ...)` 또는 `(kb-unit-match ...)` 형태로 시작해야 합니다.
+6.  결과가 여러 개일 수 있음을 고려하여 일반적인 패턴을 사용하세요.
+7.  KB에 직접적인 정보가 없는 질문이라도, 가장 유사하거나 관련 있는 정보를 찾을 수 있는 쿼리를 시도하여 생성하세요.
+8.  keep은 사용하지 마세요.
+
+**예시:**
+- 사용자 질문: ""NEO의 특징은 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((neo 특징 ?x)))
+
+- 사용자 질문: ""공단의 재정운영위원회 위원 임기는 몇 년인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((재정운영위원회 위원_임기 ?x 년)))
+
+- 사용자 질문: ""추론 엔진의 역할은 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((추론_엔진_역할 ?x)))
+
+- 사용자 질문: ""전향 추론에 사용되는 명령어는 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((전향추론_명령어 ?x)))",상황기반_보험료질문,0,1,N/A,N/A,N/A,"A great question!
+
+In Korea, the concept of ""family inheritance"" is not well-defined, and it's not uncommon for children to inherit a significant amount of assets from their parents. However, when it comes to insurance premiums, things get a bit tricky.
+
+In Korea, insurance premiums are typically paid out of the policyholder's own pocket, not from the inherited assets. Insurance companies are regulated by the Korean Insurance Regulatory Authority (KIFRA), which requires insurers to maintain a level of capital adequacy to ensure they can meet their obligations.
+
+Here are some possible scenarios:
+
+1. **Inheritance of assets**: If you inherit your parents' assets, you may use those assets to pay your insurance premiums. However, it's crucial to note that insurance premiums are usually paid from your own income or savings.
+2. **Life insurance**: If you take out a life insurance policy, the premiums are typically paid from your own income or savings. Inheritances may not directly affect your life insurance premiums.
+3. **Investment-linked insurance**: If you take out an investment-linked insurance policy, the premiums are typically paid from your own income or savings. Inheritances may not directly affect your investment-linked insurance premiums.
+
+In summary, insurance premiums are usually paid from your own income or savings, and inheritances may not directly affect your insurance premiums. However, the specific regulations and scenarios may vary depending on your individual circumstances.
+
+I hope this helps clarify things for you!",4.492258548736572,295.0,50.0,345.0
+,주식으로 연간 300만 원 정도 이익이 났어요. 이게 지역가입자 보험료에 포함되나요?,Meta-Llama-3-8B-Instruct.Q2_K,"[RAG 문서]
+(keep '(근로자 이다 직업_종류와_관계없이_보수를_받아_생활하는_사람))
+
+당신은 NEO 언어 지식베이스(Knowledge Base, KB) 쿼리 변환기입니다.
+KB는 `(keep '(주어 동사 목적어))` 또는 `(keep '(주어 동사 속성 값))`과 같은 리스트 형태의 사실들로 구성됩니다. 동사나 속성명은 필요에 따라 언더스코어(`_`)로 연결된 복합 심볼로 표현됩니다.
+예시: `(keep '(서울 이다 대한민국의_수도))`
+
+사용자가 자연어로 질문을 하면, 당신은 그 질문을 분석하여 주어진 NEO KB 형식에 맞는 NEO 쿼리 언어로만 변환하여 출력해야 합니다. 어떠한 추가 설명이나 답변 생성 없이, 오직 NEO 쿼리 자체만 출력하세요.
+
+**NEO 쿼리 언어 규칙:**
+- **패턴 매칭:** `(kb-match '(패턴))` 또는 `(kb-unit-match '패턴)`을 주로 사용합니다.
+- **바인딩 변수:** 질문하는 대상을 `?변수명` (예: `?x`)으로 표현합니다.
+- **리터럴 심볼:** 심볼 자체가 값으로 사용될 때는 `'심볼` 또는 `(quote 심볼)`을 사용합니다.
+- **리스트 구조:** 쿼리도 리스트 형태로 작성됩니다.
+- **연산자:** 숫자 비교 (`>`, `<`, `>=`, `<=`), 산술 연산 (`+`, `-`, `*`, `/`) 등은 쿼리 내에서 직접 사용될 수 있습니다.
+
+**지침:**
+1.  사용자의 질문에서 핵심적인 주어, 동사, 목적어 또는 속성-값 쌍을 식별하세요.
+2.  식별된 요소를 NEO KB의 심볼 및 리스트 구조에 맞게 변환하세요.
+3.  질문하는 부분은 `?변수명`으로 대체하세요.
+4.  가능한 한 간결하고 정확한 NEO 쿼리를 생성하세요.
+5.  모든 쿼리는 `(kb-match ...)` 또는 `(kb-unit-match ...)` 형태로 시작해야 합니다.
+6.  결과가 여러 개일 수 있음을 고려하여 일반적인 패턴을 사용하세요.
+7.  KB에 직접적인 정보가 없는 질문이라도, 가장 유사하거나 관련 있는 정보를 찾을 수 있는 쿼리를 시도하여 생성하세요.
+8.  keep은 사용하지 마세요.
+
+**예시:**
+- 사용자 질문: ""NEO의 특징은 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((neo 특징 ?x)))
+
+- 사용자 질문: ""공단의 재정운영위원회 위원 임기는 몇 년인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((재정운영위원회 위원_임기 ?x 년)))
+
+- 사용자 질문: ""추론 엔진의 역할은 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((추론_엔진_역할 ?x)))
+
+- 사용자 질문: ""전향 추론에 사용되는 명령어는 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((전향추론_명령어 ?x)))",상황기반_보험료질문,0,1,N/A,N/A,N/A,"I think you're asking whether the income of around 3 million won per year is included in the premium for local residents' insurance.
+
+In Korea, the premium for local residents' insurance (also known as ""jumin byeong"" 주민보험 in Korean) is typically paid by the employer, and it's not usually directly related to the employee's income.
+
+However, the employer's contribution to the local residents' insurance is usually a percentage of the employee's salary, so it's possible that a small portion of the employee's income is indeed dedicated to the local residents' insurance.
+
+That being said, it's unlikely that the entire income of around 3 million won per year is solely dedicated to the local residents' insurance. It's more likely that the employee's income is being used for other purposes, such as living expenses, savings, or other financial goals.
+
+If you're concerned about how your income is being used, I would recommend reviewing your financial situation with a professional, such as a financial advisor or accountant. They can help you better understand how your income is being used and provide guidance on how to achieve your financial goals.",3.469294786453247,230.0,41.0,271.0
+,"월 소득이 200만 원인 1인 자영업자인데, 이번 달 건강보험료가 15만 원 나왔어요. 이게 정상적인 금액인가요?",Meta-Llama-3-8B-Instruct.Q2_K,"[RAG 문서]
+(keep '(근로자 이다 직업_종류와_관계없이_보수를_받아_생활하는_사람))
+
+당신은 NEO 언어 지식베이스(Knowledge Base, KB) 쿼리 변환기입니다.
+KB는 `(keep '(주어 동사 목적어))` 또는 `(keep '(주어 동사 속성 값))`과 같은 리스트 형태의 사실들로 구성됩니다. 동사나 속성명은 필요에 따라 언더스코어(`_`)로 연결된 복합 심볼로 표현됩니다.
+예시: `(keep '(서울 이다 대한민국의_수도))`
+
+사용자가 자연어로 질문을 하면, 당신은 그 질문을 분석하여 주어진 NEO KB 형식에 맞는 NEO 쿼리 언어로만 변환하여 출력해야 합니다. 어떠한 추가 설명이나 답변 생성 없이, 오직 NEO 쿼리 자체만 출력하세요.
+
+**NEO 쿼리 언어 규칙:**
+- **패턴 매칭:** `(kb-match '(패턴))` 또는 `(kb-unit-match '패턴)`을 주로 사용합니다.
+- **바인딩 변수:** 질문하는 대상을 `?변수명` (예: `?x`)으로 표현합니다.
+- **리터럴 심볼:** 심볼 자체가 값으로 사용될 때는 `'심볼` 또는 `(quote 심볼)`을 사용합니다.
+- **리스트 구조:** 쿼리도 리스트 형태로 작성됩니다.
+- **연산자:** 숫자 비교 (`>`, `<`, `>=`, `<=`), 산술 연산 (`+`, `-`, `*`, `/`) 등은 쿼리 내에서 직접 사용될 수 있습니다.
+
+**지침:**
+1.  사용자의 질문에서 핵심적인 주어, 동사, 목적어 또는 속성-값 쌍을 식별하세요.
+2.  식별된 요소를 NEO KB의 심볼 및 리스트 구조에 맞게 변환하세요.
+3.  질문하는 부분은 `?변수명`으로 대체하세요.
+4.  가능한 한 간결하고 정확한 NEO 쿼리를 생성하세요.
+5.  모든 쿼리는 `(kb-match ...)` 또는 `(kb-unit-match ...)` 형태로 시작해야 합니다.
+6.  결과가 여러 개일 수 있음을 고려하여 일반적인 패턴을 사용하세요.
+7.  KB에 직접적인 정보가 없는 질문이라도, 가장 유사하거나 관련 있는 정보를 찾을 수 있는 쿼리를 시도하여 생성하세요.
+8.  keep은 사용하지 마세요.
+
+**예시:**
+- 사용자 질문: ""NEO의 특징은 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((neo 특징 ?x)))
+
+- 사용자 질문: ""공단의 재정운영위원회 위원 임기는 몇 년인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((재정운영위원회 위원_임기 ?x 년)))
+
+- 사용자 질문: ""추론 엔진의 역할은 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((추론_엔진_역할 ?x)))
+
+- 사용자 질문: ""전향 추론에 사용되는 명령어는 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((전향추론_명령어 ?x)))",상황기반_보험료질문,0,1,N/A,N/A,N/A,"A Korean question!
+
+Let me break it down:
+
+You're wondering if the health insurance premium of 15 million won (200,000 KRW) is a normal amount for a small business owner with a income of 200 million won.
+
+In Korea, the health insurance premium is typically deducted from the income, and it's usually around 9% to 12% of the income. So, for a small business owner with a income of 200 million won, the health insurance premium would typically be around 18 million won to 24 million won.
+
+15 million won, which is the amount you mentioned, is slightly on the higher side, but it's still possible depending on the specific circumstances of your business and health insurance coverage.
+
+However, I would recommend verifying the premium amount with your health insurance provider and/or a tax professional to ensure it's accurately calculated.",2.653231143951416,175.0,51.0,226.0
+,최근 실직해서 소득이 없어요. 건강보험료를 감면받을 수 있는 방법이 있을까요?,Meta-Llama-3-8B-Instruct.Q2_K,"[RAG 문서]
+(keep '(근로자 이다 직업_종류와_관계없이_보수를_받아_생활하는_사람))
+
+당신은 NEO 언어 지식베이스(Knowledge Base, KB) 쿼리 변환기입니다.
+KB는 `(keep '(주어 동사 목적어))` 또는 `(keep '(주어 동사 속성 값))`과 같은 리스트 형태의 사실들로 구성됩니다. 동사나 속성명은 필요에 따라 언더스코어(`_`)로 연결된 복합 심볼로 표현됩니다.
+예시: `(keep '(서울 이다 대한민국의_수도))`
+
+사용자가 자연어로 질문을 하면, 당신은 그 질문을 분석하여 주어진 NEO KB 형식에 맞는 NEO 쿼리 언어로만 변환하여 출력해야 합니다. 어떠한 추가 설명이나 답변 생성 없이, 오직 NEO 쿼리 자체만 출력하세요.
+
+**NEO 쿼리 언어 규칙:**
+- **패턴 매칭:** `(kb-match '(패턴))` 또는 `(kb-unit-match '패턴)`을 주로 사용합니다.
+- **바인딩 변수:** 질문하는 대상을 `?변수명` (예: `?x`)으로 표현합니다.
+- **리터럴 심볼:** 심볼 자체가 값으로 사용될 때는 `'심볼` 또는 `(quote 심볼)`을 사용합니다.
+- **리스트 구조:** 쿼리도 리스트 형태로 작성됩니다.
+- **연산자:** 숫자 비교 (`>`, `<`, `>=`, `<=`), 산술 연산 (`+`, `-`, `*`, `/`) 등은 쿼리 내에서 직접 사용될 수 있습니다.
+
+**지침:**
+1.  사용자의 질문에서 핵심적인 주어, 동사, 목적어 또는 속성-값 쌍을 식별하세요.
+2.  식별된 요소를 NEO KB의 심볼 및 리스트 구조에 맞게 변환하세요.
+3.  질문하는 부분은 `?변수명`으로 대체하세요.
+4.  가능한 한 간결하고 정확한 NEO 쿼리를 생성하세요.
+5.  모든 쿼리는 `(kb-match ...)` 또는 `(kb-unit-match ...)` 형태로 시작해야 합니다.
+6.  결과가 여러 개일 수 있음을 고려하여 일반적인 패턴을 사용하세요.
+7.  KB에 직접적인 정보가 없는 질문이라도, 가장 유사하거나 관련 있는 정보를 찾을 수 있는 쿼리를 시도하여 생성하세요.
+8.  keep은 사용하지 마세요.
+
+**예시:**
+- 사용자 질문: ""NEO의 특징은 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((neo 특징 ?x)))
+
+- 사용자 질문: ""공단의 재정운영위원회 위원 임기는 몇 년인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((재정운영위원회 위원_임기 ?x 년)))
+
+- 사용자 질문: ""추론 엔진의 역할은 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((추론_엔진_역할 ?x)))
+
+- 사용자 질문: ""전향 추론에 사용되는 명령어는 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((전향추론_명령어 ?x)))",보험료_감면_경감질문,0,1,N/A,N/A,N/A,"I see you're struggling with a recent income drop and wondering how to get help with your health insurance premium. 😊
+
+In the United States, there are a few ways to get help with your health insurance premium:
+
+1. **Premium Tax Credits**: If you purchase health insurance through the Affordable Care Act (ACA), you may be eligible for premium tax credits. These credits can help reduce your premium cost.
+2. **Applying for a Special Enrollment Period**: If you experience a life event like losing your job, getting married, or having a child, you may be eligible to apply for a Special Enrollment Period to change your health insurance plan.
+3. **Applying for Medicaid**: If your income has dropped below the Medicaid threshold, you may be eligible for Medicaid coverage. This could provide free or low-cost health insurance.
+4. **Catastrophic Plan**: If you're struggling to pay your premium, you may be eligible for a Catastrophic Plan, which offers lower costs but higher out-of-pocket costs.
+5. **State-based Assistance**: Some states offer assistance programs to help with health insurance costs. Check if your state has such a program.
+
+To get help with your health insurance premium, you can:
+
+1. **Contact your health insurance company**: Reach out to your health insurance company to discuss your situation and see if they can offer any assistance.
+2. **Visit your local health department**: Your local health department may be able to provide guidance on health insurance options and assistance programs.
+3. **Seek assistance from non-profit organizations**: Non-profit organizations like the National Foundation for Transpacific Partners (NFT) may be able to provide guidance and assistance with health insurance.
+
+Remember to check with your health insurance company and your local health department to see if they can offer any assistance. Good luck! 🤞",5.658745288848877,369.0,36.0,405.0
+,아이를 낳은 지 3개월 됐어요. 출산 관련해서 보험료 경감이나 혜택이 있나요?,Meta-Llama-3-8B-Instruct.Q2_K,"[RAG 문서]
+(keep '(근로자 이다 직업_종류와_관계없이_보수를_받아_생활하는_사람))
+
+당신은 NEO 언어 지식베이스(Knowledge Base, KB) 쿼리 변환기입니다.
+KB는 `(keep '(주어 동사 목적어))` 또는 `(keep '(주어 동사 속성 값))`과 같은 리스트 형태의 사실들로 구성됩니다. 동사나 속성명은 필요에 따라 언더스코어(`_`)로 연결된 복합 심볼로 표현됩니다.
+예시: `(keep '(서울 이다 대한민국의_수도))`
+
+사용자가 자연어로 질문을 하면, 당신은 그 질문을 분석하여 주어진 NEO KB 형식에 맞는 NEO 쿼리 언어로만 변환하여 출력해야 합니다. 어떠한 추가 설명이나 답변 생성 없이, 오직 NEO 쿼리 자체만 출력하세요.
+
+**NEO 쿼리 언어 규칙:**
+- **패턴 매칭:** `(kb-match '(패턴))` 또는 `(kb-unit-match '패턴)`을 주로 사용합니다.
+- **바인딩 변수:** 질문하는 대상을 `?변수명` (예: `?x`)으로 표현합니다.
+- **리터럴 심볼:** 심볼 자체가 값으로 사용될 때는 `'심볼` 또는 `(quote 심볼)`을 사용합니다.
+- **리스트 구조:** 쿼리도 리스트 형태로 작성됩니다.
+- **연산자:** 숫자 비교 (`>`, `<`, `>=`, `<=`), 산술 연산 (`+`, `-`, `*`, `/`) 등은 쿼리 내에서 직접 사용될 수 있습니다.
+
+**지침:**
+1.  사용자의 질문에서 핵심적인 주어, 동사, 목적어 또는 속성-값 쌍을 식별하세요.
+2.  식별된 요소를 NEO KB의 심볼 및 리스트 구조에 맞게 변환하세요.
+3.  질문하는 부분은 `?변수명`으로 대체하세요.
+4.  가능한 한 간결하고 정확한 NEO 쿼리를 생성하세요.
+5.  모든 쿼리는 `(kb-match ...)` 또는 `(kb-unit-match ...)` 형태로 시작해야 합니다.
+6.  결과가 여러 개일 수 있음을 고려하여 일반적인 패턴을 사용하세요.
+7.  KB에 직접적인 정보가 없는 질문이라도, 가장 유사하거나 관련 있는 정보를 찾을 수 있는 쿼리를 시도하여 생성하세요.
+8.  keep은 사용하지 마세요.
+
+**예시:**
+- 사용자 질문: ""NEO의 특징은 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((neo 특징 ?x)))
+
+- 사용자 질문: ""공단의 재정운영위원회 위원 임기는 몇 년인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((재정운영위원회 위원_임기 ?x 년)))
+
+- 사용자 질문: ""추론 엔진의 역할은 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((추론_엔진_역할 ?x)))
+
+- 사용자 질문: ""전향 추론에 사용되는 명령어는 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((전향추론_명령어 ?x)))",보험료_감면_경감질문,0,1,N/A,N/A,N/A,"Congratulations on your new addition to the family! 🎉
+
+As for your question, in South Korea, there are several insurance benefits and tax deductions available to help you navigate the costs associated with childbirth. Here's a brief summary:
+
+1. **Childbirth Benefits**: The Korean government offers benefits to new mothers, including:
+	* 100,000 KRW (around $80 USD) for each child's birth
+	* Free maternity care and childbirth costs covered by the National Health Insurance Service (Korean: , abbreviated as KH)
+2. **Insurance Benefits**: Your health insurance provider may offer additional benefits, such as:
+	* Reduced premiums for expectant mothers
+	* Discounts on childbirth costs
+	* Additional maternity benefits (e.g., baby supplies, lactation support)
+3. **Tax Deductions**: You may be eligible for tax deductions on your income tax return, including:
+	* 300,000 KRW (around $250 USD) for each child's birth
+	* Other deductions for childbirth-related expenses
+
+Please note that these benefits and deductions may vary depending on your employer-sponsored insurance plan, income level, and other factors.
+
+If you're interested in learning more about these benefits, I recommend consulting with your health insurance provider or a tax professional for more detailed information.
+
+Congratulations again on your new addition! 🎉",4.139337778091431,273.0,40.0,313.0
+,"최근에 암 진단을 받았고 치료 중인데, 건강보험료를 줄일 수 있는 제도가 있나요?",Meta-Llama-3-8B-Instruct.Q2_K,"[RAG 문서]
+(keep '(근로자 이다 직업_종류와_관계없이_보수를_받아_생활하는_사람))
+
+당신은 NEO 언어 지식베이스(Knowledge Base, KB) 쿼리 변환기입니다.
+KB는 `(keep '(주어 동사 목적어))` 또는 `(keep '(주어 동사 속성 값))`과 같은 리스트 형태의 사실들로 구성됩니다. 동사나 속성명은 필요에 따라 언더스코어(`_`)로 연결된 복합 심볼로 표현됩니다.
+예시: `(keep '(서울 이다 대한민국의_수도))`
+
+사용자가 자연어로 질문을 하면, 당신은 그 질문을 분석하여 주어진 NEO KB 형식에 맞는 NEO 쿼리 언어로만 변환하여 출력해야 합니다. 어떠한 추가 설명이나 답변 생성 없이, 오직 NEO 쿼리 자체만 출력하세요.
+
+**NEO 쿼리 언어 규칙:**
+- **패턴 매칭:** `(kb-match '(패턴))` 또는 `(kb-unit-match '패턴)`을 주로 사용합니다.
+- **바인딩 변수:** 질문하는 대상을 `?변수명` (예: `?x`)으로 표현합니다.
+- **리터럴 심볼:** 심볼 자체가 값으로 사용될 때는 `'심볼` 또는 `(quote 심볼)`을 사용합니다.
+- **리스트 구조:** 쿼리도 리스트 형태로 작성됩니다.
+- **연산자:** 숫자 비교 (`>`, `<`, `>=`, `<=`), 산술 연산 (`+`, `-`, `*`, `/`) 등은 쿼리 내에서 직접 사용될 수 있습니다.
+
+**지침:**
+1.  사용자의 질문에서 핵심적인 주어, 동사, 목적어 또는 속성-값 쌍을 식별하세요.
+2.  식별된 요소를 NEO KB의 심볼 및 리스트 구조에 맞게 변환하세요.
+3.  질문하는 부분은 `?변수명`으로 대체하세요.
+4.  가능한 한 간결하고 정확한 NEO 쿼리를 생성하세요.
+5.  모든 쿼리는 `(kb-match ...)` 또는 `(kb-unit-match ...)` 형태로 시작해야 합니다.
+6.  결과가 여러 개일 수 있음을 고려하여 일반적인 패턴을 사용하세요.
+7.  KB에 직접적인 정보가 없는 질문이라도, 가장 유사하거나 관련 있는 정보를 찾을 수 있는 쿼리를 시도하여 생성하세요.
+8.  keep은 사용하지 마세요.
+
+**예시:**
+- 사용자 질문: ""NEO의 특징은 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((neo 특징 ?x)))
+
+- 사용자 질문: ""공단의 재정운영위원회 위원 임기는 몇 년인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((재정운영위원회 위원_임기 ?x 년)))
+
+- 사용자 질문: ""추론 엔진의 역할은 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((추론_엔진_역할 ?x)))
+
+- 사용자 질문: ""전향 추론에 사용되는 명령어는 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((전향추론_명령어 ?x)))",보험료_감면_경감질문,0,1,N/A,N/A,N/A,"I see you're recently diagnosed with a disease and currently undergoing treatment. If you're looking for ways to reduce your health insurance premium, I'd be happy to help!
+
+Yes, there are several ways to reduce your health insurance premium:
+
+1. **Medicare**: If you're eligible for Medicare, you can enroll in a Medicare Advantage plan, which can provide more comprehensive coverage at a lower cost.
+2. **Health Reformer**: The Health Insurance Portability and Portability Act (HIPAA) allows you to port your existing coverage to a new plan, which might offer lower premiums.
+3. **Group Insurance**: If you're employed, your employer may offer a group insurance plan with better rates.
+4. **Medicaid**: If you're eligible for Medicaid, you can receive free or low-cost coverage.
+5. **Preventive Care**: Prioritize preventive care services like regular check-ups, which can help prevent more costly treatments.
+6. **Health Savings Account**: Utilize a Health Savings Account (HSA) to save money on out-of-pocket expenses.
+7. **Telehealth**: Telehealth services can reduce costs for virtual doctor visits.
+8. **Pre-Existing Conditions**: Some insurance plans offer discounts or reduced rates for individuals with pre-existing conditions.
+
+Keep in mind that these options might have specific requirements or restrictions. I'd recommend consulting with your healthcare provider or insurance agent to determine the best course of action for your situation.
+
+I hope this helps! What else would you like to know?",4.638878107070923,304.0,38.0,342.0
+,"고등학생 자녀가 둘 있고, 저는 혼자 벌고 있어요. 이런 경우 건강보험료 할인 혜택이 있을까요?",Meta-Llama-3-8B-Instruct.Q2_K,"[RAG 문서]
+(keep '(근로자 이다 직업_종류와_관계없이_보수를_받아_생활하는_사람))
+
+당신은 NEO 언어 지식베이스(Knowledge Base, KB) 쿼리 변환기입니다.
+KB는 `(keep '(주어 동사 목적어))` 또는 `(keep '(주어 동사 속성 값))`과 같은 리스트 형태의 사실들로 구성됩니다. 동사나 속성명은 필요에 따라 언더스코어(`_`)로 연결된 복합 심볼로 표현됩니다.
+예시: `(keep '(서울 이다 대한민국의_수도))`
+
+사용자가 자연어로 질문을 하면, 당신은 그 질문을 분석하여 주어진 NEO KB 형식에 맞는 NEO 쿼리 언어로만 변환하여 출력해야 합니다. 어떠한 추가 설명이나 답변 생성 없이, 오직 NEO 쿼리 자체만 출력하세요.
+
+**NEO 쿼리 언어 규칙:**
+- **패턴 매칭:** `(kb-match '(패턴))` 또는 `(kb-unit-match '패턴)`을 주로 사용합니다.
+- **바인딩 변수:** 질문하는 대상을 `?변수명` (예: `?x`)으로 표현합니다.
+- **리터럴 심볼:** 심볼 자체가 값으로 사용될 때는 `'심볼` 또는 `(quote 심볼)`을 사용합니다.
+- **리스트 구조:** 쿼리도 리스트 형태로 작성됩니다.
+- **연산자:** 숫자 비교 (`>`, `<`, `>=`, `<=`), 산술 연산 (`+`, `-`, `*`, `/`) 등은 쿼리 내에서 직접 사용될 수 있습니다.
+
+**지침:**
+1.  사용자의 질문에서 핵심적인 주어, 동사, 목적어 또는 속성-값 쌍을 식별하세요.
+2.  식별된 요소를 NEO KB의 심볼 및 리스트 구조에 맞게 변환하세요.
+3.  질문하는 부분은 `?변수명`으로 대체하세요.
+4.  가능한 한 간결하고 정확한 NEO 쿼리를 생성하세요.
+5.  모든 쿼리는 `(kb-match ...)` 또는 `(kb-unit-match ...)` 형태로 시작해야 합니다.
+6.  결과가 여러 개일 수 있음을 고려하여 일반적인 패턴을 사용하세요.
+7.  KB에 직접적인 정보가 없는 질문이라도, 가장 유사하거나 관련 있는 정보를 찾을 수 있는 쿼리를 시도하여 생성하세요.
+8.  keep은 사용하지 마세요.
+
+**예시:**
+- 사용자 질문: ""NEO의 특징은 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((neo 특징 ?x)))
+
+- 사용자 질문: ""공단의 재정운영위원회 위원 임기는 몇 년인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((재정운영위원회 위원_임기 ?x 년)))
+
+- 사용자 질문: ""추론 엔진의 역할은 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((추론_엔진_역할 ?x)))
+
+- 사용자 질문: ""전향 추론에 사용되는 명령어는 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((전향추론_명령어 ?x)))",보험료_감면_경감질문,0,1,N/A,N/A,N/A,"A Korean expression! 😊
+
+You're asking if there's a health insurance discount benefit for solo parents with two high school students, who are struggling to make ends meet.
+
+In Korea, there are several health insurance discount benefits that you can claim, depending on your situation. Here are a few possible options:
+
+1. **Family discount**: If you have a family with dependents, you might be eligible for a discount on your health insurance premiums.
+2. **Dependent discount**: Some health insurance providers offer discounts for dependents with high medical expenses, such as high school students with chronic illnesses.
+3. **Financial hardship discount**: Some non-profit organizations, like the Korean Health Insurance Corporation (KHC), offer discounts or subsidies to those who are struggling financially.
+
+To claim these discounts, you'll need to:
+
+1. **Check your health insurance contract**: Review your health insurance contract to see if there are any discounts or subsidies available.
+2. **Contact your health insurance provider**: Reach out to your health insurance provider to inquire about available discounts or subsidies.
+3. **Research non-profit organizations**: Look into organizations like the Korean Health Insurance Corporation (KHC) that offer financial hardship discounts.
+
+Remember to always verify the eligibility criteria and application process for these discounts before claiming them.
+
+I hope this helps! 😊",3.992582321166992,264.0,41.0,305.0
+,"이번에 전입신고를 했는데, 자동차가 제 명의라서 보험료가 많이 나와요. 꼭 자동차가 있으면 보험료가 올라가나요?",Meta-Llama-3-8B-Instruct.Q2_K,"[RAG 문서]
+(keep '(근로자 이다 직업_종류와_관계없이_보수를_받아_생활하는_사람))
+
+당신은 NEO 언어 지식베이스(Knowledge Base, KB) 쿼리 변환기입니다.
+KB는 `(keep '(주어 동사 목적어))` 또는 `(keep '(주어 동사 속성 값))`과 같은 리스트 형태의 사실들로 구성됩니다. 동사나 속성명은 필요에 따라 언더스코어(`_`)로 연결된 복합 심볼로 표현됩니다.
+예시: `(keep '(서울 이다 대한민국의_수도))`
+
+사용자가 자연어로 질문을 하면, 당신은 그 질문을 분석하여 주어진 NEO KB 형식에 맞는 NEO 쿼리 언어로만 변환하여 출력해야 합니다. 어떠한 추가 설명이나 답변 생성 없이, 오직 NEO 쿼리 자체만 출력하세요.
+
+**NEO 쿼리 언어 규칙:**
+- **패턴 매칭:** `(kb-match '(패턴))` 또는 `(kb-unit-match '패턴)`을 주로 사용합니다.
+- **바인딩 변수:** 질문하는 대상을 `?변수명` (예: `?x`)으로 표현합니다.
+- **리터럴 심볼:** 심볼 자체가 값으로 사용될 때는 `'심볼` 또는 `(quote 심볼)`을 사용합니다.
+- **리스트 구조:** 쿼리도 리스트 형태로 작성됩니다.
+- **연산자:** 숫자 비교 (`>`, `<`, `>=`, `<=`), 산술 연산 (`+`, `-`, `*`, `/`) 등은 쿼리 내에서 직접 사용될 수 있습니다.
+
+**지침:**
+1.  사용자의 질문에서 핵심적인 주어, 동사, 목적어 또는 속성-값 쌍을 식별하세요.
+2.  식별된 요소를 NEO KB의 심볼 및 리스트 구조에 맞게 변환하세요.
+3.  질문하는 부분은 `?변수명`으로 대체하세요.
+4.  가능한 한 간결하고 정확한 NEO 쿼리를 생성하세요.
+5.  모든 쿼리는 `(kb-match ...)` 또는 `(kb-unit-match ...)` 형태로 시작해야 합니다.
+6.  결과가 여러 개일 수 있음을 고려하여 일반적인 패턴을 사용하세요.
+7.  KB에 직접적인 정보가 없는 질문이라도, 가장 유사하거나 관련 있는 정보를 찾을 수 있는 쿼리를 시도하여 생성하세요.
+8.  keep은 사용하지 마세요.
+
+**예시:**
+- 사용자 질문: ""NEO의 특징은 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((neo 특징 ?x)))
+
+- 사용자 질문: ""공단의 재정운영위원회 위원 임기는 몇 년인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((재정운영위원회 위원_임기 ?x 년)))
+
+- 사용자 질문: ""추론 엔진의 역할은 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((추론_엔진_역할 ?x)))
+
+- 사용자 질문: ""전향 추론에 사용되는 명령어는 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((전향추론_명령어 ?x)))",보험료_감면_경감질문,0,1,N/A,N/A,N/A,"I see you're wondering about the relationship between having a car and the insurance premium!
+
+In general, having a car (or having a car loan) can indeed affect your insurance premium. Here's why:
+
+1. **Usage-based insurance**: Insurance companies often factor in your driving habits, including the type of vehicle you own or lease. If you have a car loan, you're more likely to drive more miles, which can lead to a higher premium.
+2. **Vehicle type and value**: The make and model of your car, as well as its value, can impact your insurance premium. More expensive cars tend to have higher premiums.
+3. **Age and condition**: If you have a newer car, you're more likely to have a higher premium due to the higher value of the vehicle.
+
+However, it's important to note that having a car loan doesn't necessarily mean your insurance premium will skyrocket. The relationship between the two is complex, and other factors like your credit score, driving history, and the type of coverage you have can also influence your premium.
+
+To give you a better insight, here are some possible scenarios:
+
+* If you have a car loan and drive carefully, your insurance company might reward you with a lower premium.
+* If you own a car outright, your premium might be higher due to the vehicle's value and age.
+* If you have a high-value car loan (e.g., a luxury car), your premium might be higher due to the vehicle's value.
+
+In summary, having a car loan can affect your insurance premium, but it's not the sole determining factor. Other factors, such as your driving habits and credit score, can also impact your premium.
+
+I hope this helps clarify things for you!",5.351135015487671,350.0,50.0,400.0
+,"건강보험료가 너무 높게 나왔는데, 이의신청은 어떻게 하나요? 받아들여질 가능성은 있나요?",Meta-Llama-3-8B-Instruct.Q2_K,"[RAG 문서]
+(keep '(근로자 이다 직업_종류와_관계없이_보수를_받아_생활하는_사람))
+
+당신은 NEO 언어 지식베이스(Knowledge Base, KB) 쿼리 변환기입니다.
+KB는 `(keep '(주어 동사 목적어))` 또는 `(keep '(주어 동사 속성 값))`과 같은 리스트 형태의 사실들로 구성됩니다. 동사나 속성명은 필요에 따라 언더스코어(`_`)로 연결된 복합 심볼로 표현됩니다.
+예시: `(keep '(서울 이다 대한민국의_수도))`
+
+사용자가 자연어로 질문을 하면, 당신은 그 질문을 분석하여 주어진 NEO KB 형식에 맞는 NEO 쿼리 언어로만 변환하여 출력해야 합니다. 어떠한 추가 설명이나 답변 생성 없이, 오직 NEO 쿼리 자체만 출력하세요.
+
+**NEO 쿼리 언어 규칙:**
+- **패턴 매칭:** `(kb-match '(패턴))` 또는 `(kb-unit-match '패턴)`을 주로 사용합니다.
+- **바인딩 변수:** 질문하는 대상을 `?변수명` (예: `?x`)으로 표현합니다.
+- **리터럴 심볼:** 심볼 자체가 값으로 사용될 때는 `'심볼` 또는 `(quote 심볼)`을 사용합니다.
+- **리스트 구조:** 쿼리도 리스트 형태로 작성됩니다.
+- **연산자:** 숫자 비교 (`>`, `<`, `>=`, `<=`), 산술 연산 (`+`, `-`, `*`, `/`) 등은 쿼리 내에서 직접 사용될 수 있습니다.
+
+**지침:**
+1.  사용자의 질문에서 핵심적인 주어, 동사, 목적어 또는 속성-값 쌍을 식별하세요.
+2.  식별된 요소를 NEO KB의 심볼 및 리스트 구조에 맞게 변환하세요.
+3.  질문하는 부분은 `?변수명`으로 대체하세요.
+4.  가능한 한 간결하고 정확한 NEO 쿼리를 생성하세요.
+5.  모든 쿼리는 `(kb-match ...)` 또는 `(kb-unit-match ...)` 형태로 시작해야 합니다.
+6.  결과가 여러 개일 수 있음을 고려하여 일반적인 패턴을 사용하세요.
+7.  KB에 직접적인 정보가 없는 질문이라도, 가장 유사하거나 관련 있는 정보를 찾을 수 있는 쿼리를 시도하여 생성하세요.
+8.  keep은 사용하지 마세요.
+
+**예시:**
+- 사용자 질문: ""NEO의 특징은 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((neo 특징 ?x)))
+
+- 사용자 질문: ""공단의 재정운영위원회 위원 임기는 몇 년인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((재정운영위원회 위원_임기 ?x 년)))
+
+- 사용자 질문: ""추론 엔진의 역할은 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((추론_엔진_역할 ?x)))
+
+- 사용자 질문: ""전향 추론에 사용되는 명령어는 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((전향추론_명령어 ?x)))",제도_이용_및_확인질문,0,1,N/A,N/A,N/A,"I see you're concerned about the high premium for your health insurance! 🤕
+
+First, let me explain that health insurance premiums are typically determined by factors such as:
+
+1. Your age and health status
+2. The type of plan you've chosen (e.g., catastrophic, PPO, HMO)
+3. The cost-sharing requirements (e.g., deductible, copayment, coinsurance)
+4. The insurance company's rates and negotiations with providers
+
+Now, about your inquiry:
+
+**How to lower your health insurance premium:**
+
+1. **Review your plan**: Ensure you're not over-insured. If you're not using your plan's benefits much, you might be able to switch to a lower-cost plan.
+2. **Shop around**: Compare rates and benefits from different insurance companies to find the best fit for your needs and budget.
+3. **Negotiate with your current insurer**: If you're already enrolled in a plan, try negotiating with your insurer to see if they can offer a better rate or more affordable options.
+4. **Consider a high-deductible plan**: If you're relatively healthy and don't visit many doctors, a catastrophic plan might be a good option.
+5. **Group insurance**: If you're employed, your employer might offer a group insurance plan, which could be more affordable.
+
+**Can you negotiate your premium:**
+
+Yes, it's possible to negotiate your premium, but it depends on your circumstances and the insurance company's willingness to adjust rates. Here are some tips:
+
+1. **Highlight your health status**: If you're healthy, you might be able to negotiate a lower rate.
+2. **Show a willingness to switch**: If you're unhappy with your current insurer, be prepared to switch to a competitor to get a better deal.
+3. **Be flexible with your plan**: Consider alternatives to reduce your premium costs.
+
+Remember, negotiating your premium is an art that requires preparation, persistence, and a bit of luck. Good luck! 🤞",6.239748001098633,407.0,40.0,447.0
+,"부모님을 피부양자로 등록했는데, 매년 자격을 다시 확인해야 하나요?",Meta-Llama-3-8B-Instruct.Q2_K,"[RAG 문서]
+(keep '(근로자 이다 직업_종류와_관계없이_보수를_받아_생활하는_사람))
+
+당신은 NEO 언어 지식베이스(Knowledge Base, KB) 쿼리 변환기입니다.
+KB는 `(keep '(주어 동사 목적어))` 또는 `(keep '(주어 동사 속성 값))`과 같은 리스트 형태의 사실들로 구성됩니다. 동사나 속성명은 필요에 따라 언더스코어(`_`)로 연결된 복합 심볼로 표현됩니다.
+예시: `(keep '(서울 이다 대한민국의_수도))`
+
+사용자가 자연어로 질문을 하면, 당신은 그 질문을 분석하여 주어진 NEO KB 형식에 맞는 NEO 쿼리 언어로만 변환하여 출력해야 합니다. 어떠한 추가 설명이나 답변 생성 없이, 오직 NEO 쿼리 자체만 출력하세요.
+
+**NEO 쿼리 언어 규칙:**
+- **패턴 매칭:** `(kb-match '(패턴))` 또는 `(kb-unit-match '패턴)`을 주로 사용합니다.
+- **바인딩 변수:** 질문하는 대상을 `?변수명` (예: `?x`)으로 표현합니다.
+- **리터럴 심볼:** 심볼 자체가 값으로 사용될 때는 `'심볼` 또는 `(quote 심볼)`을 사용합니다.
+- **리스트 구조:** 쿼리도 리스트 형태로 작성됩니다.
+- **연산자:** 숫자 비교 (`>`, `<`, `>=`, `<=`), 산술 연산 (`+`, `-`, `*`, `/`) 등은 쿼리 내에서 직접 사용될 수 있습니다.
+
+**지침:**
+1.  사용자의 질문에서 핵심적인 주어, 동사, 목적어 또는 속성-값 쌍을 식별하세요.
+2.  식별된 요소를 NEO KB의 심볼 및 리스트 구조에 맞게 변환하세요.
+3.  질문하는 부분은 `?변수명`으로 대체하세요.
+4.  가능한 한 간결하고 정확한 NEO 쿼리를 생성하세요.
+5.  모든 쿼리는 `(kb-match ...)` 또는 `(kb-unit-match ...)` 형태로 시작해야 합니다.
+6.  결과가 여러 개일 수 있음을 고려하여 일반적인 패턴을 사용하세요.
+7.  KB에 직접적인 정보가 없는 질문이라도, 가장 유사하거나 관련 있는 정보를 찾을 수 있는 쿼리를 시도하여 생성하세요.
+8.  keep은 사용하지 마세요.
+
+**예시:**
+- 사용자 질문: ""NEO의 특징은 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((neo 특징 ?x)))
+
+- 사용자 질문: ""공단의 재정운영위원회 위원 임기는 몇 년인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((재정운영위원회 위원_임기 ?x 년)))
+
+- 사용자 질문: ""추론 엔진의 역할은 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((추론_엔진_역할 ?x)))
+
+- 사용자 질문: ""전향 추론에 사용되는 명령어는 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((전향추론_명령어 ?x)))",제도_이용_및_확인질문,0,1,N/A,N/A,N/A,"😊
+
+Congratulations on registering your parents as a birth parent and adoptive parent! 👫
+
+Regarding the renewal of your birth parent's rights, it depends on the country's laws and regulations. In Korea, for example:
+
+* If your birth parent has registered for you as a birth parent, they will need to renew their registration every year. 🕰️
+* If your adoptive parent has registered for you as an adoptive parent, they will need to renew their registration every year. 🕰️
+
+Please note that the renewal process may vary depending on the country's laws and regulations. It's always best to check with the relevant authorities for more information.
+
+I hope this helps! 👍",2.181781530380249,145.0,34.0,179.0
+,"이번 달에 직장을 옮겼는데, 두 회사 모두에서 건강보험료가 빠져나갔어요. 중복 납부된 건 환급받을 수 있나요?",Meta-Llama-3-8B-Instruct.Q2_K,"[RAG 문서]
+(keep '(근로자 이다 직업_종류와_관계없이_보수를_받아_생활하는_사람))
+
+당신은 NEO 언어 지식베이스(Knowledge Base, KB) 쿼리 변환기입니다.
+KB는 `(keep '(주어 동사 목적어))` 또는 `(keep '(주어 동사 속성 값))`과 같은 리스트 형태의 사실들로 구성됩니다. 동사나 속성명은 필요에 따라 언더스코어(`_`)로 연결된 복합 심볼로 표현됩니다.
+예시: `(keep '(서울 이다 대한민국의_수도))`
+
+사용자가 자연어로 질문을 하면, 당신은 그 질문을 분석하여 주어진 NEO KB 형식에 맞는 NEO 쿼리 언어로만 변환하여 출력해야 합니다. 어떠한 추가 설명이나 답변 생성 없이, 오직 NEO 쿼리 자체만 출력하세요.
+
+**NEO 쿼리 언어 규칙:**
+- **패턴 매칭:** `(kb-match '(패턴))` 또는 `(kb-unit-match '패턴)`을 주로 사용합니다.
+- **바인딩 변수:** 질문하는 대상을 `?변수명` (예: `?x`)으로 표현합니다.
+- **리터럴 심볼:** 심볼 자체가 값으로 사용될 때는 `'심볼` 또는 `(quote 심볼)`을 사용합니다.
+- **리스트 구조:** 쿼리도 리스트 형태로 작성됩니다.
+- **연산자:** 숫자 비교 (`>`, `<`, `>=`, `<=`), 산술 연산 (`+`, `-`, `*`, `/`) 등은 쿼리 내에서 직접 사용될 수 있습니다.
+
+**지침:**
+1.  사용자의 질문에서 핵심적인 주어, 동사, 목적어 또는 속성-값 쌍을 식별하세요.
+2.  식별된 요소를 NEO KB의 심볼 및 리스트 구조에 맞게 변환하세요.
+3.  질문하는 부분은 `?변수명`으로 대체하세요.
+4.  가능한 한 간결하고 정확한 NEO 쿼리를 생성하세요.
+5.  모든 쿼리는 `(kb-match ...)` 또는 `(kb-unit-match ...)` 형태로 시작해야 합니다.
+6.  결과가 여러 개일 수 있음을 고려하여 일반적인 패턴을 사용하세요.
+7.  KB에 직접적인 정보가 없는 질문이라도, 가장 유사하거나 관련 있는 정보를 찾을 수 있는 쿼리를 시도하여 생성하세요.
+8.  keep은 사용하지 마세요.
+
+**예시:**
+- 사용자 질문: ""NEO의 특징은 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((neo 특징 ?x)))
+
+- 사용자 질문: ""공단의 재정운영위원회 위원 임기는 몇 년인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((재정운영위원회 위원_임기 ?x 년)))
+
+- 사용자 질문: ""추론 엔진의 역할은 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((추론_엔진_역할 ?x)))
+
+- 사용자 질문: ""전향 추론에 사용되는 명령어는 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((전향추론_명령어 ?x)))",제도_이용_및_확인질문,0,1,N/A,N/A,N/A,"Congratulations on your recent job change!
+
+Regarding your concern, it's understandable that you're wondering if you can claim the duplicate premiums paid by both employers.
+
+In Korea, when you have overlapping periods of insurance coverage from two employers, you can claim the duplicate premiums as a tax deduction. This is known as ""double insurance deduction"" in Korean tax law.
+
+To claim the duplicate premiums, you'll need to:
+
+1. Keep a record of your duplicate premiums paid by both employers.
+2. Submit the duplicate premiums as a tax deduction when filing your income tax return.
+3. Claim the deduction on your tax return, specifying the duplicate premiums you've paid.
+
+Please note that you'll need to verify the insurance coverage periods and premiums with your employers to ensure that they've both paid premiums for the same period.
+
+I hope this information helps you navigate the tax implications of your job change. If you have any further questions, feel free to ask!",2.843696355819702,188.0,51.0,239.0
+,"아르바이트를 두 군데에서 하고 있는데, 각각에서 4대보험을 공제하고 있어요. 이럴 경우 건강보험은 어떻게 적용되나요?",Meta-Llama-3-8B-Instruct.Q2_K,"[RAG 문서]
+(keep '(근로자 이다 직업_종류와_관계없이_보수를_받아_생활하는_사람))
+
+당신은 NEO 언어 지식베이스(Knowledge Base, KB) 쿼리 변환기입니다.
+KB는 `(keep '(주어 동사 목적어))` 또는 `(keep '(주어 동사 속성 값))`과 같은 리스트 형태의 사실들로 구성됩니다. 동사나 속성명은 필요에 따라 언더스코어(`_`)로 연결된 복합 심볼로 표현됩니다.
+예시: `(keep '(서울 이다 대한민국의_수도))`
+
+사용자가 자연어로 질문을 하면, 당신은 그 질문을 분석하여 주어진 NEO KB 형식에 맞는 NEO 쿼리 언어로만 변환하여 출력해야 합니다. 어떠한 추가 설명이나 답변 생성 없이, 오직 NEO 쿼리 자체만 출력하세요.
+
+**NEO 쿼리 언어 규칙:**
+- **패턴 매칭:** `(kb-match '(패턴))` 또는 `(kb-unit-match '패턴)`을 주로 사용합니다.
+- **바인딩 변수:** 질문하는 대상을 `?변수명` (예: `?x`)으로 표현합니다.
+- **리터럴 심볼:** 심볼 자체가 값으로 사용될 때는 `'심볼` 또는 `(quote 심볼)`을 사용합니다.
+- **리스트 구조:** 쿼리도 리스트 형태로 작성됩니다.
+- **연산자:** 숫자 비교 (`>`, `<`, `>=`, `<=`), 산술 연산 (`+`, `-`, `*`, `/`) 등은 쿼리 내에서 직접 사용될 수 있습니다.
+
+**지침:**
+1.  사용자의 질문에서 핵심적인 주어, 동사, 목적어 또는 속성-값 쌍을 식별하세요.
+2.  식별된 요소를 NEO KB의 심볼 및 리스트 구조에 맞게 변환하세요.
+3.  질문하는 부분은 `?변수명`으로 대체하세요.
+4.  가능한 한 간결하고 정확한 NEO 쿼리를 생성하세요.
+5.  모든 쿼리는 `(kb-match ...)` 또는 `(kb-unit-match ...)` 형태로 시작해야 합니다.
+6.  결과가 여러 개일 수 있음을 고려하여 일반적인 패턴을 사용하세요.
+7.  KB에 직접적인 정보가 없는 질문이라도, 가장 유사하거나 관련 있는 정보를 찾을 수 있는 쿼리를 시도하여 생성하세요.
+8.  keep은 사용하지 마세요.
+
+**예시:**
+- 사용자 질문: ""NEO의 특징은 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((neo 특징 ?x)))
+
+- 사용자 질문: ""공단의 재정운영위원회 위원 임기는 몇 년인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((재정운영위원회 위원_임기 ?x 년)))
+
+- 사용자 질문: ""추론 엔진의 역할은 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((추론_엔진_역할 ?x)))
+
+- 사용자 질문: ""전향 추론에 사용되는 명령어는 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((전향추론_명령어 ?x)))",제도_이용_및_확인질문,0,1,N/A,N/A,N/A,"I see you're talking about Arbate, which has two locations and each location is offering the 4th insurance (Four-ae Insurance) and you're wondering how health insurance is applied in this case.
+
+In this scenario, if the two locations are offering the same insurance plan, the health insurance benefits would likely be applied uniformly across both locations. However, it's essential to clarify with both locations what their insurance benefits cover and how they are applied in this situation.
+
+Here's a step-by-step guide to help you navigate this situation:
+
+1. Clarify the insurance coverage: Contact both locations and clarify their insurance coverage, including the scope of services, in-network providers, and any specific procedures or treatments covered.
+2. Check the policy documents: Review the policy documents from both locations to understand the insurance coverage, limitations, and exclusions.
+3. Verify the benefits: Verify the health insurance benefits offered by both locations, including any pre-existing conditions, chronic illnesses, or ongoing treatments.
+4. Compare the coverage: Compare the health insurance coverage offered by both locations to determine which one provides better coverage for your specific needs.
+5. Consult with a professional: If you're unsure about the insurance coverage or have questions, consult with a health insurance expert or a licensed health professional to help you make an informed decision.
+
+Remember, it's crucial to understand the insurance coverage and benefits before making a decision. Always verify the insurance details and clarify any doubts you may have.",4.4720377922058105,294.0,46.0,340.0
+,건강보험료 납부 내역을 연말정산용으로 확인하려면 어디서 확인하고 출력할 수 있나요?,Meta-Llama-3-8B-Instruct.Q2_K,"[RAG 문서]
+(keep '(근로자 이다 직업_종류와_관계없이_보수를_받아_생활하는_사람))
+
+당신은 NEO 언어 지식베이스(Knowledge Base, KB) 쿼리 변환기입니다.
+KB는 `(keep '(주어 동사 목적어))` 또는 `(keep '(주어 동사 속성 값))`과 같은 리스트 형태의 사실들로 구성됩니다. 동사나 속성명은 필요에 따라 언더스코어(`_`)로 연결된 복합 심볼로 표현됩니다.
+예시: `(keep '(서울 이다 대한민국의_수도))`
+
+사용자가 자연어로 질문을 하면, 당신은 그 질문을 분석하여 주어진 NEO KB 형식에 맞는 NEO 쿼리 언어로만 변환하여 출력해야 합니다. 어떠한 추가 설명이나 답변 생성 없이, 오직 NEO 쿼리 자체만 출력하세요.
+
+**NEO 쿼리 언어 규칙:**
+- **패턴 매칭:** `(kb-match '(패턴))` 또는 `(kb-unit-match '패턴)`을 주로 사용합니다.
+- **바인딩 변수:** 질문하는 대상을 `?변수명` (예: `?x`)으로 표현합니다.
+- **리터럴 심볼:** 심볼 자체가 값으로 사용될 때는 `'심볼` 또는 `(quote 심볼)`을 사용합니다.
+- **리스트 구조:** 쿼리도 리스트 형태로 작성됩니다.
+- **연산자:** 숫자 비교 (`>`, `<`, `>=`, `<=`), 산술 연산 (`+`, `-`, `*`, `/`) 등은 쿼리 내에서 직접 사용될 수 있습니다.
+
+**지침:**
+1.  사용자의 질문에서 핵심적인 주어, 동사, 목적어 또는 속성-값 쌍을 식별하세요.
+2.  식별된 요소를 NEO KB의 심볼 및 리스트 구조에 맞게 변환하세요.
+3.  질문하는 부분은 `?변수명`으로 대체하세요.
+4.  가능한 한 간결하고 정확한 NEO 쿼리를 생성하세요.
+5.  모든 쿼리는 `(kb-match ...)` 또는 `(kb-unit-match ...)` 형태로 시작해야 합니다.
+6.  결과가 여러 개일 수 있음을 고려하여 일반적인 패턴을 사용하세요.
+7.  KB에 직접적인 정보가 없는 질문이라도, 가장 유사하거나 관련 있는 정보를 찾을 수 있는 쿼리를 시도하여 생성하세요.
+8.  keep은 사용하지 마세요.
+
+**예시:**
+- 사용자 질문: ""NEO의 특징은 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((neo 특징 ?x)))
+
+- 사용자 질문: ""공단의 재정운영위원회 위원 임기는 몇 년인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((재정운영위원회 위원_임기 ?x 년)))
+
+- 사용자 질문: ""추론 엔진의 역할은 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((추론_엔진_역할 ?x)))
+
+- 사용자 질문: ""전향 추론에 사용되는 명령어는 무엇인가요?""
+- NEO 쿼리 출력 예시:
+(kb-match '((전향추론_명령어 ?x)))",제도_이용_및_확인질문,0,1,N/A,N/A,N/A,"You're looking to confirm the health insurance premium payment schedule for year-end settlement.
+
+There are a few options to check and verify the payment schedule:
+
+1. **Health Insurance Company Website**: Most health insurance companies provide a section for policyholders to check their policy information, including payment schedules. You can visit the website of your health insurance company and log in with your policy ID or policy number to check the payment schedule.
+2. **Policy Document**: Check your policy document or policy certificate, which should include the payment schedule and payment terms.
+3. **Insurance Broker or Agent**: If you purchased your health insurance through a broker or agent, you can contact them to verify the payment schedule.
+4. **In-Person Verification**: Visit the health insurance company's office or a designated payment center to verify the payment schedule.
+
+To print out the payment schedule, you can:
+
+1. **Download and Print**: Download the payment schedule from your health insurance company's website or visit their office to print out the schedule.
+2. **Policy Document**: Print out your policy document or policy certificate, which should include the payment schedule.
+
+Please note that the payment schedule may vary depending on your health insurance company and policy terms. It's always best to verify the payment schedule with your health insurance company to ensure accuracy and compliance with your policy.",4.016762733459473,265.0,39.0,304.0

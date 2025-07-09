@@ -1,0 +1,1089 @@
+output,elapsed_time,tokens_generated,tokens_prompt,tokens_total,system_prompt,prompt,model,category,is_error
+(keep '(국민건강보험 이다 대한민국의 공적 의료보험 제도)),35.29272150993347,20,1765,1785,"# NEO Knowledge Base Conversion System Prompt
+
+## Introduction
+
+The NEO knowledge base uses a structured list (S-expression) format to represent **facts** and **rules**, which are stored using a special `keep` command. In this format, each fact or rule is enclosed in parentheses as a list. **Rules** are expressed as two related lists sharing the same rule name: one list for the condition (preceded by `if`) and one for the conclusion (preceded by `then`). The system prompt will ensure that any Korean sentence input by a user is automatically converted into this NEO code format, following a strict set of guidelines. Below are the key requirements and conversion rules that the system prompt must enforce:
+
+## Input Format: Korean Sentences
+
+The input to the model will always be a natural language sentence in **Korean**. The system assumes the user’s query is given in Korean and is a simple declarative statement (either a factual statement or a general rule statement). For example, valid inputs might be `""펭귄은 새다""` (""Penguin is a bird"") or `""모든 새는 날 수 있다""` (""All birds can fly""). The prompt should explicitly note that it expects Korean sentences as input, with examples of the format.
+
+## Output Format: NEO List Code
+
+The model’s output **must be in NEO code**, i.e. in the form of lists (S-expressions) that represent the content of the sentence. The subject and predicate (and any object or complement) of the sentence are to be represented as a parenthesized list in the NEO syntax. In other words, the natural language input should be transformed into a **logical form list**. For example:
+
+* Input `""펭귄은 새다""` (Penguin is a bird) should become the list `(펭귄 이다 새)`. Here `펭귄` (penguin) is the subject and `새` (bird) is the category or class, with the copula ""`이다`"" denoting the ""is-a"" relationship.
+* Input `""제비는 날 수 있다""` (A swallow can fly) should become `(제비 can fly)`, representing that the subject *제비* (swallow) has the ability *fly*.
+
+The prompt must ensure the output is **not natural language text** but strictly the NEO code representation of the sentence. All Korean entities and relations should be expressed in the list format using the appropriate symbols or English phrases as defined in the knowledge base. (For instance, the predicate `이다` is used for ""is a"" relations, and the phrase `can fly` is used to denote the ability ""날 수 있다"". Other abilities or relations may similarly be represented with English phrases for consistency.)
+
+## Representing Facts with `keep`
+
+If the input sentence is a **simple fact statement**, it should be output as a list wrapped with the `keep` command. A fact here means a basic statement that some individual has some property or belongs to some category (e.g. ""A is B"", or ""A can do X""). Since each fact is a unit of knowledge to be stored in the knowledge base, the `keep` command is used to save it. The general form is:
+
+```
+(keep '(...))
+```
+
+where the `...` is the list representing the fact. For example:
+
+* Input: **""펭귄은 새다""** – a factual statement that a penguin is a bird.
+  **Output:** `(keep '(펭귄 이다 새))`.
+* Input: **""제비는 날 수 있다""** – a factual statement about a swallow’s ability.
+  **Output:** `(keep '(제비 can fly))`.
+
+In these outputs, the inner list `'(펭귄 이다 새)` or `'(제비 can fly)` is the actual knowledge being expressed, and the `keep '(... )` wrapper instructs NEO to store that fact in the knowledge base. No additional text or explanation accompanies the output – it is purely the code needed to record the fact.
+
+## Representing Rules with If/Then Structure
+
+If the input sentence expresses a **general rule or a conditional statement** (for example, sentences that imply ""all X have property Y"" or ""if X, then Y""), it must be converted into an **if/then rule structure** in NEO. Such a rule is represented by two lists: one for the **antecedent** (condition) and one for the **consequent** (result), each preceded by a shared rule name symbol. The conversion guidelines for rules are as follows:
+
+* **Rule Naming:** Each rule is given a unique name, like `rule1`, `rule2`, etc. The rule name is consistent across the two parts of the rule, linking the `if` part and the `then` part as one rule. The prompt should specify that rule names are to be generated sequentially for each new rule sentence (e.g., the first rule encountered is rule1, the next rule2, and so on).
+
+* **If (Condition) Part:** The condition of the rule corresponds to the premise of the natural sentence. This should be represented in a list following the `if` keyword. Each condition within the premise is converted to a list, using a variable in place of the specific subject. If the natural language implies multiple conditions, all those condition lists are included in the same `if` clause. For example, the sentence **""모든 새는 날 수 있다""** (""All birds can fly"") has the implicit premise ""if something is a bird"" – this is converted to the condition list `(?x 이다 새)` (where `?x` stands for an arbitrary instance of ""bird""). Another example, **""날 수 있는 동물은 새이다""** (""Any animal that can fly is a bird""), has a compound premise ""if something is an animal **and** (it) can fly"" – this yields two condition lists `(?x 이다 동물)` and `(?x can fly)` under the `if` clause. These condition lists are grouped together after the `if` in the rule.
+
+* **Then (Conclusion) Part:** The conclusion of the rule is represented as a list following the `then` keyword, reflecting the outcome that holds when the condition is true. If there are multiple conclusions in the sentence, each would be listed in the `then` clause (though commonly there's one main conclusion). In our examples, for **""모든 새는 날 수 있다""**, the conclusion is that the entity can fly, represented as `(?x can fly)`. For **""날 수 있는 동물은 새이다""**, the conclusion is that the entity is a bird, represented as `(?x 이다 새)`. These follow the `then` in the rule.
+
+* **Example – Complete Rule Conversion:**
+  *Input:* ""모든 새는 날 수 있다.""
+  *Output:*
+
+  ```plaintext
+  (keep '(rule1 if (?x 이다 새)))  
+  (keep '(rule1 then (?x can fly)))  
+  ```
+
+  This corresponds to: If `?x` is a bird, **then** `?x` can fly. Both lines share the rule name `rule1`.
+  *Another Input:* ""날 수 있는 동물은 새이다.""
+  *Output:*
+
+  ```plaintext
+  (keep '(rule2 if (?x 이다 동물) (?x can fly)))  
+  (keep '(rule2 then (?x 이다 새)))  
+  ```
+
+  This corresponds to: If `?x` is an animal **and** `?x` can fly, **then** `?x` is a bird. Here `rule2` is used for this second rule.
+
+* **Use of Multiple Conditions/Conclusions:** NEO allows multiple conditions in the `if` part or multiple conclusions in the `then` part of a single rule if the sentence contains a compound premise or multiple outcomes. In the code, this is done by listing multiple condition lists after the `if` (and similarly multiple conclusion lists after the `then` if needed) within the same rule structure. The above example of the flying animal demonstrates multiple conditions in the `if` clause. If a sentence had multiple conclusions (e.g., ""If X, then Y and Z""), the `then` part would list both conclusion lists. The system prompt should mention that the model may encounter such cases and how to handle them (by including all relevant condition or conclusion lists after the appropriate keyword).
+
+## Using Variables for General Statements
+
+When converting general statements or rules, the prompt must enforce the use of **variables** like `?x`, `?y` in place of specific subjects or objects. These **binding variables** represent arbitrary instances of a concept in rules. The guideline is that the **same entity** mentioned in both the condition and conclusion of a rule should be represented by the **same variable** throughout that rule, to indicate they refer to the same thing. Different entities in the same sentence should use different variables (`?x`, `?y`, `?z`, etc.) as needed.
+
+For example, in **""모든 새는 날 수 있다""**, an unspecified bird is represented as `?x` in both the `if` part (`(?x 이다 새)`) and the `then` part (`(?x can fly)`), linking the condition and conclusion to the same generic entity. The prompt should clearly instruct that the model replace concrete nouns with variables in rules, maintaining consistency (one variable per unique entity). In simple fact statements (like ""펭귄은 새다""), variables are not needed because the statement is about a specific individual (penguin), so the actual noun is used directly in the list.
+
+## Output Restrictions: Code Only, No Explanatory Text
+
+Critically, the system prompt must make it clear that **the model’s answer should contain only the converted NEO code, and nothing else**. This means the model should **not** produce any natural language explanation, comments, or additional clarification aside from the code itself. The output should be formatted as a snippet of code, ideally in a code block, containing one or more lines of NEO expressions. Each line should be a single complete `(keep '(...))` statement, and no line should contain anything outside of the parentheses besides the `keep` prefix. There should be no extra lines or blank lines either – just the code representation. For instance, if the input is ""펭귄은 새다"", the model’s entire answer should be something like:
+
+```plaintext
+(keep '(펭귄 이다 새))
+```
+
+Nothing before or after this line, no greeting, no explanation of what it means – only the code. Even if multiple lines are needed (as in the case of a rule with two lines), the response should still consist solely of those code lines, each properly formatted, and presented in a code block format for clarity. The prompt should explicitly warn the model *not* to output translations, descriptions, or any text except the NEO code itself.
+
+## Scope Limitations and Exceptions
+
+Finally, the system prompt should clarify that it deals **only with straightforward factual and rule-based sentences**. More complex or advanced sentences that go beyond simple facts or general implications are **out of scope** for this conversion. This includes things like function or object definitions in code, highly complex conditional statements, or any form of sentence that doesn’t fit the pattern of a basic assertion or a general rule. The prompt can assume that users will not provide such unsupported inputs. Therefore, the conversion rules above focus on common knowledge statements (facts) and general rules (universal statements or simple conditionals), and the model does not need to handle programming constructs or overly complicated sentences. By limiting the scope, the system ensures more accurate conversions for the intended types of input.
+
+**In summary,** the system prompt must instruct the model to: take a Korean sentence, identify whether it states a simple fact or a general rule, then output the corresponding NEO knowledge base code using the correct list format. It should enforce the use of `keep` for storing facts, `if/then` structure with variables for rules, and strictly produce the code without any extra commentary. By adhering to all the above guidelines, the AI will consistently transform user inputs into the proper NEO knowledge base representation, enabling seamless building of a knowledge base from natural language statements.
+
+
+---
+
+## Output Restrictions: Code Only, No Explanatory Text
+
+Critically, the system prompt must make it clear that **the model’s answer should contain only the converted NEO code, and nothing else**.
+**Under no circumstances should the model output any natural language text, explanation, greeting, summary, translation, comment, or meta content. Only valid NEO code lines must be produced. Any non-code output is strictly prohibited.**
+
+The output must consist of one or more lines of NEO expressions such as:
+
+```plaintext
+(keep '(펭귄 이다 새))
+```
+
+Each line must be a valid NEO expression using `(keep '(...))` or `(keep '(ruleN if ...))` / `(keep '(ruleN then ...))`.
+No additional text, spacing, or context should appear before, after, or between these expressions.
+
+---",국민건강보험은 대한민국의 공적 의료보험 제도이다.,gemma-3-12b-it-Q6_K,국민건강보험,0
+"(keep '(직장가입자 이다 근로자))
+(keep '(직장가입자 이다 사용자))
+",9.287251234054565,29,1766,1795,"# NEO Knowledge Base Conversion System Prompt
+
+## Introduction
+
+The NEO knowledge base uses a structured list (S-expression) format to represent **facts** and **rules**, which are stored using a special `keep` command. In this format, each fact or rule is enclosed in parentheses as a list. **Rules** are expressed as two related lists sharing the same rule name: one list for the condition (preceded by `if`) and one for the conclusion (preceded by `then`). The system prompt will ensure that any Korean sentence input by a user is automatically converted into this NEO code format, following a strict set of guidelines. Below are the key requirements and conversion rules that the system prompt must enforce:
+
+## Input Format: Korean Sentences
+
+The input to the model will always be a natural language sentence in **Korean**. The system assumes the user’s query is given in Korean and is a simple declarative statement (either a factual statement or a general rule statement). For example, valid inputs might be `""펭귄은 새다""` (""Penguin is a bird"") or `""모든 새는 날 수 있다""` (""All birds can fly""). The prompt should explicitly note that it expects Korean sentences as input, with examples of the format.
+
+## Output Format: NEO List Code
+
+The model’s output **must be in NEO code**, i.e. in the form of lists (S-expressions) that represent the content of the sentence. The subject and predicate (and any object or complement) of the sentence are to be represented as a parenthesized list in the NEO syntax. In other words, the natural language input should be transformed into a **logical form list**. For example:
+
+* Input `""펭귄은 새다""` (Penguin is a bird) should become the list `(펭귄 이다 새)`. Here `펭귄` (penguin) is the subject and `새` (bird) is the category or class, with the copula ""`이다`"" denoting the ""is-a"" relationship.
+* Input `""제비는 날 수 있다""` (A swallow can fly) should become `(제비 can fly)`, representing that the subject *제비* (swallow) has the ability *fly*.
+
+The prompt must ensure the output is **not natural language text** but strictly the NEO code representation of the sentence. All Korean entities and relations should be expressed in the list format using the appropriate symbols or English phrases as defined in the knowledge base. (For instance, the predicate `이다` is used for ""is a"" relations, and the phrase `can fly` is used to denote the ability ""날 수 있다"". Other abilities or relations may similarly be represented with English phrases for consistency.)
+
+## Representing Facts with `keep`
+
+If the input sentence is a **simple fact statement**, it should be output as a list wrapped with the `keep` command. A fact here means a basic statement that some individual has some property or belongs to some category (e.g. ""A is B"", or ""A can do X""). Since each fact is a unit of knowledge to be stored in the knowledge base, the `keep` command is used to save it. The general form is:
+
+```
+(keep '(...))
+```
+
+where the `...` is the list representing the fact. For example:
+
+* Input: **""펭귄은 새다""** – a factual statement that a penguin is a bird.
+  **Output:** `(keep '(펭귄 이다 새))`.
+* Input: **""제비는 날 수 있다""** – a factual statement about a swallow’s ability.
+  **Output:** `(keep '(제비 can fly))`.
+
+In these outputs, the inner list `'(펭귄 이다 새)` or `'(제비 can fly)` is the actual knowledge being expressed, and the `keep '(... )` wrapper instructs NEO to store that fact in the knowledge base. No additional text or explanation accompanies the output – it is purely the code needed to record the fact.
+
+## Representing Rules with If/Then Structure
+
+If the input sentence expresses a **general rule or a conditional statement** (for example, sentences that imply ""all X have property Y"" or ""if X, then Y""), it must be converted into an **if/then rule structure** in NEO. Such a rule is represented by two lists: one for the **antecedent** (condition) and one for the **consequent** (result), each preceded by a shared rule name symbol. The conversion guidelines for rules are as follows:
+
+* **Rule Naming:** Each rule is given a unique name, like `rule1`, `rule2`, etc. The rule name is consistent across the two parts of the rule, linking the `if` part and the `then` part as one rule. The prompt should specify that rule names are to be generated sequentially for each new rule sentence (e.g., the first rule encountered is rule1, the next rule2, and so on).
+
+* **If (Condition) Part:** The condition of the rule corresponds to the premise of the natural sentence. This should be represented in a list following the `if` keyword. Each condition within the premise is converted to a list, using a variable in place of the specific subject. If the natural language implies multiple conditions, all those condition lists are included in the same `if` clause. For example, the sentence **""모든 새는 날 수 있다""** (""All birds can fly"") has the implicit premise ""if something is a bird"" – this is converted to the condition list `(?x 이다 새)` (where `?x` stands for an arbitrary instance of ""bird""). Another example, **""날 수 있는 동물은 새이다""** (""Any animal that can fly is a bird""), has a compound premise ""if something is an animal **and** (it) can fly"" – this yields two condition lists `(?x 이다 동물)` and `(?x can fly)` under the `if` clause. These condition lists are grouped together after the `if` in the rule.
+
+* **Then (Conclusion) Part:** The conclusion of the rule is represented as a list following the `then` keyword, reflecting the outcome that holds when the condition is true. If there are multiple conclusions in the sentence, each would be listed in the `then` clause (though commonly there's one main conclusion). In our examples, for **""모든 새는 날 수 있다""**, the conclusion is that the entity can fly, represented as `(?x can fly)`. For **""날 수 있는 동물은 새이다""**, the conclusion is that the entity is a bird, represented as `(?x 이다 새)`. These follow the `then` in the rule.
+
+* **Example – Complete Rule Conversion:**
+  *Input:* ""모든 새는 날 수 있다.""
+  *Output:*
+
+  ```plaintext
+  (keep '(rule1 if (?x 이다 새)))  
+  (keep '(rule1 then (?x can fly)))  
+  ```
+
+  This corresponds to: If `?x` is a bird, **then** `?x` can fly. Both lines share the rule name `rule1`.
+  *Another Input:* ""날 수 있는 동물은 새이다.""
+  *Output:*
+
+  ```plaintext
+  (keep '(rule2 if (?x 이다 동물) (?x can fly)))  
+  (keep '(rule2 then (?x 이다 새)))  
+  ```
+
+  This corresponds to: If `?x` is an animal **and** `?x` can fly, **then** `?x` is a bird. Here `rule2` is used for this second rule.
+
+* **Use of Multiple Conditions/Conclusions:** NEO allows multiple conditions in the `if` part or multiple conclusions in the `then` part of a single rule if the sentence contains a compound premise or multiple outcomes. In the code, this is done by listing multiple condition lists after the `if` (and similarly multiple conclusion lists after the `then` if needed) within the same rule structure. The above example of the flying animal demonstrates multiple conditions in the `if` clause. If a sentence had multiple conclusions (e.g., ""If X, then Y and Z""), the `then` part would list both conclusion lists. The system prompt should mention that the model may encounter such cases and how to handle them (by including all relevant condition or conclusion lists after the appropriate keyword).
+
+## Using Variables for General Statements
+
+When converting general statements or rules, the prompt must enforce the use of **variables** like `?x`, `?y` in place of specific subjects or objects. These **binding variables** represent arbitrary instances of a concept in rules. The guideline is that the **same entity** mentioned in both the condition and conclusion of a rule should be represented by the **same variable** throughout that rule, to indicate they refer to the same thing. Different entities in the same sentence should use different variables (`?x`, `?y`, `?z`, etc.) as needed.
+
+For example, in **""모든 새는 날 수 있다""**, an unspecified bird is represented as `?x` in both the `if` part (`(?x 이다 새)`) and the `then` part (`(?x can fly)`), linking the condition and conclusion to the same generic entity. The prompt should clearly instruct that the model replace concrete nouns with variables in rules, maintaining consistency (one variable per unique entity). In simple fact statements (like ""펭귄은 새다""), variables are not needed because the statement is about a specific individual (penguin), so the actual noun is used directly in the list.
+
+## Output Restrictions: Code Only, No Explanatory Text
+
+Critically, the system prompt must make it clear that **the model’s answer should contain only the converted NEO code, and nothing else**. This means the model should **not** produce any natural language explanation, comments, or additional clarification aside from the code itself. The output should be formatted as a snippet of code, ideally in a code block, containing one or more lines of NEO expressions. Each line should be a single complete `(keep '(...))` statement, and no line should contain anything outside of the parentheses besides the `keep` prefix. There should be no extra lines or blank lines either – just the code representation. For instance, if the input is ""펭귄은 새다"", the model’s entire answer should be something like:
+
+```plaintext
+(keep '(펭귄 이다 새))
+```
+
+Nothing before or after this line, no greeting, no explanation of what it means – only the code. Even if multiple lines are needed (as in the case of a rule with two lines), the response should still consist solely of those code lines, each properly formatted, and presented in a code block format for clarity. The prompt should explicitly warn the model *not* to output translations, descriptions, or any text except the NEO code itself.
+
+## Scope Limitations and Exceptions
+
+Finally, the system prompt should clarify that it deals **only with straightforward factual and rule-based sentences**. More complex or advanced sentences that go beyond simple facts or general implications are **out of scope** for this conversion. This includes things like function or object definitions in code, highly complex conditional statements, or any form of sentence that doesn’t fit the pattern of a basic assertion or a general rule. The prompt can assume that users will not provide such unsupported inputs. Therefore, the conversion rules above focus on common knowledge statements (facts) and general rules (universal statements or simple conditionals), and the model does not need to handle programming constructs or overly complicated sentences. By limiting the scope, the system ensures more accurate conversions for the intended types of input.
+
+**In summary,** the system prompt must instruct the model to: take a Korean sentence, identify whether it states a simple fact or a general rule, then output the corresponding NEO knowledge base code using the correct list format. It should enforce the use of `keep` for storing facts, `if/then` structure with variables for rules, and strictly produce the code without any extra commentary. By adhering to all the above guidelines, the AI will consistently transform user inputs into the proper NEO knowledge base representation, enabling seamless building of a knowledge base from natural language statements.
+
+
+---
+
+## Output Restrictions: Code Only, No Explanatory Text
+
+Critically, the system prompt must make it clear that **the model’s answer should contain only the converted NEO code, and nothing else**.
+**Under no circumstances should the model output any natural language text, explanation, greeting, summary, translation, comment, or meta content. Only valid NEO code lines must be produced. Any non-code output is strictly prohibited.**
+
+The output must consist of one or more lines of NEO expressions such as:
+
+```plaintext
+(keep '(펭귄 이다 새))
+```
+
+Each line must be a valid NEO expression using `(keep '(...))` or `(keep '(ruleN if ...))` / `(keep '(ruleN then ...))`.
+No additional text, spacing, or context should appear before, after, or between these expressions.
+
+---",직장가입자는 근로자와 사용자 모두가 보험료를 부담한다.,gemma-3-12b-it-Q6_K,국민건강보험,0
+"(keep '(지역가입자 이다 보험료))
+(keep '(보험료 기준 소득))
+(keep '(보험료 기준 재산))
+(keep '(보험료 기준 생활수준))",14.1062753200531,44,1771,1815,"# NEO Knowledge Base Conversion System Prompt
+
+## Introduction
+
+The NEO knowledge base uses a structured list (S-expression) format to represent **facts** and **rules**, which are stored using a special `keep` command. In this format, each fact or rule is enclosed in parentheses as a list. **Rules** are expressed as two related lists sharing the same rule name: one list for the condition (preceded by `if`) and one for the conclusion (preceded by `then`). The system prompt will ensure that any Korean sentence input by a user is automatically converted into this NEO code format, following a strict set of guidelines. Below are the key requirements and conversion rules that the system prompt must enforce:
+
+## Input Format: Korean Sentences
+
+The input to the model will always be a natural language sentence in **Korean**. The system assumes the user’s query is given in Korean and is a simple declarative statement (either a factual statement or a general rule statement). For example, valid inputs might be `""펭귄은 새다""` (""Penguin is a bird"") or `""모든 새는 날 수 있다""` (""All birds can fly""). The prompt should explicitly note that it expects Korean sentences as input, with examples of the format.
+
+## Output Format: NEO List Code
+
+The model’s output **must be in NEO code**, i.e. in the form of lists (S-expressions) that represent the content of the sentence. The subject and predicate (and any object or complement) of the sentence are to be represented as a parenthesized list in the NEO syntax. In other words, the natural language input should be transformed into a **logical form list**. For example:
+
+* Input `""펭귄은 새다""` (Penguin is a bird) should become the list `(펭귄 이다 새)`. Here `펭귄` (penguin) is the subject and `새` (bird) is the category or class, with the copula ""`이다`"" denoting the ""is-a"" relationship.
+* Input `""제비는 날 수 있다""` (A swallow can fly) should become `(제비 can fly)`, representing that the subject *제비* (swallow) has the ability *fly*.
+
+The prompt must ensure the output is **not natural language text** but strictly the NEO code representation of the sentence. All Korean entities and relations should be expressed in the list format using the appropriate symbols or English phrases as defined in the knowledge base. (For instance, the predicate `이다` is used for ""is a"" relations, and the phrase `can fly` is used to denote the ability ""날 수 있다"". Other abilities or relations may similarly be represented with English phrases for consistency.)
+
+## Representing Facts with `keep`
+
+If the input sentence is a **simple fact statement**, it should be output as a list wrapped with the `keep` command. A fact here means a basic statement that some individual has some property or belongs to some category (e.g. ""A is B"", or ""A can do X""). Since each fact is a unit of knowledge to be stored in the knowledge base, the `keep` command is used to save it. The general form is:
+
+```
+(keep '(...))
+```
+
+where the `...` is the list representing the fact. For example:
+
+* Input: **""펭귄은 새다""** – a factual statement that a penguin is a bird.
+  **Output:** `(keep '(펭귄 이다 새))`.
+* Input: **""제비는 날 수 있다""** – a factual statement about a swallow’s ability.
+  **Output:** `(keep '(제비 can fly))`.
+
+In these outputs, the inner list `'(펭귄 이다 새)` or `'(제비 can fly)` is the actual knowledge being expressed, and the `keep '(... )` wrapper instructs NEO to store that fact in the knowledge base. No additional text or explanation accompanies the output – it is purely the code needed to record the fact.
+
+## Representing Rules with If/Then Structure
+
+If the input sentence expresses a **general rule or a conditional statement** (for example, sentences that imply ""all X have property Y"" or ""if X, then Y""), it must be converted into an **if/then rule structure** in NEO. Such a rule is represented by two lists: one for the **antecedent** (condition) and one for the **consequent** (result), each preceded by a shared rule name symbol. The conversion guidelines for rules are as follows:
+
+* **Rule Naming:** Each rule is given a unique name, like `rule1`, `rule2`, etc. The rule name is consistent across the two parts of the rule, linking the `if` part and the `then` part as one rule. The prompt should specify that rule names are to be generated sequentially for each new rule sentence (e.g., the first rule encountered is rule1, the next rule2, and so on).
+
+* **If (Condition) Part:** The condition of the rule corresponds to the premise of the natural sentence. This should be represented in a list following the `if` keyword. Each condition within the premise is converted to a list, using a variable in place of the specific subject. If the natural language implies multiple conditions, all those condition lists are included in the same `if` clause. For example, the sentence **""모든 새는 날 수 있다""** (""All birds can fly"") has the implicit premise ""if something is a bird"" – this is converted to the condition list `(?x 이다 새)` (where `?x` stands for an arbitrary instance of ""bird""). Another example, **""날 수 있는 동물은 새이다""** (""Any animal that can fly is a bird""), has a compound premise ""if something is an animal **and** (it) can fly"" – this yields two condition lists `(?x 이다 동물)` and `(?x can fly)` under the `if` clause. These condition lists are grouped together after the `if` in the rule.
+
+* **Then (Conclusion) Part:** The conclusion of the rule is represented as a list following the `then` keyword, reflecting the outcome that holds when the condition is true. If there are multiple conclusions in the sentence, each would be listed in the `then` clause (though commonly there's one main conclusion). In our examples, for **""모든 새는 날 수 있다""**, the conclusion is that the entity can fly, represented as `(?x can fly)`. For **""날 수 있는 동물은 새이다""**, the conclusion is that the entity is a bird, represented as `(?x 이다 새)`. These follow the `then` in the rule.
+
+* **Example – Complete Rule Conversion:**
+  *Input:* ""모든 새는 날 수 있다.""
+  *Output:*
+
+  ```plaintext
+  (keep '(rule1 if (?x 이다 새)))  
+  (keep '(rule1 then (?x can fly)))  
+  ```
+
+  This corresponds to: If `?x` is a bird, **then** `?x` can fly. Both lines share the rule name `rule1`.
+  *Another Input:* ""날 수 있는 동물은 새이다.""
+  *Output:*
+
+  ```plaintext
+  (keep '(rule2 if (?x 이다 동물) (?x can fly)))  
+  (keep '(rule2 then (?x 이다 새)))  
+  ```
+
+  This corresponds to: If `?x` is an animal **and** `?x` can fly, **then** `?x` is a bird. Here `rule2` is used for this second rule.
+
+* **Use of Multiple Conditions/Conclusions:** NEO allows multiple conditions in the `if` part or multiple conclusions in the `then` part of a single rule if the sentence contains a compound premise or multiple outcomes. In the code, this is done by listing multiple condition lists after the `if` (and similarly multiple conclusion lists after the `then` if needed) within the same rule structure. The above example of the flying animal demonstrates multiple conditions in the `if` clause. If a sentence had multiple conclusions (e.g., ""If X, then Y and Z""), the `then` part would list both conclusion lists. The system prompt should mention that the model may encounter such cases and how to handle them (by including all relevant condition or conclusion lists after the appropriate keyword).
+
+## Using Variables for General Statements
+
+When converting general statements or rules, the prompt must enforce the use of **variables** like `?x`, `?y` in place of specific subjects or objects. These **binding variables** represent arbitrary instances of a concept in rules. The guideline is that the **same entity** mentioned in both the condition and conclusion of a rule should be represented by the **same variable** throughout that rule, to indicate they refer to the same thing. Different entities in the same sentence should use different variables (`?x`, `?y`, `?z`, etc.) as needed.
+
+For example, in **""모든 새는 날 수 있다""**, an unspecified bird is represented as `?x` in both the `if` part (`(?x 이다 새)`) and the `then` part (`(?x can fly)`), linking the condition and conclusion to the same generic entity. The prompt should clearly instruct that the model replace concrete nouns with variables in rules, maintaining consistency (one variable per unique entity). In simple fact statements (like ""펭귄은 새다""), variables are not needed because the statement is about a specific individual (penguin), so the actual noun is used directly in the list.
+
+## Output Restrictions: Code Only, No Explanatory Text
+
+Critically, the system prompt must make it clear that **the model’s answer should contain only the converted NEO code, and nothing else**. This means the model should **not** produce any natural language explanation, comments, or additional clarification aside from the code itself. The output should be formatted as a snippet of code, ideally in a code block, containing one or more lines of NEO expressions. Each line should be a single complete `(keep '(...))` statement, and no line should contain anything outside of the parentheses besides the `keep` prefix. There should be no extra lines or blank lines either – just the code representation. For instance, if the input is ""펭귄은 새다"", the model’s entire answer should be something like:
+
+```plaintext
+(keep '(펭귄 이다 새))
+```
+
+Nothing before or after this line, no greeting, no explanation of what it means – only the code. Even if multiple lines are needed (as in the case of a rule with two lines), the response should still consist solely of those code lines, each properly formatted, and presented in a code block format for clarity. The prompt should explicitly warn the model *not* to output translations, descriptions, or any text except the NEO code itself.
+
+## Scope Limitations and Exceptions
+
+Finally, the system prompt should clarify that it deals **only with straightforward factual and rule-based sentences**. More complex or advanced sentences that go beyond simple facts or general implications are **out of scope** for this conversion. This includes things like function or object definitions in code, highly complex conditional statements, or any form of sentence that doesn’t fit the pattern of a basic assertion or a general rule. The prompt can assume that users will not provide such unsupported inputs. Therefore, the conversion rules above focus on common knowledge statements (facts) and general rules (universal statements or simple conditionals), and the model does not need to handle programming constructs or overly complicated sentences. By limiting the scope, the system ensures more accurate conversions for the intended types of input.
+
+**In summary,** the system prompt must instruct the model to: take a Korean sentence, identify whether it states a simple fact or a general rule, then output the corresponding NEO knowledge base code using the correct list format. It should enforce the use of `keep` for storing facts, `if/then` structure with variables for rules, and strictly produce the code without any extra commentary. By adhering to all the above guidelines, the AI will consistently transform user inputs into the proper NEO knowledge base representation, enabling seamless building of a knowledge base from natural language statements.
+
+
+---
+
+## Output Restrictions: Code Only, No Explanatory Text
+
+Critically, the system prompt must make it clear that **the model’s answer should contain only the converted NEO code, and nothing else**.
+**Under no circumstances should the model output any natural language text, explanation, greeting, summary, translation, comment, or meta content. Only valid NEO code lines must be produced. Any non-code output is strictly prohibited.**
+
+The output must consist of one or more lines of NEO expressions such as:
+
+```plaintext
+(keep '(펭귄 이다 새))
+```
+
+Each line must be a valid NEO expression using `(keep '(...))` or `(keep '(ruleN if ...))` / `(keep '(ruleN then ...))`.
+No additional text, spacing, or context should appear before, after, or between these expressions.
+
+---","지역가입자의 보험료는 소득, 재산, 생활수준 등을 기준으로 산정된다.",gemma-3-12b-it-Q6_K,국민건강보험,0
+(keep '(건강보험료 이다 매월 납부)),4.902368068695068,15,1765,1780,"# NEO Knowledge Base Conversion System Prompt
+
+## Introduction
+
+The NEO knowledge base uses a structured list (S-expression) format to represent **facts** and **rules**, which are stored using a special `keep` command. In this format, each fact or rule is enclosed in parentheses as a list. **Rules** are expressed as two related lists sharing the same rule name: one list for the condition (preceded by `if`) and one for the conclusion (preceded by `then`). The system prompt will ensure that any Korean sentence input by a user is automatically converted into this NEO code format, following a strict set of guidelines. Below are the key requirements and conversion rules that the system prompt must enforce:
+
+## Input Format: Korean Sentences
+
+The input to the model will always be a natural language sentence in **Korean**. The system assumes the user’s query is given in Korean and is a simple declarative statement (either a factual statement or a general rule statement). For example, valid inputs might be `""펭귄은 새다""` (""Penguin is a bird"") or `""모든 새는 날 수 있다""` (""All birds can fly""). The prompt should explicitly note that it expects Korean sentences as input, with examples of the format.
+
+## Output Format: NEO List Code
+
+The model’s output **must be in NEO code**, i.e. in the form of lists (S-expressions) that represent the content of the sentence. The subject and predicate (and any object or complement) of the sentence are to be represented as a parenthesized list in the NEO syntax. In other words, the natural language input should be transformed into a **logical form list**. For example:
+
+* Input `""펭귄은 새다""` (Penguin is a bird) should become the list `(펭귄 이다 새)`. Here `펭귄` (penguin) is the subject and `새` (bird) is the category or class, with the copula ""`이다`"" denoting the ""is-a"" relationship.
+* Input `""제비는 날 수 있다""` (A swallow can fly) should become `(제비 can fly)`, representing that the subject *제비* (swallow) has the ability *fly*.
+
+The prompt must ensure the output is **not natural language text** but strictly the NEO code representation of the sentence. All Korean entities and relations should be expressed in the list format using the appropriate symbols or English phrases as defined in the knowledge base. (For instance, the predicate `이다` is used for ""is a"" relations, and the phrase `can fly` is used to denote the ability ""날 수 있다"". Other abilities or relations may similarly be represented with English phrases for consistency.)
+
+## Representing Facts with `keep`
+
+If the input sentence is a **simple fact statement**, it should be output as a list wrapped with the `keep` command. A fact here means a basic statement that some individual has some property or belongs to some category (e.g. ""A is B"", or ""A can do X""). Since each fact is a unit of knowledge to be stored in the knowledge base, the `keep` command is used to save it. The general form is:
+
+```
+(keep '(...))
+```
+
+where the `...` is the list representing the fact. For example:
+
+* Input: **""펭귄은 새다""** – a factual statement that a penguin is a bird.
+  **Output:** `(keep '(펭귄 이다 새))`.
+* Input: **""제비는 날 수 있다""** – a factual statement about a swallow’s ability.
+  **Output:** `(keep '(제비 can fly))`.
+
+In these outputs, the inner list `'(펭귄 이다 새)` or `'(제비 can fly)` is the actual knowledge being expressed, and the `keep '(... )` wrapper instructs NEO to store that fact in the knowledge base. No additional text or explanation accompanies the output – it is purely the code needed to record the fact.
+
+## Representing Rules with If/Then Structure
+
+If the input sentence expresses a **general rule or a conditional statement** (for example, sentences that imply ""all X have property Y"" or ""if X, then Y""), it must be converted into an **if/then rule structure** in NEO. Such a rule is represented by two lists: one for the **antecedent** (condition) and one for the **consequent** (result), each preceded by a shared rule name symbol. The conversion guidelines for rules are as follows:
+
+* **Rule Naming:** Each rule is given a unique name, like `rule1`, `rule2`, etc. The rule name is consistent across the two parts of the rule, linking the `if` part and the `then` part as one rule. The prompt should specify that rule names are to be generated sequentially for each new rule sentence (e.g., the first rule encountered is rule1, the next rule2, and so on).
+
+* **If (Condition) Part:** The condition of the rule corresponds to the premise of the natural sentence. This should be represented in a list following the `if` keyword. Each condition within the premise is converted to a list, using a variable in place of the specific subject. If the natural language implies multiple conditions, all those condition lists are included in the same `if` clause. For example, the sentence **""모든 새는 날 수 있다""** (""All birds can fly"") has the implicit premise ""if something is a bird"" – this is converted to the condition list `(?x 이다 새)` (where `?x` stands for an arbitrary instance of ""bird""). Another example, **""날 수 있는 동물은 새이다""** (""Any animal that can fly is a bird""), has a compound premise ""if something is an animal **and** (it) can fly"" – this yields two condition lists `(?x 이다 동물)` and `(?x can fly)` under the `if` clause. These condition lists are grouped together after the `if` in the rule.
+
+* **Then (Conclusion) Part:** The conclusion of the rule is represented as a list following the `then` keyword, reflecting the outcome that holds when the condition is true. If there are multiple conclusions in the sentence, each would be listed in the `then` clause (though commonly there's one main conclusion). In our examples, for **""모든 새는 날 수 있다""**, the conclusion is that the entity can fly, represented as `(?x can fly)`. For **""날 수 있는 동물은 새이다""**, the conclusion is that the entity is a bird, represented as `(?x 이다 새)`. These follow the `then` in the rule.
+
+* **Example – Complete Rule Conversion:**
+  *Input:* ""모든 새는 날 수 있다.""
+  *Output:*
+
+  ```plaintext
+  (keep '(rule1 if (?x 이다 새)))  
+  (keep '(rule1 then (?x can fly)))  
+  ```
+
+  This corresponds to: If `?x` is a bird, **then** `?x` can fly. Both lines share the rule name `rule1`.
+  *Another Input:* ""날 수 있는 동물은 새이다.""
+  *Output:*
+
+  ```plaintext
+  (keep '(rule2 if (?x 이다 동물) (?x can fly)))  
+  (keep '(rule2 then (?x 이다 새)))  
+  ```
+
+  This corresponds to: If `?x` is an animal **and** `?x` can fly, **then** `?x` is a bird. Here `rule2` is used for this second rule.
+
+* **Use of Multiple Conditions/Conclusions:** NEO allows multiple conditions in the `if` part or multiple conclusions in the `then` part of a single rule if the sentence contains a compound premise or multiple outcomes. In the code, this is done by listing multiple condition lists after the `if` (and similarly multiple conclusion lists after the `then` if needed) within the same rule structure. The above example of the flying animal demonstrates multiple conditions in the `if` clause. If a sentence had multiple conclusions (e.g., ""If X, then Y and Z""), the `then` part would list both conclusion lists. The system prompt should mention that the model may encounter such cases and how to handle them (by including all relevant condition or conclusion lists after the appropriate keyword).
+
+## Using Variables for General Statements
+
+When converting general statements or rules, the prompt must enforce the use of **variables** like `?x`, `?y` in place of specific subjects or objects. These **binding variables** represent arbitrary instances of a concept in rules. The guideline is that the **same entity** mentioned in both the condition and conclusion of a rule should be represented by the **same variable** throughout that rule, to indicate they refer to the same thing. Different entities in the same sentence should use different variables (`?x`, `?y`, `?z`, etc.) as needed.
+
+For example, in **""모든 새는 날 수 있다""**, an unspecified bird is represented as `?x` in both the `if` part (`(?x 이다 새)`) and the `then` part (`(?x can fly)`), linking the condition and conclusion to the same generic entity. The prompt should clearly instruct that the model replace concrete nouns with variables in rules, maintaining consistency (one variable per unique entity). In simple fact statements (like ""펭귄은 새다""), variables are not needed because the statement is about a specific individual (penguin), so the actual noun is used directly in the list.
+
+## Output Restrictions: Code Only, No Explanatory Text
+
+Critically, the system prompt must make it clear that **the model’s answer should contain only the converted NEO code, and nothing else**. This means the model should **not** produce any natural language explanation, comments, or additional clarification aside from the code itself. The output should be formatted as a snippet of code, ideally in a code block, containing one or more lines of NEO expressions. Each line should be a single complete `(keep '(...))` statement, and no line should contain anything outside of the parentheses besides the `keep` prefix. There should be no extra lines or blank lines either – just the code representation. For instance, if the input is ""펭귄은 새다"", the model’s entire answer should be something like:
+
+```plaintext
+(keep '(펭귄 이다 새))
+```
+
+Nothing before or after this line, no greeting, no explanation of what it means – only the code. Even if multiple lines are needed (as in the case of a rule with two lines), the response should still consist solely of those code lines, each properly formatted, and presented in a code block format for clarity. The prompt should explicitly warn the model *not* to output translations, descriptions, or any text except the NEO code itself.
+
+## Scope Limitations and Exceptions
+
+Finally, the system prompt should clarify that it deals **only with straightforward factual and rule-based sentences**. More complex or advanced sentences that go beyond simple facts or general implications are **out of scope** for this conversion. This includes things like function or object definitions in code, highly complex conditional statements, or any form of sentence that doesn’t fit the pattern of a basic assertion or a general rule. The prompt can assume that users will not provide such unsupported inputs. Therefore, the conversion rules above focus on common knowledge statements (facts) and general rules (universal statements or simple conditionals), and the model does not need to handle programming constructs or overly complicated sentences. By limiting the scope, the system ensures more accurate conversions for the intended types of input.
+
+**In summary,** the system prompt must instruct the model to: take a Korean sentence, identify whether it states a simple fact or a general rule, then output the corresponding NEO knowledge base code using the correct list format. It should enforce the use of `keep` for storing facts, `if/then` structure with variables for rules, and strictly produce the code without any extra commentary. By adhering to all the above guidelines, the AI will consistently transform user inputs into the proper NEO knowledge base representation, enabling seamless building of a knowledge base from natural language statements.
+
+
+---
+
+## Output Restrictions: Code Only, No Explanatory Text
+
+Critically, the system prompt must make it clear that **the model’s answer should contain only the converted NEO code, and nothing else**.
+**Under no circumstances should the model output any natural language text, explanation, greeting, summary, translation, comment, or meta content. Only valid NEO code lines must be produced. Any non-code output is strictly prohibited.**
+
+The output must consist of one or more lines of NEO expressions such as:
+
+```plaintext
+(keep '(펭귄 이다 새))
+```
+
+Each line must be a valid NEO expression using `(keep '(...))` or `(keep '(ruleN if ...))` / `(keep '(ruleN then ...))`.
+No additional text, spacing, or context should appear before, after, or between these expressions.
+
+---",건강보험료는 매월 10일까지 납부해야 한다.,gemma-3-12b-it-Q6_K,국민건강보험,0
+(keep '(건강보험 피부양자 이다 일정 요건)),5.175415277481079,16,1767,1783,"# NEO Knowledge Base Conversion System Prompt
+
+## Introduction
+
+The NEO knowledge base uses a structured list (S-expression) format to represent **facts** and **rules**, which are stored using a special `keep` command. In this format, each fact or rule is enclosed in parentheses as a list. **Rules** are expressed as two related lists sharing the same rule name: one list for the condition (preceded by `if`) and one for the conclusion (preceded by `then`). The system prompt will ensure that any Korean sentence input by a user is automatically converted into this NEO code format, following a strict set of guidelines. Below are the key requirements and conversion rules that the system prompt must enforce:
+
+## Input Format: Korean Sentences
+
+The input to the model will always be a natural language sentence in **Korean**. The system assumes the user’s query is given in Korean and is a simple declarative statement (either a factual statement or a general rule statement). For example, valid inputs might be `""펭귄은 새다""` (""Penguin is a bird"") or `""모든 새는 날 수 있다""` (""All birds can fly""). The prompt should explicitly note that it expects Korean sentences as input, with examples of the format.
+
+## Output Format: NEO List Code
+
+The model’s output **must be in NEO code**, i.e. in the form of lists (S-expressions) that represent the content of the sentence. The subject and predicate (and any object or complement) of the sentence are to be represented as a parenthesized list in the NEO syntax. In other words, the natural language input should be transformed into a **logical form list**. For example:
+
+* Input `""펭귄은 새다""` (Penguin is a bird) should become the list `(펭귄 이다 새)`. Here `펭귄` (penguin) is the subject and `새` (bird) is the category or class, with the copula ""`이다`"" denoting the ""is-a"" relationship.
+* Input `""제비는 날 수 있다""` (A swallow can fly) should become `(제비 can fly)`, representing that the subject *제비* (swallow) has the ability *fly*.
+
+The prompt must ensure the output is **not natural language text** but strictly the NEO code representation of the sentence. All Korean entities and relations should be expressed in the list format using the appropriate symbols or English phrases as defined in the knowledge base. (For instance, the predicate `이다` is used for ""is a"" relations, and the phrase `can fly` is used to denote the ability ""날 수 있다"". Other abilities or relations may similarly be represented with English phrases for consistency.)
+
+## Representing Facts with `keep`
+
+If the input sentence is a **simple fact statement**, it should be output as a list wrapped with the `keep` command. A fact here means a basic statement that some individual has some property or belongs to some category (e.g. ""A is B"", or ""A can do X""). Since each fact is a unit of knowledge to be stored in the knowledge base, the `keep` command is used to save it. The general form is:
+
+```
+(keep '(...))
+```
+
+where the `...` is the list representing the fact. For example:
+
+* Input: **""펭귄은 새다""** – a factual statement that a penguin is a bird.
+  **Output:** `(keep '(펭귄 이다 새))`.
+* Input: **""제비는 날 수 있다""** – a factual statement about a swallow’s ability.
+  **Output:** `(keep '(제비 can fly))`.
+
+In these outputs, the inner list `'(펭귄 이다 새)` or `'(제비 can fly)` is the actual knowledge being expressed, and the `keep '(... )` wrapper instructs NEO to store that fact in the knowledge base. No additional text or explanation accompanies the output – it is purely the code needed to record the fact.
+
+## Representing Rules with If/Then Structure
+
+If the input sentence expresses a **general rule or a conditional statement** (for example, sentences that imply ""all X have property Y"" or ""if X, then Y""), it must be converted into an **if/then rule structure** in NEO. Such a rule is represented by two lists: one for the **antecedent** (condition) and one for the **consequent** (result), each preceded by a shared rule name symbol. The conversion guidelines for rules are as follows:
+
+* **Rule Naming:** Each rule is given a unique name, like `rule1`, `rule2`, etc. The rule name is consistent across the two parts of the rule, linking the `if` part and the `then` part as one rule. The prompt should specify that rule names are to be generated sequentially for each new rule sentence (e.g., the first rule encountered is rule1, the next rule2, and so on).
+
+* **If (Condition) Part:** The condition of the rule corresponds to the premise of the natural sentence. This should be represented in a list following the `if` keyword. Each condition within the premise is converted to a list, using a variable in place of the specific subject. If the natural language implies multiple conditions, all those condition lists are included in the same `if` clause. For example, the sentence **""모든 새는 날 수 있다""** (""All birds can fly"") has the implicit premise ""if something is a bird"" – this is converted to the condition list `(?x 이다 새)` (where `?x` stands for an arbitrary instance of ""bird""). Another example, **""날 수 있는 동물은 새이다""** (""Any animal that can fly is a bird""), has a compound premise ""if something is an animal **and** (it) can fly"" – this yields two condition lists `(?x 이다 동물)` and `(?x can fly)` under the `if` clause. These condition lists are grouped together after the `if` in the rule.
+
+* **Then (Conclusion) Part:** The conclusion of the rule is represented as a list following the `then` keyword, reflecting the outcome that holds when the condition is true. If there are multiple conclusions in the sentence, each would be listed in the `then` clause (though commonly there's one main conclusion). In our examples, for **""모든 새는 날 수 있다""**, the conclusion is that the entity can fly, represented as `(?x can fly)`. For **""날 수 있는 동물은 새이다""**, the conclusion is that the entity is a bird, represented as `(?x 이다 새)`. These follow the `then` in the rule.
+
+* **Example – Complete Rule Conversion:**
+  *Input:* ""모든 새는 날 수 있다.""
+  *Output:*
+
+  ```plaintext
+  (keep '(rule1 if (?x 이다 새)))  
+  (keep '(rule1 then (?x can fly)))  
+  ```
+
+  This corresponds to: If `?x` is a bird, **then** `?x` can fly. Both lines share the rule name `rule1`.
+  *Another Input:* ""날 수 있는 동물은 새이다.""
+  *Output:*
+
+  ```plaintext
+  (keep '(rule2 if (?x 이다 동물) (?x can fly)))  
+  (keep '(rule2 then (?x 이다 새)))  
+  ```
+
+  This corresponds to: If `?x` is an animal **and** `?x` can fly, **then** `?x` is a bird. Here `rule2` is used for this second rule.
+
+* **Use of Multiple Conditions/Conclusions:** NEO allows multiple conditions in the `if` part or multiple conclusions in the `then` part of a single rule if the sentence contains a compound premise or multiple outcomes. In the code, this is done by listing multiple condition lists after the `if` (and similarly multiple conclusion lists after the `then` if needed) within the same rule structure. The above example of the flying animal demonstrates multiple conditions in the `if` clause. If a sentence had multiple conclusions (e.g., ""If X, then Y and Z""), the `then` part would list both conclusion lists. The system prompt should mention that the model may encounter such cases and how to handle them (by including all relevant condition or conclusion lists after the appropriate keyword).
+
+## Using Variables for General Statements
+
+When converting general statements or rules, the prompt must enforce the use of **variables** like `?x`, `?y` in place of specific subjects or objects. These **binding variables** represent arbitrary instances of a concept in rules. The guideline is that the **same entity** mentioned in both the condition and conclusion of a rule should be represented by the **same variable** throughout that rule, to indicate they refer to the same thing. Different entities in the same sentence should use different variables (`?x`, `?y`, `?z`, etc.) as needed.
+
+For example, in **""모든 새는 날 수 있다""**, an unspecified bird is represented as `?x` in both the `if` part (`(?x 이다 새)`) and the `then` part (`(?x can fly)`), linking the condition and conclusion to the same generic entity. The prompt should clearly instruct that the model replace concrete nouns with variables in rules, maintaining consistency (one variable per unique entity). In simple fact statements (like ""펭귄은 새다""), variables are not needed because the statement is about a specific individual (penguin), so the actual noun is used directly in the list.
+
+## Output Restrictions: Code Only, No Explanatory Text
+
+Critically, the system prompt must make it clear that **the model’s answer should contain only the converted NEO code, and nothing else**. This means the model should **not** produce any natural language explanation, comments, or additional clarification aside from the code itself. The output should be formatted as a snippet of code, ideally in a code block, containing one or more lines of NEO expressions. Each line should be a single complete `(keep '(...))` statement, and no line should contain anything outside of the parentheses besides the `keep` prefix. There should be no extra lines or blank lines either – just the code representation. For instance, if the input is ""펭귄은 새다"", the model’s entire answer should be something like:
+
+```plaintext
+(keep '(펭귄 이다 새))
+```
+
+Nothing before or after this line, no greeting, no explanation of what it means – only the code. Even if multiple lines are needed (as in the case of a rule with two lines), the response should still consist solely of those code lines, each properly formatted, and presented in a code block format for clarity. The prompt should explicitly warn the model *not* to output translations, descriptions, or any text except the NEO code itself.
+
+## Scope Limitations and Exceptions
+
+Finally, the system prompt should clarify that it deals **only with straightforward factual and rule-based sentences**. More complex or advanced sentences that go beyond simple facts or general implications are **out of scope** for this conversion. This includes things like function or object definitions in code, highly complex conditional statements, or any form of sentence that doesn’t fit the pattern of a basic assertion or a general rule. The prompt can assume that users will not provide such unsupported inputs. Therefore, the conversion rules above focus on common knowledge statements (facts) and general rules (universal statements or simple conditionals), and the model does not need to handle programming constructs or overly complicated sentences. By limiting the scope, the system ensures more accurate conversions for the intended types of input.
+
+**In summary,** the system prompt must instruct the model to: take a Korean sentence, identify whether it states a simple fact or a general rule, then output the corresponding NEO knowledge base code using the correct list format. It should enforce the use of `keep` for storing facts, `if/then` structure with variables for rules, and strictly produce the code without any extra commentary. By adhering to all the above guidelines, the AI will consistently transform user inputs into the proper NEO knowledge base representation, enabling seamless building of a knowledge base from natural language statements.
+
+
+---
+
+## Output Restrictions: Code Only, No Explanatory Text
+
+Critically, the system prompt must make it clear that **the model’s answer should contain only the converted NEO code, and nothing else**.
+**Under no circumstances should the model output any natural language text, explanation, greeting, summary, translation, comment, or meta content. Only valid NEO code lines must be produced. Any non-code output is strictly prohibited.**
+
+The output must consist of one or more lines of NEO expressions such as:
+
+```plaintext
+(keep '(펭귄 이다 새))
+```
+
+Each line must be a valid NEO expression using `(keep '(...))` or `(keep '(ruleN if ...))` / `(keep '(ruleN then ...))`.
+No additional text, spacing, or context should appear before, after, or between these expressions.
+
+---",건강보험 피부양자는 일정 요건을 충족해야 등록할 수 있다.,gemma-3-12b-it-Q6_K,국민건강보험,0
+"(keep '(건강보험 급여에는 진료, 입원, 약제비 등이 포함된다))
+",7.68299412727356,24,1768,1792,"# NEO Knowledge Base Conversion System Prompt
+
+## Introduction
+
+The NEO knowledge base uses a structured list (S-expression) format to represent **facts** and **rules**, which are stored using a special `keep` command. In this format, each fact or rule is enclosed in parentheses as a list. **Rules** are expressed as two related lists sharing the same rule name: one list for the condition (preceded by `if`) and one for the conclusion (preceded by `then`). The system prompt will ensure that any Korean sentence input by a user is automatically converted into this NEO code format, following a strict set of guidelines. Below are the key requirements and conversion rules that the system prompt must enforce:
+
+## Input Format: Korean Sentences
+
+The input to the model will always be a natural language sentence in **Korean**. The system assumes the user’s query is given in Korean and is a simple declarative statement (either a factual statement or a general rule statement). For example, valid inputs might be `""펭귄은 새다""` (""Penguin is a bird"") or `""모든 새는 날 수 있다""` (""All birds can fly""). The prompt should explicitly note that it expects Korean sentences as input, with examples of the format.
+
+## Output Format: NEO List Code
+
+The model’s output **must be in NEO code**, i.e. in the form of lists (S-expressions) that represent the content of the sentence. The subject and predicate (and any object or complement) of the sentence are to be represented as a parenthesized list in the NEO syntax. In other words, the natural language input should be transformed into a **logical form list**. For example:
+
+* Input `""펭귄은 새다""` (Penguin is a bird) should become the list `(펭귄 이다 새)`. Here `펭귄` (penguin) is the subject and `새` (bird) is the category or class, with the copula ""`이다`"" denoting the ""is-a"" relationship.
+* Input `""제비는 날 수 있다""` (A swallow can fly) should become `(제비 can fly)`, representing that the subject *제비* (swallow) has the ability *fly*.
+
+The prompt must ensure the output is **not natural language text** but strictly the NEO code representation of the sentence. All Korean entities and relations should be expressed in the list format using the appropriate symbols or English phrases as defined in the knowledge base. (For instance, the predicate `이다` is used for ""is a"" relations, and the phrase `can fly` is used to denote the ability ""날 수 있다"". Other abilities or relations may similarly be represented with English phrases for consistency.)
+
+## Representing Facts with `keep`
+
+If the input sentence is a **simple fact statement**, it should be output as a list wrapped with the `keep` command. A fact here means a basic statement that some individual has some property or belongs to some category (e.g. ""A is B"", or ""A can do X""). Since each fact is a unit of knowledge to be stored in the knowledge base, the `keep` command is used to save it. The general form is:
+
+```
+(keep '(...))
+```
+
+where the `...` is the list representing the fact. For example:
+
+* Input: **""펭귄은 새다""** – a factual statement that a penguin is a bird.
+  **Output:** `(keep '(펭귄 이다 새))`.
+* Input: **""제비는 날 수 있다""** – a factual statement about a swallow’s ability.
+  **Output:** `(keep '(제비 can fly))`.
+
+In these outputs, the inner list `'(펭귄 이다 새)` or `'(제비 can fly)` is the actual knowledge being expressed, and the `keep '(... )` wrapper instructs NEO to store that fact in the knowledge base. No additional text or explanation accompanies the output – it is purely the code needed to record the fact.
+
+## Representing Rules with If/Then Structure
+
+If the input sentence expresses a **general rule or a conditional statement** (for example, sentences that imply ""all X have property Y"" or ""if X, then Y""), it must be converted into an **if/then rule structure** in NEO. Such a rule is represented by two lists: one for the **antecedent** (condition) and one for the **consequent** (result), each preceded by a shared rule name symbol. The conversion guidelines for rules are as follows:
+
+* **Rule Naming:** Each rule is given a unique name, like `rule1`, `rule2`, etc. The rule name is consistent across the two parts of the rule, linking the `if` part and the `then` part as one rule. The prompt should specify that rule names are to be generated sequentially for each new rule sentence (e.g., the first rule encountered is rule1, the next rule2, and so on).
+
+* **If (Condition) Part:** The condition of the rule corresponds to the premise of the natural sentence. This should be represented in a list following the `if` keyword. Each condition within the premise is converted to a list, using a variable in place of the specific subject. If the natural language implies multiple conditions, all those condition lists are included in the same `if` clause. For example, the sentence **""모든 새는 날 수 있다""** (""All birds can fly"") has the implicit premise ""if something is a bird"" – this is converted to the condition list `(?x 이다 새)` (where `?x` stands for an arbitrary instance of ""bird""). Another example, **""날 수 있는 동물은 새이다""** (""Any animal that can fly is a bird""), has a compound premise ""if something is an animal **and** (it) can fly"" – this yields two condition lists `(?x 이다 동물)` and `(?x can fly)` under the `if` clause. These condition lists are grouped together after the `if` in the rule.
+
+* **Then (Conclusion) Part:** The conclusion of the rule is represented as a list following the `then` keyword, reflecting the outcome that holds when the condition is true. If there are multiple conclusions in the sentence, each would be listed in the `then` clause (though commonly there's one main conclusion). In our examples, for **""모든 새는 날 수 있다""**, the conclusion is that the entity can fly, represented as `(?x can fly)`. For **""날 수 있는 동물은 새이다""**, the conclusion is that the entity is a bird, represented as `(?x 이다 새)`. These follow the `then` in the rule.
+
+* **Example – Complete Rule Conversion:**
+  *Input:* ""모든 새는 날 수 있다.""
+  *Output:*
+
+  ```plaintext
+  (keep '(rule1 if (?x 이다 새)))  
+  (keep '(rule1 then (?x can fly)))  
+  ```
+
+  This corresponds to: If `?x` is a bird, **then** `?x` can fly. Both lines share the rule name `rule1`.
+  *Another Input:* ""날 수 있는 동물은 새이다.""
+  *Output:*
+
+  ```plaintext
+  (keep '(rule2 if (?x 이다 동물) (?x can fly)))  
+  (keep '(rule2 then (?x 이다 새)))  
+  ```
+
+  This corresponds to: If `?x` is an animal **and** `?x` can fly, **then** `?x` is a bird. Here `rule2` is used for this second rule.
+
+* **Use of Multiple Conditions/Conclusions:** NEO allows multiple conditions in the `if` part or multiple conclusions in the `then` part of a single rule if the sentence contains a compound premise or multiple outcomes. In the code, this is done by listing multiple condition lists after the `if` (and similarly multiple conclusion lists after the `then` if needed) within the same rule structure. The above example of the flying animal demonstrates multiple conditions in the `if` clause. If a sentence had multiple conclusions (e.g., ""If X, then Y and Z""), the `then` part would list both conclusion lists. The system prompt should mention that the model may encounter such cases and how to handle them (by including all relevant condition or conclusion lists after the appropriate keyword).
+
+## Using Variables for General Statements
+
+When converting general statements or rules, the prompt must enforce the use of **variables** like `?x`, `?y` in place of specific subjects or objects. These **binding variables** represent arbitrary instances of a concept in rules. The guideline is that the **same entity** mentioned in both the condition and conclusion of a rule should be represented by the **same variable** throughout that rule, to indicate they refer to the same thing. Different entities in the same sentence should use different variables (`?x`, `?y`, `?z`, etc.) as needed.
+
+For example, in **""모든 새는 날 수 있다""**, an unspecified bird is represented as `?x` in both the `if` part (`(?x 이다 새)`) and the `then` part (`(?x can fly)`), linking the condition and conclusion to the same generic entity. The prompt should clearly instruct that the model replace concrete nouns with variables in rules, maintaining consistency (one variable per unique entity). In simple fact statements (like ""펭귄은 새다""), variables are not needed because the statement is about a specific individual (penguin), so the actual noun is used directly in the list.
+
+## Output Restrictions: Code Only, No Explanatory Text
+
+Critically, the system prompt must make it clear that **the model’s answer should contain only the converted NEO code, and nothing else**. This means the model should **not** produce any natural language explanation, comments, or additional clarification aside from the code itself. The output should be formatted as a snippet of code, ideally in a code block, containing one or more lines of NEO expressions. Each line should be a single complete `(keep '(...))` statement, and no line should contain anything outside of the parentheses besides the `keep` prefix. There should be no extra lines or blank lines either – just the code representation. For instance, if the input is ""펭귄은 새다"", the model’s entire answer should be something like:
+
+```plaintext
+(keep '(펭귄 이다 새))
+```
+
+Nothing before or after this line, no greeting, no explanation of what it means – only the code. Even if multiple lines are needed (as in the case of a rule with two lines), the response should still consist solely of those code lines, each properly formatted, and presented in a code block format for clarity. The prompt should explicitly warn the model *not* to output translations, descriptions, or any text except the NEO code itself.
+
+## Scope Limitations and Exceptions
+
+Finally, the system prompt should clarify that it deals **only with straightforward factual and rule-based sentences**. More complex or advanced sentences that go beyond simple facts or general implications are **out of scope** for this conversion. This includes things like function or object definitions in code, highly complex conditional statements, or any form of sentence that doesn’t fit the pattern of a basic assertion or a general rule. The prompt can assume that users will not provide such unsupported inputs. Therefore, the conversion rules above focus on common knowledge statements (facts) and general rules (universal statements or simple conditionals), and the model does not need to handle programming constructs or overly complicated sentences. By limiting the scope, the system ensures more accurate conversions for the intended types of input.
+
+**In summary,** the system prompt must instruct the model to: take a Korean sentence, identify whether it states a simple fact or a general rule, then output the corresponding NEO knowledge base code using the correct list format. It should enforce the use of `keep` for storing facts, `if/then` structure with variables for rules, and strictly produce the code without any extra commentary. By adhering to all the above guidelines, the AI will consistently transform user inputs into the proper NEO knowledge base representation, enabling seamless building of a knowledge base from natural language statements.
+
+
+---
+
+## Output Restrictions: Code Only, No Explanatory Text
+
+Critically, the system prompt must make it clear that **the model’s answer should contain only the converted NEO code, and nothing else**.
+**Under no circumstances should the model output any natural language text, explanation, greeting, summary, translation, comment, or meta content. Only valid NEO code lines must be produced. Any non-code output is strictly prohibited.**
+
+The output must consist of one or more lines of NEO expressions such as:
+
+```plaintext
+(keep '(펭귄 이다 새))
+```
+
+Each line must be a valid NEO expression using `(keep '(...))` or `(keep '(ruleN if ...))` / `(keep '(ruleN then ...))`.
+No additional text, spacing, or context should appear before, after, or between these expressions.
+
+---","건강보험 급여에는 진료, 입원, 약제비 등이 포함된다.",gemma-3-12b-it-Q6_K,국민건강보험,0
+"(keep '(본인부담금 이다 진료비의 일부))
+(keep '(본인부담금 이다 가입자가 직접 부담하는 금액))",11.584412574768066,36,1770,1806,"# NEO Knowledge Base Conversion System Prompt
+
+## Introduction
+
+The NEO knowledge base uses a structured list (S-expression) format to represent **facts** and **rules**, which are stored using a special `keep` command. In this format, each fact or rule is enclosed in parentheses as a list. **Rules** are expressed as two related lists sharing the same rule name: one list for the condition (preceded by `if`) and one for the conclusion (preceded by `then`). The system prompt will ensure that any Korean sentence input by a user is automatically converted into this NEO code format, following a strict set of guidelines. Below are the key requirements and conversion rules that the system prompt must enforce:
+
+## Input Format: Korean Sentences
+
+The input to the model will always be a natural language sentence in **Korean**. The system assumes the user’s query is given in Korean and is a simple declarative statement (either a factual statement or a general rule statement). For example, valid inputs might be `""펭귄은 새다""` (""Penguin is a bird"") or `""모든 새는 날 수 있다""` (""All birds can fly""). The prompt should explicitly note that it expects Korean sentences as input, with examples of the format.
+
+## Output Format: NEO List Code
+
+The model’s output **must be in NEO code**, i.e. in the form of lists (S-expressions) that represent the content of the sentence. The subject and predicate (and any object or complement) of the sentence are to be represented as a parenthesized list in the NEO syntax. In other words, the natural language input should be transformed into a **logical form list**. For example:
+
+* Input `""펭귄은 새다""` (Penguin is a bird) should become the list `(펭귄 이다 새)`. Here `펭귄` (penguin) is the subject and `새` (bird) is the category or class, with the copula ""`이다`"" denoting the ""is-a"" relationship.
+* Input `""제비는 날 수 있다""` (A swallow can fly) should become `(제비 can fly)`, representing that the subject *제비* (swallow) has the ability *fly*.
+
+The prompt must ensure the output is **not natural language text** but strictly the NEO code representation of the sentence. All Korean entities and relations should be expressed in the list format using the appropriate symbols or English phrases as defined in the knowledge base. (For instance, the predicate `이다` is used for ""is a"" relations, and the phrase `can fly` is used to denote the ability ""날 수 있다"". Other abilities or relations may similarly be represented with English phrases for consistency.)
+
+## Representing Facts with `keep`
+
+If the input sentence is a **simple fact statement**, it should be output as a list wrapped with the `keep` command. A fact here means a basic statement that some individual has some property or belongs to some category (e.g. ""A is B"", or ""A can do X""). Since each fact is a unit of knowledge to be stored in the knowledge base, the `keep` command is used to save it. The general form is:
+
+```
+(keep '(...))
+```
+
+where the `...` is the list representing the fact. For example:
+
+* Input: **""펭귄은 새다""** – a factual statement that a penguin is a bird.
+  **Output:** `(keep '(펭귄 이다 새))`.
+* Input: **""제비는 날 수 있다""** – a factual statement about a swallow’s ability.
+  **Output:** `(keep '(제비 can fly))`.
+
+In these outputs, the inner list `'(펭귄 이다 새)` or `'(제비 can fly)` is the actual knowledge being expressed, and the `keep '(... )` wrapper instructs NEO to store that fact in the knowledge base. No additional text or explanation accompanies the output – it is purely the code needed to record the fact.
+
+## Representing Rules with If/Then Structure
+
+If the input sentence expresses a **general rule or a conditional statement** (for example, sentences that imply ""all X have property Y"" or ""if X, then Y""), it must be converted into an **if/then rule structure** in NEO. Such a rule is represented by two lists: one for the **antecedent** (condition) and one for the **consequent** (result), each preceded by a shared rule name symbol. The conversion guidelines for rules are as follows:
+
+* **Rule Naming:** Each rule is given a unique name, like `rule1`, `rule2`, etc. The rule name is consistent across the two parts of the rule, linking the `if` part and the `then` part as one rule. The prompt should specify that rule names are to be generated sequentially for each new rule sentence (e.g., the first rule encountered is rule1, the next rule2, and so on).
+
+* **If (Condition) Part:** The condition of the rule corresponds to the premise of the natural sentence. This should be represented in a list following the `if` keyword. Each condition within the premise is converted to a list, using a variable in place of the specific subject. If the natural language implies multiple conditions, all those condition lists are included in the same `if` clause. For example, the sentence **""모든 새는 날 수 있다""** (""All birds can fly"") has the implicit premise ""if something is a bird"" – this is converted to the condition list `(?x 이다 새)` (where `?x` stands for an arbitrary instance of ""bird""). Another example, **""날 수 있는 동물은 새이다""** (""Any animal that can fly is a bird""), has a compound premise ""if something is an animal **and** (it) can fly"" – this yields two condition lists `(?x 이다 동물)` and `(?x can fly)` under the `if` clause. These condition lists are grouped together after the `if` in the rule.
+
+* **Then (Conclusion) Part:** The conclusion of the rule is represented as a list following the `then` keyword, reflecting the outcome that holds when the condition is true. If there are multiple conclusions in the sentence, each would be listed in the `then` clause (though commonly there's one main conclusion). In our examples, for **""모든 새는 날 수 있다""**, the conclusion is that the entity can fly, represented as `(?x can fly)`. For **""날 수 있는 동물은 새이다""**, the conclusion is that the entity is a bird, represented as `(?x 이다 새)`. These follow the `then` in the rule.
+
+* **Example – Complete Rule Conversion:**
+  *Input:* ""모든 새는 날 수 있다.""
+  *Output:*
+
+  ```plaintext
+  (keep '(rule1 if (?x 이다 새)))  
+  (keep '(rule1 then (?x can fly)))  
+  ```
+
+  This corresponds to: If `?x` is a bird, **then** `?x` can fly. Both lines share the rule name `rule1`.
+  *Another Input:* ""날 수 있는 동물은 새이다.""
+  *Output:*
+
+  ```plaintext
+  (keep '(rule2 if (?x 이다 동물) (?x can fly)))  
+  (keep '(rule2 then (?x 이다 새)))  
+  ```
+
+  This corresponds to: If `?x` is an animal **and** `?x` can fly, **then** `?x` is a bird. Here `rule2` is used for this second rule.
+
+* **Use of Multiple Conditions/Conclusions:** NEO allows multiple conditions in the `if` part or multiple conclusions in the `then` part of a single rule if the sentence contains a compound premise or multiple outcomes. In the code, this is done by listing multiple condition lists after the `if` (and similarly multiple conclusion lists after the `then` if needed) within the same rule structure. The above example of the flying animal demonstrates multiple conditions in the `if` clause. If a sentence had multiple conclusions (e.g., ""If X, then Y and Z""), the `then` part would list both conclusion lists. The system prompt should mention that the model may encounter such cases and how to handle them (by including all relevant condition or conclusion lists after the appropriate keyword).
+
+## Using Variables for General Statements
+
+When converting general statements or rules, the prompt must enforce the use of **variables** like `?x`, `?y` in place of specific subjects or objects. These **binding variables** represent arbitrary instances of a concept in rules. The guideline is that the **same entity** mentioned in both the condition and conclusion of a rule should be represented by the **same variable** throughout that rule, to indicate they refer to the same thing. Different entities in the same sentence should use different variables (`?x`, `?y`, `?z`, etc.) as needed.
+
+For example, in **""모든 새는 날 수 있다""**, an unspecified bird is represented as `?x` in both the `if` part (`(?x 이다 새)`) and the `then` part (`(?x can fly)`), linking the condition and conclusion to the same generic entity. The prompt should clearly instruct that the model replace concrete nouns with variables in rules, maintaining consistency (one variable per unique entity). In simple fact statements (like ""펭귄은 새다""), variables are not needed because the statement is about a specific individual (penguin), so the actual noun is used directly in the list.
+
+## Output Restrictions: Code Only, No Explanatory Text
+
+Critically, the system prompt must make it clear that **the model’s answer should contain only the converted NEO code, and nothing else**. This means the model should **not** produce any natural language explanation, comments, or additional clarification aside from the code itself. The output should be formatted as a snippet of code, ideally in a code block, containing one or more lines of NEO expressions. Each line should be a single complete `(keep '(...))` statement, and no line should contain anything outside of the parentheses besides the `keep` prefix. There should be no extra lines or blank lines either – just the code representation. For instance, if the input is ""펭귄은 새다"", the model’s entire answer should be something like:
+
+```plaintext
+(keep '(펭귄 이다 새))
+```
+
+Nothing before or after this line, no greeting, no explanation of what it means – only the code. Even if multiple lines are needed (as in the case of a rule with two lines), the response should still consist solely of those code lines, each properly formatted, and presented in a code block format for clarity. The prompt should explicitly warn the model *not* to output translations, descriptions, or any text except the NEO code itself.
+
+## Scope Limitations and Exceptions
+
+Finally, the system prompt should clarify that it deals **only with straightforward factual and rule-based sentences**. More complex or advanced sentences that go beyond simple facts or general implications are **out of scope** for this conversion. This includes things like function or object definitions in code, highly complex conditional statements, or any form of sentence that doesn’t fit the pattern of a basic assertion or a general rule. The prompt can assume that users will not provide such unsupported inputs. Therefore, the conversion rules above focus on common knowledge statements (facts) and general rules (universal statements or simple conditionals), and the model does not need to handle programming constructs or overly complicated sentences. By limiting the scope, the system ensures more accurate conversions for the intended types of input.
+
+**In summary,** the system prompt must instruct the model to: take a Korean sentence, identify whether it states a simple fact or a general rule, then output the corresponding NEO knowledge base code using the correct list format. It should enforce the use of `keep` for storing facts, `if/then` structure with variables for rules, and strictly produce the code without any extra commentary. By adhering to all the above guidelines, the AI will consistently transform user inputs into the proper NEO knowledge base representation, enabling seamless building of a knowledge base from natural language statements.
+
+
+---
+
+## Output Restrictions: Code Only, No Explanatory Text
+
+Critically, the system prompt must make it clear that **the model’s answer should contain only the converted NEO code, and nothing else**.
+**Under no circumstances should the model output any natural language text, explanation, greeting, summary, translation, comment, or meta content. Only valid NEO code lines must be produced. Any non-code output is strictly prohibited.**
+
+The output must consist of one or more lines of NEO expressions such as:
+
+```plaintext
+(keep '(펭귄 이다 새))
+```
+
+Each line must be a valid NEO expression using `(keep '(...))` or `(keep '(ruleN if ...))` / `(keep '(ruleN then ...))`.
+No additional text, spacing, or context should appear before, after, or between these expressions.
+
+---",본인부담금은 진료비의 일부를 가입자가 직접 부담하는 금액이다.,gemma-3-12b-it-Q6_K,국민건강보험,0
+(keep '(일정 소득 이하의 가입자는 건강보험료 경감 혜택을 받을 수 있다)),8.37102484703064,26,1771,1797,"# NEO Knowledge Base Conversion System Prompt
+
+## Introduction
+
+The NEO knowledge base uses a structured list (S-expression) format to represent **facts** and **rules**, which are stored using a special `keep` command. In this format, each fact or rule is enclosed in parentheses as a list. **Rules** are expressed as two related lists sharing the same rule name: one list for the condition (preceded by `if`) and one for the conclusion (preceded by `then`). The system prompt will ensure that any Korean sentence input by a user is automatically converted into this NEO code format, following a strict set of guidelines. Below are the key requirements and conversion rules that the system prompt must enforce:
+
+## Input Format: Korean Sentences
+
+The input to the model will always be a natural language sentence in **Korean**. The system assumes the user’s query is given in Korean and is a simple declarative statement (either a factual statement or a general rule statement). For example, valid inputs might be `""펭귄은 새다""` (""Penguin is a bird"") or `""모든 새는 날 수 있다""` (""All birds can fly""). The prompt should explicitly note that it expects Korean sentences as input, with examples of the format.
+
+## Output Format: NEO List Code
+
+The model’s output **must be in NEO code**, i.e. in the form of lists (S-expressions) that represent the content of the sentence. The subject and predicate (and any object or complement) of the sentence are to be represented as a parenthesized list in the NEO syntax. In other words, the natural language input should be transformed into a **logical form list**. For example:
+
+* Input `""펭귄은 새다""` (Penguin is a bird) should become the list `(펭귄 이다 새)`. Here `펭귄` (penguin) is the subject and `새` (bird) is the category or class, with the copula ""`이다`"" denoting the ""is-a"" relationship.
+* Input `""제비는 날 수 있다""` (A swallow can fly) should become `(제비 can fly)`, representing that the subject *제비* (swallow) has the ability *fly*.
+
+The prompt must ensure the output is **not natural language text** but strictly the NEO code representation of the sentence. All Korean entities and relations should be expressed in the list format using the appropriate symbols or English phrases as defined in the knowledge base. (For instance, the predicate `이다` is used for ""is a"" relations, and the phrase `can fly` is used to denote the ability ""날 수 있다"". Other abilities or relations may similarly be represented with English phrases for consistency.)
+
+## Representing Facts with `keep`
+
+If the input sentence is a **simple fact statement**, it should be output as a list wrapped with the `keep` command. A fact here means a basic statement that some individual has some property or belongs to some category (e.g. ""A is B"", or ""A can do X""). Since each fact is a unit of knowledge to be stored in the knowledge base, the `keep` command is used to save it. The general form is:
+
+```
+(keep '(...))
+```
+
+where the `...` is the list representing the fact. For example:
+
+* Input: **""펭귄은 새다""** – a factual statement that a penguin is a bird.
+  **Output:** `(keep '(펭귄 이다 새))`.
+* Input: **""제비는 날 수 있다""** – a factual statement about a swallow’s ability.
+  **Output:** `(keep '(제비 can fly))`.
+
+In these outputs, the inner list `'(펭귄 이다 새)` or `'(제비 can fly)` is the actual knowledge being expressed, and the `keep '(... )` wrapper instructs NEO to store that fact in the knowledge base. No additional text or explanation accompanies the output – it is purely the code needed to record the fact.
+
+## Representing Rules with If/Then Structure
+
+If the input sentence expresses a **general rule or a conditional statement** (for example, sentences that imply ""all X have property Y"" or ""if X, then Y""), it must be converted into an **if/then rule structure** in NEO. Such a rule is represented by two lists: one for the **antecedent** (condition) and one for the **consequent** (result), each preceded by a shared rule name symbol. The conversion guidelines for rules are as follows:
+
+* **Rule Naming:** Each rule is given a unique name, like `rule1`, `rule2`, etc. The rule name is consistent across the two parts of the rule, linking the `if` part and the `then` part as one rule. The prompt should specify that rule names are to be generated sequentially for each new rule sentence (e.g., the first rule encountered is rule1, the next rule2, and so on).
+
+* **If (Condition) Part:** The condition of the rule corresponds to the premise of the natural sentence. This should be represented in a list following the `if` keyword. Each condition within the premise is converted to a list, using a variable in place of the specific subject. If the natural language implies multiple conditions, all those condition lists are included in the same `if` clause. For example, the sentence **""모든 새는 날 수 있다""** (""All birds can fly"") has the implicit premise ""if something is a bird"" – this is converted to the condition list `(?x 이다 새)` (where `?x` stands for an arbitrary instance of ""bird""). Another example, **""날 수 있는 동물은 새이다""** (""Any animal that can fly is a bird""), has a compound premise ""if something is an animal **and** (it) can fly"" – this yields two condition lists `(?x 이다 동물)` and `(?x can fly)` under the `if` clause. These condition lists are grouped together after the `if` in the rule.
+
+* **Then (Conclusion) Part:** The conclusion of the rule is represented as a list following the `then` keyword, reflecting the outcome that holds when the condition is true. If there are multiple conclusions in the sentence, each would be listed in the `then` clause (though commonly there's one main conclusion). In our examples, for **""모든 새는 날 수 있다""**, the conclusion is that the entity can fly, represented as `(?x can fly)`. For **""날 수 있는 동물은 새이다""**, the conclusion is that the entity is a bird, represented as `(?x 이다 새)`. These follow the `then` in the rule.
+
+* **Example – Complete Rule Conversion:**
+  *Input:* ""모든 새는 날 수 있다.""
+  *Output:*
+
+  ```plaintext
+  (keep '(rule1 if (?x 이다 새)))  
+  (keep '(rule1 then (?x can fly)))  
+  ```
+
+  This corresponds to: If `?x` is a bird, **then** `?x` can fly. Both lines share the rule name `rule1`.
+  *Another Input:* ""날 수 있는 동물은 새이다.""
+  *Output:*
+
+  ```plaintext
+  (keep '(rule2 if (?x 이다 동물) (?x can fly)))  
+  (keep '(rule2 then (?x 이다 새)))  
+  ```
+
+  This corresponds to: If `?x` is an animal **and** `?x` can fly, **then** `?x` is a bird. Here `rule2` is used for this second rule.
+
+* **Use of Multiple Conditions/Conclusions:** NEO allows multiple conditions in the `if` part or multiple conclusions in the `then` part of a single rule if the sentence contains a compound premise or multiple outcomes. In the code, this is done by listing multiple condition lists after the `if` (and similarly multiple conclusion lists after the `then` if needed) within the same rule structure. The above example of the flying animal demonstrates multiple conditions in the `if` clause. If a sentence had multiple conclusions (e.g., ""If X, then Y and Z""), the `then` part would list both conclusion lists. The system prompt should mention that the model may encounter such cases and how to handle them (by including all relevant condition or conclusion lists after the appropriate keyword).
+
+## Using Variables for General Statements
+
+When converting general statements or rules, the prompt must enforce the use of **variables** like `?x`, `?y` in place of specific subjects or objects. These **binding variables** represent arbitrary instances of a concept in rules. The guideline is that the **same entity** mentioned in both the condition and conclusion of a rule should be represented by the **same variable** throughout that rule, to indicate they refer to the same thing. Different entities in the same sentence should use different variables (`?x`, `?y`, `?z`, etc.) as needed.
+
+For example, in **""모든 새는 날 수 있다""**, an unspecified bird is represented as `?x` in both the `if` part (`(?x 이다 새)`) and the `then` part (`(?x can fly)`), linking the condition and conclusion to the same generic entity. The prompt should clearly instruct that the model replace concrete nouns with variables in rules, maintaining consistency (one variable per unique entity). In simple fact statements (like ""펭귄은 새다""), variables are not needed because the statement is about a specific individual (penguin), so the actual noun is used directly in the list.
+
+## Output Restrictions: Code Only, No Explanatory Text
+
+Critically, the system prompt must make it clear that **the model’s answer should contain only the converted NEO code, and nothing else**. This means the model should **not** produce any natural language explanation, comments, or additional clarification aside from the code itself. The output should be formatted as a snippet of code, ideally in a code block, containing one or more lines of NEO expressions. Each line should be a single complete `(keep '(...))` statement, and no line should contain anything outside of the parentheses besides the `keep` prefix. There should be no extra lines or blank lines either – just the code representation. For instance, if the input is ""펭귄은 새다"", the model’s entire answer should be something like:
+
+```plaintext
+(keep '(펭귄 이다 새))
+```
+
+Nothing before or after this line, no greeting, no explanation of what it means – only the code. Even if multiple lines are needed (as in the case of a rule with two lines), the response should still consist solely of those code lines, each properly formatted, and presented in a code block format for clarity. The prompt should explicitly warn the model *not* to output translations, descriptions, or any text except the NEO code itself.
+
+## Scope Limitations and Exceptions
+
+Finally, the system prompt should clarify that it deals **only with straightforward factual and rule-based sentences**. More complex or advanced sentences that go beyond simple facts or general implications are **out of scope** for this conversion. This includes things like function or object definitions in code, highly complex conditional statements, or any form of sentence that doesn’t fit the pattern of a basic assertion or a general rule. The prompt can assume that users will not provide such unsupported inputs. Therefore, the conversion rules above focus on common knowledge statements (facts) and general rules (universal statements or simple conditionals), and the model does not need to handle programming constructs or overly complicated sentences. By limiting the scope, the system ensures more accurate conversions for the intended types of input.
+
+**In summary,** the system prompt must instruct the model to: take a Korean sentence, identify whether it states a simple fact or a general rule, then output the corresponding NEO knowledge base code using the correct list format. It should enforce the use of `keep` for storing facts, `if/then` structure with variables for rules, and strictly produce the code without any extra commentary. By adhering to all the above guidelines, the AI will consistently transform user inputs into the proper NEO knowledge base representation, enabling seamless building of a knowledge base from natural language statements.
+
+
+---
+
+## Output Restrictions: Code Only, No Explanatory Text
+
+Critically, the system prompt must make it clear that **the model’s answer should contain only the converted NEO code, and nothing else**.
+**Under no circumstances should the model output any natural language text, explanation, greeting, summary, translation, comment, or meta content. Only valid NEO code lines must be produced. Any non-code output is strictly prohibited.**
+
+The output must consist of one or more lines of NEO expressions such as:
+
+```plaintext
+(keep '(펭귄 이다 새))
+```
+
+Each line must be a valid NEO expression using `(keep '(...))` or `(keep '(ruleN if ...))` / `(keep '(ruleN then ...))`.
+No additional text, spacing, or context should appear before, after, or between these expressions.
+
+---",일정 소득 이하의 가입자는 건강보험료 경감 혜택을 받을 수 있다.,gemma-3-12b-it-Q6_K,국민건강보험,0
+"(keep '(자격 상실하면 건강보험 혜택을 받을 수 없다))
+",6.458062410354614,20,1764,1784,"# NEO Knowledge Base Conversion System Prompt
+
+## Introduction
+
+The NEO knowledge base uses a structured list (S-expression) format to represent **facts** and **rules**, which are stored using a special `keep` command. In this format, each fact or rule is enclosed in parentheses as a list. **Rules** are expressed as two related lists sharing the same rule name: one list for the condition (preceded by `if`) and one for the conclusion (preceded by `then`). The system prompt will ensure that any Korean sentence input by a user is automatically converted into this NEO code format, following a strict set of guidelines. Below are the key requirements and conversion rules that the system prompt must enforce:
+
+## Input Format: Korean Sentences
+
+The input to the model will always be a natural language sentence in **Korean**. The system assumes the user’s query is given in Korean and is a simple declarative statement (either a factual statement or a general rule statement). For example, valid inputs might be `""펭귄은 새다""` (""Penguin is a bird"") or `""모든 새는 날 수 있다""` (""All birds can fly""). The prompt should explicitly note that it expects Korean sentences as input, with examples of the format.
+
+## Output Format: NEO List Code
+
+The model’s output **must be in NEO code**, i.e. in the form of lists (S-expressions) that represent the content of the sentence. The subject and predicate (and any object or complement) of the sentence are to be represented as a parenthesized list in the NEO syntax. In other words, the natural language input should be transformed into a **logical form list**. For example:
+
+* Input `""펭귄은 새다""` (Penguin is a bird) should become the list `(펭귄 이다 새)`. Here `펭귄` (penguin) is the subject and `새` (bird) is the category or class, with the copula ""`이다`"" denoting the ""is-a"" relationship.
+* Input `""제비는 날 수 있다""` (A swallow can fly) should become `(제비 can fly)`, representing that the subject *제비* (swallow) has the ability *fly*.
+
+The prompt must ensure the output is **not natural language text** but strictly the NEO code representation of the sentence. All Korean entities and relations should be expressed in the list format using the appropriate symbols or English phrases as defined in the knowledge base. (For instance, the predicate `이다` is used for ""is a"" relations, and the phrase `can fly` is used to denote the ability ""날 수 있다"". Other abilities or relations may similarly be represented with English phrases for consistency.)
+
+## Representing Facts with `keep`
+
+If the input sentence is a **simple fact statement**, it should be output as a list wrapped with the `keep` command. A fact here means a basic statement that some individual has some property or belongs to some category (e.g. ""A is B"", or ""A can do X""). Since each fact is a unit of knowledge to be stored in the knowledge base, the `keep` command is used to save it. The general form is:
+
+```
+(keep '(...))
+```
+
+where the `...` is the list representing the fact. For example:
+
+* Input: **""펭귄은 새다""** – a factual statement that a penguin is a bird.
+  **Output:** `(keep '(펭귄 이다 새))`.
+* Input: **""제비는 날 수 있다""** – a factual statement about a swallow’s ability.
+  **Output:** `(keep '(제비 can fly))`.
+
+In these outputs, the inner list `'(펭귄 이다 새)` or `'(제비 can fly)` is the actual knowledge being expressed, and the `keep '(... )` wrapper instructs NEO to store that fact in the knowledge base. No additional text or explanation accompanies the output – it is purely the code needed to record the fact.
+
+## Representing Rules with If/Then Structure
+
+If the input sentence expresses a **general rule or a conditional statement** (for example, sentences that imply ""all X have property Y"" or ""if X, then Y""), it must be converted into an **if/then rule structure** in NEO. Such a rule is represented by two lists: one for the **antecedent** (condition) and one for the **consequent** (result), each preceded by a shared rule name symbol. The conversion guidelines for rules are as follows:
+
+* **Rule Naming:** Each rule is given a unique name, like `rule1`, `rule2`, etc. The rule name is consistent across the two parts of the rule, linking the `if` part and the `then` part as one rule. The prompt should specify that rule names are to be generated sequentially for each new rule sentence (e.g., the first rule encountered is rule1, the next rule2, and so on).
+
+* **If (Condition) Part:** The condition of the rule corresponds to the premise of the natural sentence. This should be represented in a list following the `if` keyword. Each condition within the premise is converted to a list, using a variable in place of the specific subject. If the natural language implies multiple conditions, all those condition lists are included in the same `if` clause. For example, the sentence **""모든 새는 날 수 있다""** (""All birds can fly"") has the implicit premise ""if something is a bird"" – this is converted to the condition list `(?x 이다 새)` (where `?x` stands for an arbitrary instance of ""bird""). Another example, **""날 수 있는 동물은 새이다""** (""Any animal that can fly is a bird""), has a compound premise ""if something is an animal **and** (it) can fly"" – this yields two condition lists `(?x 이다 동물)` and `(?x can fly)` under the `if` clause. These condition lists are grouped together after the `if` in the rule.
+
+* **Then (Conclusion) Part:** The conclusion of the rule is represented as a list following the `then` keyword, reflecting the outcome that holds when the condition is true. If there are multiple conclusions in the sentence, each would be listed in the `then` clause (though commonly there's one main conclusion). In our examples, for **""모든 새는 날 수 있다""**, the conclusion is that the entity can fly, represented as `(?x can fly)`. For **""날 수 있는 동물은 새이다""**, the conclusion is that the entity is a bird, represented as `(?x 이다 새)`. These follow the `then` in the rule.
+
+* **Example – Complete Rule Conversion:**
+  *Input:* ""모든 새는 날 수 있다.""
+  *Output:*
+
+  ```plaintext
+  (keep '(rule1 if (?x 이다 새)))  
+  (keep '(rule1 then (?x can fly)))  
+  ```
+
+  This corresponds to: If `?x` is a bird, **then** `?x` can fly. Both lines share the rule name `rule1`.
+  *Another Input:* ""날 수 있는 동물은 새이다.""
+  *Output:*
+
+  ```plaintext
+  (keep '(rule2 if (?x 이다 동물) (?x can fly)))  
+  (keep '(rule2 then (?x 이다 새)))  
+  ```
+
+  This corresponds to: If `?x` is an animal **and** `?x` can fly, **then** `?x` is a bird. Here `rule2` is used for this second rule.
+
+* **Use of Multiple Conditions/Conclusions:** NEO allows multiple conditions in the `if` part or multiple conclusions in the `then` part of a single rule if the sentence contains a compound premise or multiple outcomes. In the code, this is done by listing multiple condition lists after the `if` (and similarly multiple conclusion lists after the `then` if needed) within the same rule structure. The above example of the flying animal demonstrates multiple conditions in the `if` clause. If a sentence had multiple conclusions (e.g., ""If X, then Y and Z""), the `then` part would list both conclusion lists. The system prompt should mention that the model may encounter such cases and how to handle them (by including all relevant condition or conclusion lists after the appropriate keyword).
+
+## Using Variables for General Statements
+
+When converting general statements or rules, the prompt must enforce the use of **variables** like `?x`, `?y` in place of specific subjects or objects. These **binding variables** represent arbitrary instances of a concept in rules. The guideline is that the **same entity** mentioned in both the condition and conclusion of a rule should be represented by the **same variable** throughout that rule, to indicate they refer to the same thing. Different entities in the same sentence should use different variables (`?x`, `?y`, `?z`, etc.) as needed.
+
+For example, in **""모든 새는 날 수 있다""**, an unspecified bird is represented as `?x` in both the `if` part (`(?x 이다 새)`) and the `then` part (`(?x can fly)`), linking the condition and conclusion to the same generic entity. The prompt should clearly instruct that the model replace concrete nouns with variables in rules, maintaining consistency (one variable per unique entity). In simple fact statements (like ""펭귄은 새다""), variables are not needed because the statement is about a specific individual (penguin), so the actual noun is used directly in the list.
+
+## Output Restrictions: Code Only, No Explanatory Text
+
+Critically, the system prompt must make it clear that **the model’s answer should contain only the converted NEO code, and nothing else**. This means the model should **not** produce any natural language explanation, comments, or additional clarification aside from the code itself. The output should be formatted as a snippet of code, ideally in a code block, containing one or more lines of NEO expressions. Each line should be a single complete `(keep '(...))` statement, and no line should contain anything outside of the parentheses besides the `keep` prefix. There should be no extra lines or blank lines either – just the code representation. For instance, if the input is ""펭귄은 새다"", the model’s entire answer should be something like:
+
+```plaintext
+(keep '(펭귄 이다 새))
+```
+
+Nothing before or after this line, no greeting, no explanation of what it means – only the code. Even if multiple lines are needed (as in the case of a rule with two lines), the response should still consist solely of those code lines, each properly formatted, and presented in a code block format for clarity. The prompt should explicitly warn the model *not* to output translations, descriptions, or any text except the NEO code itself.
+
+## Scope Limitations and Exceptions
+
+Finally, the system prompt should clarify that it deals **only with straightforward factual and rule-based sentences**. More complex or advanced sentences that go beyond simple facts or general implications are **out of scope** for this conversion. This includes things like function or object definitions in code, highly complex conditional statements, or any form of sentence that doesn’t fit the pattern of a basic assertion or a general rule. The prompt can assume that users will not provide such unsupported inputs. Therefore, the conversion rules above focus on common knowledge statements (facts) and general rules (universal statements or simple conditionals), and the model does not need to handle programming constructs or overly complicated sentences. By limiting the scope, the system ensures more accurate conversions for the intended types of input.
+
+**In summary,** the system prompt must instruct the model to: take a Korean sentence, identify whether it states a simple fact or a general rule, then output the corresponding NEO knowledge base code using the correct list format. It should enforce the use of `keep` for storing facts, `if/then` structure with variables for rules, and strictly produce the code without any extra commentary. By adhering to all the above guidelines, the AI will consistently transform user inputs into the proper NEO knowledge base representation, enabling seamless building of a knowledge base from natural language statements.
+
+
+---
+
+## Output Restrictions: Code Only, No Explanatory Text
+
+Critically, the system prompt must make it clear that **the model’s answer should contain only the converted NEO code, and nothing else**.
+**Under no circumstances should the model output any natural language text, explanation, greeting, summary, translation, comment, or meta content. Only valid NEO code lines must be produced. Any non-code output is strictly prohibited.**
+
+The output must consist of one or more lines of NEO expressions such as:
+
+```plaintext
+(keep '(펭귄 이다 새))
+```
+
+Each line must be a valid NEO expression using `(keep '(...))` or `(keep '(ruleN if ...))` / `(keep '(ruleN then ...))`.
+No additional text, spacing, or context should appear before, after, or between these expressions.
+
+---",자격을 상실하면 건강보험 혜택을 받을 수 없다.,gemma-3-12b-it-Q6_K,국민건강보험,0
+(keep '(건강보험증 이다 가까운 국민건강보험공단 지사에서 재발급받을 수 있다)),9.339104175567627,29,1773,1802,"# NEO Knowledge Base Conversion System Prompt
+
+## Introduction
+
+The NEO knowledge base uses a structured list (S-expression) format to represent **facts** and **rules**, which are stored using a special `keep` command. In this format, each fact or rule is enclosed in parentheses as a list. **Rules** are expressed as two related lists sharing the same rule name: one list for the condition (preceded by `if`) and one for the conclusion (preceded by `then`). The system prompt will ensure that any Korean sentence input by a user is automatically converted into this NEO code format, following a strict set of guidelines. Below are the key requirements and conversion rules that the system prompt must enforce:
+
+## Input Format: Korean Sentences
+
+The input to the model will always be a natural language sentence in **Korean**. The system assumes the user’s query is given in Korean and is a simple declarative statement (either a factual statement or a general rule statement). For example, valid inputs might be `""펭귄은 새다""` (""Penguin is a bird"") or `""모든 새는 날 수 있다""` (""All birds can fly""). The prompt should explicitly note that it expects Korean sentences as input, with examples of the format.
+
+## Output Format: NEO List Code
+
+The model’s output **must be in NEO code**, i.e. in the form of lists (S-expressions) that represent the content of the sentence. The subject and predicate (and any object or complement) of the sentence are to be represented as a parenthesized list in the NEO syntax. In other words, the natural language input should be transformed into a **logical form list**. For example:
+
+* Input `""펭귄은 새다""` (Penguin is a bird) should become the list `(펭귄 이다 새)`. Here `펭귄` (penguin) is the subject and `새` (bird) is the category or class, with the copula ""`이다`"" denoting the ""is-a"" relationship.
+* Input `""제비는 날 수 있다""` (A swallow can fly) should become `(제비 can fly)`, representing that the subject *제비* (swallow) has the ability *fly*.
+
+The prompt must ensure the output is **not natural language text** but strictly the NEO code representation of the sentence. All Korean entities and relations should be expressed in the list format using the appropriate symbols or English phrases as defined in the knowledge base. (For instance, the predicate `이다` is used for ""is a"" relations, and the phrase `can fly` is used to denote the ability ""날 수 있다"". Other abilities or relations may similarly be represented with English phrases for consistency.)
+
+## Representing Facts with `keep`
+
+If the input sentence is a **simple fact statement**, it should be output as a list wrapped with the `keep` command. A fact here means a basic statement that some individual has some property or belongs to some category (e.g. ""A is B"", or ""A can do X""). Since each fact is a unit of knowledge to be stored in the knowledge base, the `keep` command is used to save it. The general form is:
+
+```
+(keep '(...))
+```
+
+where the `...` is the list representing the fact. For example:
+
+* Input: **""펭귄은 새다""** – a factual statement that a penguin is a bird.
+  **Output:** `(keep '(펭귄 이다 새))`.
+* Input: **""제비는 날 수 있다""** – a factual statement about a swallow’s ability.
+  **Output:** `(keep '(제비 can fly))`.
+
+In these outputs, the inner list `'(펭귄 이다 새)` or `'(제비 can fly)` is the actual knowledge being expressed, and the `keep '(... )` wrapper instructs NEO to store that fact in the knowledge base. No additional text or explanation accompanies the output – it is purely the code needed to record the fact.
+
+## Representing Rules with If/Then Structure
+
+If the input sentence expresses a **general rule or a conditional statement** (for example, sentences that imply ""all X have property Y"" or ""if X, then Y""), it must be converted into an **if/then rule structure** in NEO. Such a rule is represented by two lists: one for the **antecedent** (condition) and one for the **consequent** (result), each preceded by a shared rule name symbol. The conversion guidelines for rules are as follows:
+
+* **Rule Naming:** Each rule is given a unique name, like `rule1`, `rule2`, etc. The rule name is consistent across the two parts of the rule, linking the `if` part and the `then` part as one rule. The prompt should specify that rule names are to be generated sequentially for each new rule sentence (e.g., the first rule encountered is rule1, the next rule2, and so on).
+
+* **If (Condition) Part:** The condition of the rule corresponds to the premise of the natural sentence. This should be represented in a list following the `if` keyword. Each condition within the premise is converted to a list, using a variable in place of the specific subject. If the natural language implies multiple conditions, all those condition lists are included in the same `if` clause. For example, the sentence **""모든 새는 날 수 있다""** (""All birds can fly"") has the implicit premise ""if something is a bird"" – this is converted to the condition list `(?x 이다 새)` (where `?x` stands for an arbitrary instance of ""bird""). Another example, **""날 수 있는 동물은 새이다""** (""Any animal that can fly is a bird""), has a compound premise ""if something is an animal **and** (it) can fly"" – this yields two condition lists `(?x 이다 동물)` and `(?x can fly)` under the `if` clause. These condition lists are grouped together after the `if` in the rule.
+
+* **Then (Conclusion) Part:** The conclusion of the rule is represented as a list following the `then` keyword, reflecting the outcome that holds when the condition is true. If there are multiple conclusions in the sentence, each would be listed in the `then` clause (though commonly there's one main conclusion). In our examples, for **""모든 새는 날 수 있다""**, the conclusion is that the entity can fly, represented as `(?x can fly)`. For **""날 수 있는 동물은 새이다""**, the conclusion is that the entity is a bird, represented as `(?x 이다 새)`. These follow the `then` in the rule.
+
+* **Example – Complete Rule Conversion:**
+  *Input:* ""모든 새는 날 수 있다.""
+  *Output:*
+
+  ```plaintext
+  (keep '(rule1 if (?x 이다 새)))  
+  (keep '(rule1 then (?x can fly)))  
+  ```
+
+  This corresponds to: If `?x` is a bird, **then** `?x` can fly. Both lines share the rule name `rule1`.
+  *Another Input:* ""날 수 있는 동물은 새이다.""
+  *Output:*
+
+  ```plaintext
+  (keep '(rule2 if (?x 이다 동물) (?x can fly)))  
+  (keep '(rule2 then (?x 이다 새)))  
+  ```
+
+  This corresponds to: If `?x` is an animal **and** `?x` can fly, **then** `?x` is a bird. Here `rule2` is used for this second rule.
+
+* **Use of Multiple Conditions/Conclusions:** NEO allows multiple conditions in the `if` part or multiple conclusions in the `then` part of a single rule if the sentence contains a compound premise or multiple outcomes. In the code, this is done by listing multiple condition lists after the `if` (and similarly multiple conclusion lists after the `then` if needed) within the same rule structure. The above example of the flying animal demonstrates multiple conditions in the `if` clause. If a sentence had multiple conclusions (e.g., ""If X, then Y and Z""), the `then` part would list both conclusion lists. The system prompt should mention that the model may encounter such cases and how to handle them (by including all relevant condition or conclusion lists after the appropriate keyword).
+
+## Using Variables for General Statements
+
+When converting general statements or rules, the prompt must enforce the use of **variables** like `?x`, `?y` in place of specific subjects or objects. These **binding variables** represent arbitrary instances of a concept in rules. The guideline is that the **same entity** mentioned in both the condition and conclusion of a rule should be represented by the **same variable** throughout that rule, to indicate they refer to the same thing. Different entities in the same sentence should use different variables (`?x`, `?y`, `?z`, etc.) as needed.
+
+For example, in **""모든 새는 날 수 있다""**, an unspecified bird is represented as `?x` in both the `if` part (`(?x 이다 새)`) and the `then` part (`(?x can fly)`), linking the condition and conclusion to the same generic entity. The prompt should clearly instruct that the model replace concrete nouns with variables in rules, maintaining consistency (one variable per unique entity). In simple fact statements (like ""펭귄은 새다""), variables are not needed because the statement is about a specific individual (penguin), so the actual noun is used directly in the list.
+
+## Output Restrictions: Code Only, No Explanatory Text
+
+Critically, the system prompt must make it clear that **the model’s answer should contain only the converted NEO code, and nothing else**. This means the model should **not** produce any natural language explanation, comments, or additional clarification aside from the code itself. The output should be formatted as a snippet of code, ideally in a code block, containing one or more lines of NEO expressions. Each line should be a single complete `(keep '(...))` statement, and no line should contain anything outside of the parentheses besides the `keep` prefix. There should be no extra lines or blank lines either – just the code representation. For instance, if the input is ""펭귄은 새다"", the model’s entire answer should be something like:
+
+```plaintext
+(keep '(펭귄 이다 새))
+```
+
+Nothing before or after this line, no greeting, no explanation of what it means – only the code. Even if multiple lines are needed (as in the case of a rule with two lines), the response should still consist solely of those code lines, each properly formatted, and presented in a code block format for clarity. The prompt should explicitly warn the model *not* to output translations, descriptions, or any text except the NEO code itself.
+
+## Scope Limitations and Exceptions
+
+Finally, the system prompt should clarify that it deals **only with straightforward factual and rule-based sentences**. More complex or advanced sentences that go beyond simple facts or general implications are **out of scope** for this conversion. This includes things like function or object definitions in code, highly complex conditional statements, or any form of sentence that doesn’t fit the pattern of a basic assertion or a general rule. The prompt can assume that users will not provide such unsupported inputs. Therefore, the conversion rules above focus on common knowledge statements (facts) and general rules (universal statements or simple conditionals), and the model does not need to handle programming constructs or overly complicated sentences. By limiting the scope, the system ensures more accurate conversions for the intended types of input.
+
+**In summary,** the system prompt must instruct the model to: take a Korean sentence, identify whether it states a simple fact or a general rule, then output the corresponding NEO knowledge base code using the correct list format. It should enforce the use of `keep` for storing facts, `if/then` structure with variables for rules, and strictly produce the code without any extra commentary. By adhering to all the above guidelines, the AI will consistently transform user inputs into the proper NEO knowledge base representation, enabling seamless building of a knowledge base from natural language statements.
+
+
+---
+
+## Output Restrictions: Code Only, No Explanatory Text
+
+Critically, the system prompt must make it clear that **the model’s answer should contain only the converted NEO code, and nothing else**.
+**Under no circumstances should the model output any natural language text, explanation, greeting, summary, translation, comment, or meta content. Only valid NEO code lines must be produced. Any non-code output is strictly prohibited.**
+
+The output must consist of one or more lines of NEO expressions such as:
+
+```plaintext
+(keep '(펭귄 이다 새))
+```
+
+Each line must be a valid NEO expression using `(keep '(...))` or `(keep '(ruleN if ...))` / `(keep '(ruleN then ...))`.
+No additional text, spacing, or context should appear before, after, or between these expressions.
+
+---",건강보험증은 가까운 국민건강보험공단 지사에서 재발급받을 수 있다.,gemma-3-12b-it-Q6_K,국민건강보험,0
