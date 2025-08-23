@@ -178,6 +178,32 @@ class ModelBenchmark:
     def get_system_prompt(self, model_name: str) -> str:
         return self.system_prompts.get(model_name, "당신은 유용한 AI 어시스턴트입니다.")
 
+    def load_template_content(self, template_name: str) -> str:
+        """템플릿 파일의 내용을 로드합니다."""
+        if not template_name:
+            return ""
+        template_path = self.system_prompt_dir / template_name
+        if template_path.exists():
+            try:
+                with open(template_path, 'r', encoding='utf-8') as f:
+                    return f.read().strip()
+            except Exception as e:
+                print(f"템플릿 로드 오류: {e}")
+                return ""
+        return ""
+
+    def save_system_prompt(self, model_name: str, filename: Optional[str] = None) -> None:
+        """모델의 시스템 프롬프트를 파일로 저장합니다."""
+        if not filename:
+            filename = f"{model_name}_system_prompt.txt"
+        prompt_path = self.system_prompt_dir / filename
+        try:
+            with open(prompt_path, 'w', encoding='utf-8') as f:
+                f.write(self.system_prompts.get(model_name, ""))
+            print(f"시스템 프롬프트가 {prompt_path}에 저장되었습니다.")
+        except Exception as e:
+            print(f"시스템 프롬프트 저장 오류: {e}")
+
     # --- 모델 생성/서버 관리 ---
     def generate(self, model_name: str, prompt: str, max_tokens: int, temperature: float, top_p: float, use_system_prompt: bool, openai_api_key: Optional[str], gemini_api_key: Optional[str], port: int, gpu_layers: int) -> Dict[str, Any]:
         """모델별 생성 API 통합"""
@@ -631,6 +657,18 @@ def create_benchmark_interface(model_paths: Dict[str, str], system_prompt_dir: s
                                                               value="gpt-4o", label="평가용 모델 선택", visible=False)
                         chatbot_max_retries = gr.Slider(1, 5, value=3, step=1, label="최대 재시도 횟수", visible=False)
                     
+                    # Agent 설정 섹션 추가
+                    gr.Markdown("### Agent 설정")
+                    use_agent_dialogue = gr.Checkbox(value=True, label="Agent 대화 모드 사용", info="사용자와 직접 대화하여 정보를 구조화한 후 NEO Query로 변환")
+                    agent_model_dropdown = gr.Dropdown(choices=list(model_paths.keys()), label="Agent 모델 선택", value=list(model_paths.keys())[0] if model_paths else None)
+                    agent_system_prompt_template = gr.Dropdown(choices=["default_system_prompt.txt"] + available_templates, label="Agent 시스템 프롬프트 템플릿", value="default_system_prompt.txt", allow_custom_value=False)
+                    agent_system_prompt_input = gr.Textbox(lines=6, label="Agent 시스템 프롬프트", placeholder="Agent의 역할과 지침을 정의하세요...", value=benchmark.load_template_content("default_system_prompt.txt") if os.path.exists(os.path.join(system_prompt_dir, "default_system_prompt.txt")) else "", interactive=False)
+                    
+                    with gr.Accordion("Agent 생성 파라미터", open=False):
+                        agent_temp = gr.Slider(0.0, 2.0, value=0.3, label="Agent Temperature", info="낮은 값으로 일관된 응답")
+                        agent_top_p = gr.Slider(0.0, 1.0, value=0.9, label="Agent Top-p")
+                        agent_max_tokens = gr.Slider(16, 2048, value=256, step=16, label="Agent 최대 토큰")
+                    
                     gr.Markdown("### 전처리")
                     preprocess_btn = gr.Button("모델 서버 시작 및 연결 확인", variant="primary")
                     preprocess_status = gr.Textbox(label="전처리 상태", interactive=False, value="전처리가 필요합니다.")
@@ -657,6 +695,86 @@ def create_benchmark_interface(model_paths: Dict[str, str], system_prompt_dir: s
                         stop_btn = gr.Button("중지", variant="stop")
                     
                     chatbot_status = gr.Textbox(label="상태", interactive=False, value="챗봇이 준비되었습니다.")
+
+        with gr.Tab("지식베이스 생성"):
+            with gr.Row():
+                with gr.Column(scale=1):
+                    gr.Markdown("### 지식베이스 생성 설정")
+                    kb_gen_model_dropdown = gr.Dropdown(choices=list(model_paths.keys()), label="생성 모델 선택", value=list(model_paths.keys())[0] if model_paths else None)
+                    kb_gen_system_prompt_template = gr.Dropdown(choices=[""] + available_templates, label="시스템 프롬프트 템플릿 로드", allow_custom_value=False)
+                    kb_gen_system_prompt_input = gr.Textbox(lines=6, label="시스템 프롬프트", placeholder="지식베이스 생성을 위한 시스템 프롬프트를 입력하세요...", value="당신은 전문적인 지식베이스 생성 전문가입니다. 주어진 문서나 텍스트에서 모든 중요한 지식 항목을 추출하여 구조화된 지식베이스를 생성해주세요. 문서에 포함된 모든 관련 정보를 빠짐없이 추출하여 여러 개의 지식 항목으로 변환하세요.", interactive=True)
+                    
+                    with gr.Accordion("생성 파라미터", open=False):
+                        kb_gen_temp = gr.Slider(0.0, 2.0, value=0.3, label="Temperature", info="낮은 값으로 일관된 생성")
+                        kb_gen_top_p = gr.Slider(0.0, 1.0, value=0.9, label="Top-p")
+                        kb_gen_max_tokens = gr.Slider(16, 4096, value=1024, step=16, label="최대 토큰")
+                    
+                    gr.Markdown("### 입력 데이터")
+                    kb_gen_input_type = gr.Radio(
+                        choices=["텍스트 입력", "파일 업로드", "URL 입력"],
+                        value="텍스트 입력",
+                        label="입력 방식 선택"
+                    )
+                    
+                    kb_gen_text_input = gr.Textbox(
+                        lines=10, 
+                        label="텍스트 입력", 
+                        placeholder="지식베이스로 변환할 텍스트를 입력하세요...",
+                        visible=True
+                    )
+                    
+                    kb_gen_file_input = gr.File(
+                        label="파일 업로드 (.txt, .md, .pdf, .docx)",
+                        file_types=[".txt", ".md", ".pdf", ".docx"],
+                        visible=False
+                    )
+                    
+                    kb_gen_url_input = gr.Textbox(
+                        lines=2,
+                        label="URL 입력",
+                        placeholder="https://example.com/article",
+                        visible=False
+                    )
+                    
+                    gr.Markdown("### 생성 옵션")
+                    kb_gen_output_format = gr.Radio(
+                        choices=["NEO 형식 (.kb)", "자연어 형식 (.nkb)", "JSON 형식 (.json)"],
+                        value="NEO 형식 (.kb)",
+                        label="출력 형식"
+                    )
+                    
+                    kb_gen_filename = gr.Textbox(
+                        label="파일명 (확장자 제외)",
+                        placeholder="예: health_insurance_kb",
+                        value="generated_kb"
+                    )
+                    
+                    kb_gen_button = gr.Button("지식베이스 생성", variant="primary")
+                    
+                with gr.Column(scale=2):
+                    gr.Markdown("### 생성 결과")
+                    kb_gen_progress = gr.Textbox(label="진행 상황", interactive=False, value="지식베이스 생성을 기다리는 중...")
+                    kb_gen_output = gr.Textbox(
+                        lines=20, 
+                        label="생성된 지식베이스", 
+                        placeholder="생성된 지식베이스가 여기에 표시됩니다...",
+                        max_lines=50
+                    )
+                    
+                    with gr.Row():
+                        kb_gen_save_btn = gr.Button("파일 저장", variant="secondary")
+                        kb_gen_clear_btn = gr.Button("결과 지우기", variant="secondary")
+                        kb_gen_load_btn = gr.Button("생성된 KB 로드", variant="secondary")
+                    
+                    kb_gen_save_status = gr.Textbox(label="저장 상태", interactive=False)
+                    
+                    gr.Markdown("### 생성된 KB 파일 목록")
+                    kb_gen_file_list = gr.Dropdown(
+                        choices=[],
+                        label="생성된 KB 파일 선택",
+                        allow_custom_value=False
+                    )
+                    refresh_kb_gen_btn = gr.Button("파일 목록 새로고침", variant="secondary", size="sm")
 
         with gr.Tab("단일 모델 테스트 (Native)"):
             with gr.Row():
@@ -748,8 +866,8 @@ def create_benchmark_interface(model_paths: Dict[str, str], system_prompt_dir: s
                                 if p.strip() in original_to_simplified:
                                     for simplified_p in original_to_simplified[p.strip()]:
                                         cat_map[simplified_p] = cat
-                            else:
-                                cat_map[p.strip()] = cat
+                                else:
+                                    cat_map[p.strip()] = cat
             
             total_tasks = len(models) * len(prompts)
             results_data = {"detailed": {m: [] for m in models}}
@@ -1039,6 +1157,18 @@ def create_benchmark_interface(model_paths: Dict[str, str], system_prompt_dir: s
             chatbot_system_prompt_input
         )
 
+        # Agent 템플릿 로딩 핸들러 추가
+        def load_template_for_agent(template_name):
+            if not template_name:
+                return ""
+            return benchmark.load_template_content(template_name)
+
+        agent_system_prompt_template.change(
+            load_template_for_agent,
+            agent_system_prompt_template,
+            agent_system_prompt_input
+        )
+
         def toggle_chatbot_evaluation_ui(use_evaluation):
             """챗봇 출력 평가 옵션에 따라 관련 UI 요소들의 가시성을 조절합니다."""
             return gr.update(visible=use_evaluation), gr.update(visible=use_evaluation)
@@ -1049,13 +1179,104 @@ def create_benchmark_interface(model_paths: Dict[str, str], system_prompt_dir: s
             [chatbot_evaluation_model, chatbot_max_retries]
         )
 
-        def send_message(message, history, model, system_prompt, temp, top_p, max_tokens, gpu_l, port_val, oai_key, gem_key, use_evaluation=False, eval_model="gpt-4o", max_retries=3):
+        def send_message(message, history, model, system_prompt, temp, top_p, max_tokens, gpu_l, port_val, oai_key, gem_key, use_evaluation=False, eval_model="gpt-4o", max_retries=3, use_agent_dialogue=True, agent_model=None, agent_system_prompt="", agent_temp=0.3, agent_top_p=0.9, agent_max_tokens=256):
             global neo_executor, current_kb_file
             
             if not message.strip():
                 return history, "", "메시지를 입력해주세요."
             
             try:
+                # Agent 대화 모드가 활성화된 경우
+                if use_agent_dialogue and agent_model:
+                    print(f"[AGENT 모드] Agent와 사용자 대화 시작 (모델: {agent_model})")
+                    
+                    # Agent 시스템 프롬프트 로드
+                    if not agent_system_prompt:
+                        agent_system_prompt = benchmark.get_system_prompt(agent_model)
+                    
+                    # Agent와의 대화 기록 구성
+                    agent_messages = []
+                    if history:
+                        # 기존 대화 기록을 Agent 대화로 변환
+                        for user_msg, bot_msg in history:
+                            agent_messages.append(f"사용자: {user_msg}")
+                            agent_messages.append(f"Agent: {bot_msg}")
+                    
+                    # 현재 메시지 추가
+                    agent_messages.append(f"사용자: {message}")
+                    
+                    # Agent에게 전달할 프롬프트 구성
+                    agent_prompt = f"""{agent_system_prompt}
+
+=== 대화 기록 ===
+{chr(10).join(agent_messages)}
+
+=== 지침 ===
+위의 대화 기록을 참고하여 사용자의 국민건강보험 관련 정보가 충분한지 판단하고:
+
+1. **정보가 충분한 경우**: 
+   - "구조화완료:"로 시작하여 JSON 형태로 구조화된 정보를 제공
+   - 예시: "구조화완료: {{"가입자유형": "직장가입자", "연소득": "30000000", ...}}"
+
+2. **정보가 부족한 경우**: 
+   - "추가질문:"으로 시작하여 국민건강보험 관련 추가 정보를 요청
+   - 예시: "추가질문: 연소득을 알려주시면 보험료 산정이 정확해집니다."
+
+3. **범위 외 질문인 경우**:
+   - 국민건강보험과 무관한 질문(인사말, 잡담 등)은 "범위외:"로 시작하여 거절
+   - 예시: "범위외: 저는 국민건강보험 관련 질문만 답변할 수 있습니다."
+
+**중요**: 기술적 질문이나 시스템 관련 질문은 하지 마세요. 오직 국민건강보험 관련 정보 수집에만 집중하세요.
+
+Agent:"""
+                    
+                    print(f"[AGENT] Agent 프롬프트 전송 중...")
+                    agent_result = benchmark.generate(agent_model, agent_prompt, agent_max_tokens, agent_temp, agent_top_p, False, oai_key, gem_key, port_val, gpu_l)
+                    
+                    if 'error' in agent_result:
+                        error_msg = f"Agent 처리 오류: {agent_result['error']}"
+                        history.append((message, error_msg))
+                        return history, "", error_msg
+                    
+                    agent_response = agent_result['output'].strip()
+                    print(f"[AGENT 응답]\n{agent_response}")
+                    
+                    # Agent 응답 분석
+                    if agent_response.startswith("구조화완료:"):
+                        # 정보가 충분한 경우, 구조화된 정보 추출
+                        structured_info = agent_response.replace("구조화완료:", "").strip()
+                        print(f"[AGENT] 구조화된 정보 추출: {structured_info}")
+                        
+                        # 구조화된 정보를 NEO Query 변환에 사용
+                        user_query_for_neo = f"사용자 상황: {message}\n구조화된 정보: {structured_info}"
+                        
+                        # Agent 응답을 대화 기록에 추가
+                        history.append((message, agent_response))
+                        
+                        # NEO Query 변환으로 진행
+                        print(f"[AGENT] NEO Query 변환 단계로 진행")
+                        
+                    elif agent_response.startswith("추가질문:"):
+                        # 정보가 부족한 경우, Agent의 추가 질문을 그대로 반환
+                        additional_question = agent_response.replace("추가질문:", "").strip()
+                        history.append((message, additional_question))
+                        return history, "", f"Agent 추가 질문 완료 ({len(additional_question)}자)"
+                    
+                    elif agent_response.startswith("범위외:"):
+                        # 범위 외 질문인 경우, Agent의 거절 메시지를 그대로 반환
+                        rejection_message = agent_response.replace("범위외:", "").strip()
+                        history.append((message, rejection_message))
+                        return history, "", f"Agent 범위 외 질문 거절 완료 ({len(rejection_message)}자)"
+                    
+                    else:
+                        # 예상치 못한 응답 형식
+                        history.append((message, agent_response))
+                        return history, "", f"Agent 응답 완료 ({len(agent_response)}자)"
+                
+                else:
+                    # Agent 모드가 비활성화된 경우, 기존 방식 사용
+                    user_query_for_neo = message
+                
                 # 1. RAG: 질의 임베딩 → Chroma에서 유사 KB 검색
                 # RAG KB 임베딩 캐시
                 kb_embedding_cache = {}
@@ -1069,7 +1290,7 @@ def create_benchmark_interface(model_paths: Dict[str, str], system_prompt_dir: s
                         if kb_path not in kb_embedding_cache:
                             rag_engine.build_kb(kb_texts)
                             kb_embedding_cache[kb_path] = True
-                        retrieved_kb = rag_engine.query(message, top_k=3)
+                        retrieved_kb = rag_engine.query(user_query_for_neo, top_k=3)
                         rag_context = "\n".join(retrieved_kb)
                         print(f"[RAG 검색 결과]\n{rag_context}")
                 elif current_kb_file and not CHROMA_RAG_AVAILABLE:
@@ -1085,7 +1306,7 @@ def create_benchmark_interface(model_paths: Dict[str, str], system_prompt_dir: s
                     "질의: 근로자의 용어정의를 알려줘\n"
                     "→ 변환된 NEO Query: (keep '(용어정의 근로자 ?x))\n"
                     f"=== KB ===\n{rag_context}\n"
-                    f"=== 질의 ===\n{message}\n"
+                    f"=== 질의 ===\n{user_query_for_neo}\n"
                     "=== 변환된 NEO Query만 출력하세요. ==="
                 )
                 print(f"[NEO Query 변환 프롬프트 미리보기]\n{neo_query_prompt[:200]}...")
@@ -1224,14 +1445,14 @@ def create_benchmark_interface(model_paths: Dict[str, str], system_prompt_dir: s
         send_btn.click(
             send_message,
             [chatbot_input, chatbot, chatbot_model_dropdown, chatbot_system_prompt_input, 
-             chatbot_temp, chatbot_top_p, chatbot_max_tokens, gpu_layers, port, openai_key, gemini_key, chatbot_use_evaluation, chatbot_evaluation_model, chatbot_max_retries],
+             chatbot_temp, chatbot_top_p, chatbot_max_tokens, gpu_layers, port, openai_key, gemini_key, chatbot_use_evaluation, chatbot_evaluation_model, chatbot_max_retries, use_agent_dialogue, agent_model_dropdown, agent_system_prompt_input, agent_temp, agent_top_p, agent_max_tokens],
             [chatbot, chatbot_input, chatbot_status]
         )
         
         chatbot_input.submit(
             send_message,
             [chatbot_input, chatbot, chatbot_model_dropdown, chatbot_system_prompt_input, 
-             chatbot_temp, chatbot_top_p, chatbot_max_tokens, gpu_layers, port, openai_key, gemini_key, chatbot_use_evaluation, chatbot_evaluation_model, chatbot_max_retries],
+             chatbot_temp, chatbot_top_p, chatbot_max_tokens, gpu_layers, port, openai_key, gemini_key, chatbot_use_evaluation, chatbot_evaluation_model, chatbot_max_retries, use_agent_dialogue, agent_model_dropdown, agent_system_prompt_input, agent_temp, agent_top_p, agent_max_tokens],
             [chatbot, chatbot_input, chatbot_status]
         )
         
@@ -1567,6 +1788,473 @@ def create_benchmark_interface(model_paths: Dict[str, str], system_prompt_dir: s
             load_sys_prompt_template_content,
             sys_prompt_template_dropdown,
             sys_prompt_template_content
+        )
+
+        # --- 지식베이스 생성 탭 이벤트 핸들러 ---
+        def toggle_kb_gen_input_ui(input_type):
+            """입력 방식에 따라 UI 요소들의 가시성을 조절합니다."""
+            if input_type == "텍스트 입력":
+                return gr.update(visible=True), gr.update(visible=False), gr.update(visible=False)
+            elif input_type == "파일 업로드":
+                return gr.update(visible=False), gr.update(visible=True), gr.update(visible=False)
+            else:  # URL 입력
+                return gr.update(visible=False), gr.update(visible=False), gr.update(visible=True)
+
+        kb_gen_input_type.change(
+            toggle_kb_gen_input_ui,
+            kb_gen_input_type,
+            [kb_gen_text_input, kb_gen_file_input, kb_gen_url_input]
+        )
+
+        def load_template_for_kb_gen(template_name):
+            """지식베이스 생성용 템플릿을 로드합니다."""
+            if not template_name:
+                return ""
+            return benchmark.load_template_content(template_name)
+
+        kb_gen_system_prompt_template.change(
+            load_template_for_kb_gen,
+            kb_gen_system_prompt_template,
+            kb_gen_system_prompt_input
+        )
+
+        def extract_pdf_chunks_from_file(file, chunk_size=1200):
+            """PDF 파일을 페이지별 또는 일정 길이로 분할하여 텍스트 chunk 리스트로 반환합니다."""
+            try:
+                file_path = file.name
+                # PyPDF2 우선 사용
+                try:
+                    import PyPDF2
+                    with open(file_path, 'rb') as f:
+                        pdf_reader = PyPDF2.PdfReader(f)
+                        chunks = []
+                        for page in pdf_reader.pages:
+                            text = page.extract_text()
+                            if text:
+                                # 너무 길면 chunk_size 단위로 쪼갬
+                                for i in range(0, len(text), chunk_size):
+                                    chunk = text[i:i+chunk_size]
+                                    if chunk.strip():
+                                        chunks.append(chunk.strip())
+                        return chunks
+                except ImportError:
+                    # pypdf fallback
+                    try:
+                        import pypdf
+                        with open(file_path, 'rb') as f:
+                            pdf_reader = pypdf.PdfReader(f)
+                            chunks = []
+                            for page in pdf_reader.pages:
+                                text = page.extract_text()
+                                if text:
+                                    for i in range(0, len(text), chunk_size):
+                                        chunk = text[i:i+chunk_size]
+                                        if chunk.strip():
+                                            chunks.append(chunk.strip())
+                            return chunks
+                    except ImportError:
+                        return ["PDF 파일을 읽으려면 PyPDF2 또는 pypdf 라이브러리가 필요합니다.\npip install PyPDF2 또는 pip install pypdf를 실행해주세요."]
+            except Exception as e:
+                return [f"PDF 파일 읽기 오류: {str(e)}"]
+
+        def extract_text_from_file(file):
+            """업로드된 파일에서 텍스트를 추출합니다."""
+            if not file:
+                return ""
+            try:
+                file_path = file.name
+                file_ext = os.path.splitext(file_path)[1].lower()
+                if file_ext == '.txt':
+                    with open(file_path, 'r', encoding='utf-8') as f:
+                        return f.read()
+                elif file_ext == '.md':
+                    with open(file_path, 'r', encoding='utf-8') as f:
+                        return f.read()
+                elif file_ext == '.pdf':
+                    # PDF는 분할 추출이 필요하므로 여기서는 전체 텍스트 반환 대신 chunk 리스트 반환
+                    return extract_pdf_chunks_from_file(file)
+                elif file_ext == '.docx':
+                    try:
+                        from docx import Document
+                        doc = Document(file_path)
+                        text = ""
+                        for paragraph in doc.paragraphs:
+                            text += paragraph.text + "\n"
+                        return text
+                    except ImportError:
+                        return "DOCX 파일을 읽으려면 python-docx 라이브러리가 필요합니다. pip install python-docx를 실행해주세요."
+                else:
+                    return f"지원하지 않는 파일 형식입니다: {file_ext}"
+            except Exception as e:
+                return f"파일 읽기 오류: {str(e)}"
+
+        def extract_text_from_url(url):
+            """URL에서 텍스트를 추출합니다."""
+            if not url or not url.strip():
+                return ""
+            
+            try:
+                import requests
+                from bs4 import BeautifulSoup
+                
+                response = requests.get(url.strip(), timeout=10)
+                response.raise_for_status()
+                
+                soup = BeautifulSoup(response.content, 'html.parser')
+                
+                # 불필요한 태그 제거
+                for tag in soup(['script', 'style', 'nav', 'header', 'footer', 'aside']):
+                    tag.decompose()
+                
+                # 텍스트 추출
+                text = soup.get_text()
+                
+                # 줄바꿈 정리
+                lines = (line.strip() for line in text.splitlines())
+                chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
+                text = '\n'.join(chunk for chunk in chunks if chunk)
+                
+                return text[:5000]  # 최대 5000자로 제한
+                
+            except ImportError:
+                return "URL에서 텍스트를 추출하려면 requests와 beautifulsoup4 라이브러리가 필요합니다. pip install requests beautifulsoup4를 실행해주세요."
+            except Exception as e:
+                return f"URL 텍스트 추출 오류: {str(e)}"
+
+        def generate_knowledge_base(model, system_prompt, input_type, text_input, file_input, url_input, output_format, filename, temp, top_p, max_tokens, gpu_l, port_val, oai_key, gem_key):
+            """지식베이스를 생성합니다."""
+            try:
+                # 입력 데이터 추출
+                input_text = ""
+                pdf_chunks = None
+                if input_type == "텍스트 입력":
+                    input_text = text_input.strip()
+                elif input_type == "파일 업로드":
+                    file_path = file_input.name if file_input else None
+                    file_ext = os.path.splitext(file_path)[1].lower() if file_path else ""
+                    if file_ext == '.pdf':
+                        pdf_chunks = extract_pdf_chunks_from_file(file_input)
+                    else:
+                        input_text = extract_text_from_file(file_input)
+                elif input_type == "URL 입력":
+                    input_text = extract_text_from_url(url_input)
+                
+                if pdf_chunks is not None:
+                    # PDF 분할 추출 케이스
+                    all_kb_results = []
+                    for idx, chunk in enumerate(pdf_chunks):
+                        if not chunk.strip():
+                            continue
+                        # 출력 형식에 따른 프롬프트 구성
+                        format_instructions = {
+                            "NEO 형식 (.kb)": "NEO 엔진에서 사용할 수 있는 S-식 형태의 지식베이스를 생성하세요. 문서에서 발견되는 모든 중요한 지식 항목을 각각 별도의 (keep '(...)) 형태로 생성하세요. 예시:\n(keep '(용어정의 근로자 '직업의_종류와_관계없이_근로의_대가로_보수를_받아_생활하는_사람으로서_공무원_및_교직원을_제외한_사람'))\n(keep '(용어정의 건강보험 '질병이나부상으로인해발생한고액의진료비로가계에과도한부담이되는것을방지하기위한사회보장제도'))\n(keep '(건강보험_특성 의무적인보험가입및보험료납부))\n문서의 모든 관련 정보를 빠짐없이 추출하여 여러 개의 지식 항목으로 변환하세요.",
+                            "자연어 형식 (.nkb)": "자연어로 된 지식베이스를 생성하세요. 문서에서 발견되는 모든 중요한 지식 항목을 각각 별도의 항목으로 작성하세요. 각 지식 항목을 명확하고 이해하기 쉽게 작성하세요.",
+                            "JSON 형식 (.json)": "JSON 형태의 구조화된 지식베이스를 생성하세요. 문서의 모든 중요한 지식 항목을 concepts 배열에 포함하세요. 예시: {\"concepts\": [{\"term\": \"근로자\", \"definition\": \"직업의 종류와 관계없이 근로의 대가로 보수를 받아 생활하는 사람\"}, {\"term\": \"건강보험\", \"definition\": \"질병이나 부상으로 인해 발생한 고액의 진료비로 가계에 과도한 부담이 되는 것을 방지하기 위한 사회보장제도\"}]}"
+                        }
+                        format_instruction = format_instructions.get(output_format, "")
+                        final_prompt = f"""{system_prompt}\n\n=== 입력 데이터 (PDF 분할 {idx+1}/{len(pdf_chunks)}) ===\n{chunk}\n\n=== 출력 형식 지침 ===\n{format_instruction}\n\n위의 입력 데이터를 바탕으로 {output_format}에 맞는 지식베이스를 생성하세요. \n중요: 문서에서 발견되는 모든 중요한 지식 항목을 빠짐없이 추출하여 여러 개의 지식 항목으로 변환하세요. \n하나의 지식 항목만 생성하지 말고, 문서에 포함된 모든 관련 정보를 각각 별도의 지식 항목으로 생성하세요."""
+                        result = benchmark.generate(model, final_prompt, max_tokens, temp, top_p, True, oai_key, gem_key, port_val, gpu_l)
+                        if 'error' in result:
+                            continue
+                        all_kb_results.append(result['output'])
+                    # 결과 합치기 및 중복 제거
+                    merged = '\n'.join(sorted(set('\n'.join(all_kb_results).splitlines())))
+                    # 파일 저장
+                    kb_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "kb")
+                    os.makedirs(kb_dir, exist_ok=True)
+                    file_extensions = {
+                        "NEO 형식 (.kb)": ".kb",
+                        "자연어 형식 (.nkb)": ".nkb",
+                        "JSON 형식 (.json)": ".json"
+                    }
+                    file_ext = file_extensions.get(output_format, ".kb")
+                    file_path = os.path.join(kb_dir, f"{filename}{file_ext}")
+                    with open(file_path, 'w', encoding='utf-8') as f:
+                        f.write(merged)
+                    return f"지식베이스 생성 완료: {file_path}", merged
+                else:
+                    if not input_text:
+                        return "지식베이스 생성을 기다리는 중...", "입력 데이터가 없습니다."
+                    # 기존 단일 텍스트 처리 방식
+                    format_instructions = {
+                        "NEO 형식 (.kb)": "NEO 엔진에서 사용할 수 있는 S-식 형태의 지식베이스를 생성하세요. 문서에서 발견되는 모든 중요한 지식 항목을 각각 별도의 (keep '(...)) 형태로 생성하세요. 예시:\n(keep '(용어정의 근로자 '직업의_종류와_관계없이_근로의_대가로_보수를_받아_생활하는_사람으로서_공무원_및_교직원을_제외한_사람'))\n(keep '(용어정의 건강보험 '질병이나부상으로인해발생한고액의진료비로가계에과도한부담이되는것을방지하기위한사회보장제도'))\n(keep '(건강보험_특성 의무적인보험가입및보험료납부))\n문서의 모든 관련 정보를 빠짐없이 추출하여 여러 개의 지식 항목으로 변환하세요.",
+                        "자연어 형식 (.nkb)": "자연어로 된 지식베이스를 생성하세요. 문서에서 발견되는 모든 중요한 지식 항목을 각각 별도의 항목으로 작성하세요. 각 지식 항목을 명확하고 이해하기 쉽게 작성하세요.",
+                        "JSON 형식 (.json)": "JSON 형태의 구조화된 지식베이스를 생성하세요. 문서의 모든 중요한 지식 항목을 concepts 배열에 포함하세요. 예시: {\"concepts\": [{\"term\": \"근로자\", \"definition\": \"직업의 종류와 관계없이 근로의 대가로 보수를 받아 생활하는 사람\"}, {\"term\": \"건강보험\", \"definition\": \"질병이나 부상으로 인해 발생한 고액의 진료비로 가계에 과도한 부담이 되는 것을 방지하기 위한 사회보장제도\"}]}"
+                    }
+                    format_instruction = format_instructions.get(output_format, "")
+                    final_prompt = f"""{system_prompt}\n\n=== 입력 데이터 ===\n{input_text}\n\n=== 출력 형식 지침 ===\n{format_instruction}\n\n위의 입력 데이터를 바탕으로 {output_format}에 맞는 지식베이스를 생성하세요. \n중요: 문서에서 발견되는 모든 중요한 지식 항목을 빠짐없이 추출하여 여러 개의 지식 항목으로 변환하세요. \n하나의 지식 항목만 생성하지 말고, 문서에 포함된 모든 관련 정보를 각각 별도의 지식 항목으로 생성하세요."""
+                    result = benchmark.generate(model, final_prompt, max_tokens, temp, top_p, True, oai_key, gem_key, port_val, gpu_l)
+                    if 'error' in result:
+                        return "지식베이스 생성을 기다리는 중...", f"생성 오류: {result['error']}"
+                    generated_kb = result['output']
+                    # 파일 저장
+                    kb_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "kb")
+                    os.makedirs(kb_dir, exist_ok=True)
+                    file_extensions = {
+                        "NEO 형식 (.kb)": ".kb",
+                        "자연어 형식 (.nkb)": ".nkb", 
+                        "JSON 형식 (.json)": ".json"
+                    }
+                    file_ext = file_extensions.get(output_format, ".kb")
+                    file_path = os.path.join(kb_dir, f"{filename}{file_ext}")
+                    with open(file_path, 'w', encoding='utf-8') as f:
+                        f.write(generated_kb)
+                    return f"지식베이스 생성 완료: {file_path}", generated_kb
+            except Exception as e:
+                return "지식베이스 생성을 기다리는 중...", f"예외 발생: {str(e)}"
+
+        def save_kb_generated_content(content, filename, output_format):
+            """생성된 지식베이스를 파일로 저장합니다."""
+            if not content.strip():
+                return "저장할 내용이 없습니다."
+            
+            try:
+                kb_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "kb")
+                os.makedirs(kb_dir, exist_ok=True)
+                
+                file_extensions = {
+                    "NEO 형식 (.kb)": ".kb",
+                    "자연어 형식 (.nkb)": ".nkb",
+                    "JSON 형식 (.json)": ".json"
+                }
+                
+                file_ext = file_extensions.get(output_format, ".kb")
+                file_path = os.path.join(kb_dir, f"{filename}{file_ext}")
+                
+                with open(file_path, 'w', encoding='utf-8') as f:
+                    f.write(content)
+                
+                return f"파일이 저장되었습니다: {file_path}"
+                
+            except Exception as e:
+                return f"저장 실패: {str(e)}"
+
+        def clear_kb_generated_content():
+            """생성된 지식베이스 내용을 지웁니다."""
+            return "지식베이스 생성을 기다리는 중...", ""
+
+        def load_kb_generated_file(filename):
+            """생성된 KB 파일을 로드합니다."""
+            if not filename:
+                return "파일을 선택해주세요."
+            
+            try:
+                kb_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "kb")
+                file_path = os.path.join(kb_dir, filename)
+                
+                if not os.path.exists(file_path):
+                    return f"파일을 찾을 수 없습니다: {filename}"
+                
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    content = f.read()
+                
+                return f"파일 로드 완료: {filename} ({len(content)}자)"
+                
+            except Exception as e:
+                return f"파일 로드 실패: {str(e)}"
+
+        def refresh_kb_gen_file_list():
+            """생성된 KB 파일 목록을 새로고침합니다."""
+            kb_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "kb")
+            kb_files = []
+            
+            if os.path.exists(kb_dir):
+                for file in os.listdir(kb_dir):
+                    if file.endswith(('.kb', '.nkb', '.json')):
+                        kb_files.append(file)
+            
+            return gr.update(choices=sorted(kb_files), value=sorted(kb_files)[0] if kb_files else None)
+
+        # 지식베이스 생성 이벤트 연결
+        kb_gen_button.click(
+            generate_knowledge_base,
+            [kb_gen_model_dropdown, kb_gen_system_prompt_input, kb_gen_input_type, kb_gen_text_input, kb_gen_file_input, kb_gen_url_input, kb_gen_output_format, kb_gen_filename, kb_gen_temp, kb_gen_top_p, kb_gen_max_tokens, gpu_layers, port, openai_key, gemini_key],
+            [kb_gen_progress, kb_gen_output]
+        )
+        
+        kb_gen_save_btn.click(
+            save_kb_generated_content,
+            [kb_gen_output, kb_gen_filename, kb_gen_output_format],
+            [kb_gen_save_status]
+        )
+        
+        kb_gen_clear_btn.click(
+            clear_kb_generated_content,
+            [],
+            [kb_gen_progress, kb_gen_output]
+        )
+        
+        kb_gen_load_btn.click(
+            load_kb_generated_file,
+            [kb_gen_file_list],
+            [kb_gen_save_status]
+        )
+        
+        refresh_kb_gen_btn.click(
+            refresh_kb_gen_file_list,
+            [],
+            [kb_gen_file_list]
+        )
+
+        # --- Native 단일 모델 테스트 핸들러 ---
+        def load_template_for_native_test(template_name):
+            return benchmark.load_template_content(template_name)
+
+        native_system_prompt_template.change(
+            load_template_for_native_test,
+            native_system_prompt_template,
+            native_system_prompt_input
+        )
+
+        def run_native_model_task(model, sys_prompt, prompt, temp, top_p, max_tok, gpu_l, port_val, oai_key, gem_key):
+            output = ""
+            try:
+                benchmark.set_system_prompt(model, sys_prompt)
+                result = benchmark.generate(model, prompt, max_tok, temp, top_p, True, oai_key, gem_key, port_val, gpu_l)
+                if 'error' in result:
+                    return f"오류: {result['error']}"
+                output = result['output']
+                return output
+            except Exception as e:
+                return f"실행 중 예외 발생: {e}"
+
+        # --- Native 단일 모델 테스트 핸들러 (대화형) ---
+        def send_native_message(message, history, model, system_prompt, temp, top_p, max_tokens, gpu_l, port_val, oai_key, gem_key):
+            output = ""
+            if not message.strip():
+                return history, "", "메시지를 입력하세요."
+            try:
+                # history를 OpenAI/chat 형식으로 변환
+                chat_messages = []
+                if system_prompt.strip():
+                    chat_messages.append({"role": "system", "content": system_prompt.strip()})
+                for q, a in history:
+                    chat_messages.append({"role": "user", "content": q})
+                    chat_messages.append({"role": "assistant", "content": a})
+                chat_messages.append({"role": "user", "content": message.strip()})
+                # 모델 호출
+                json_data = {"messages": chat_messages, "max_tokens": max_tokens, "temperature": temp, "top_p": top_p}
+                if model.startswith("gpt-"):
+                    headers = {"Authorization": f"Bearer {oai_key}", "Content-Type": "application/json"}
+                    response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json={"model": model, **json_data})
+                    response.raise_for_status()
+                    data = response.json()
+                    output = data['choices'][0]['message']['content']
+                elif model.startswith("gemini"):
+                    if not gem_key:
+                        return history, "", "Gemini API 키가 필요합니다."
+                    url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={gem_key}"
+                    full_prompt = system_prompt.strip() + "\n\n" + "\n".join([f"Q: {q}\nA: {a}" for q, a in history]) + f"\nQ: {message.strip()}\nA:"
+                    json_data = {"contents": [{"parts": [{"text": full_prompt}]}], "generationConfig": {"maxOutputTokens": max_tokens, "temperature": temp, "topP": top_p}}
+                    response = requests.post(url, json=json_data)
+                    response.raise_for_status()
+                    data = response.json()
+                    output = data['candidates'][0]['content']['parts'][0]['text']
+                else:
+                    # 로컬 llama.cpp/ollama 등
+                    model_type = benchmark.model_paths.get(model, "")
+                    if model_type == "ollama":
+                        # Ollama REST API로 바로 요청
+                        url = "http://localhost:11434/api/generate"
+                        json_data_ollama = {
+                            "model": model,
+                            "prompt": message,
+                            "system": system_prompt,
+                            "options": {
+                                "temperature": temp,
+                                "top_p": top_p,
+                                "num_predict": max_tokens,
+                                "stream": False
+                            }
+                        }
+                        response = requests.post(url, json=json_data_ollama, timeout=120)
+                        response.raise_for_status()
+                        # 견고한 Ollama 응답 파싱: 빈 줄/공백/로그 무시, 여러 JSON 오브젝트 분리, done: true만 사용
+                        import json
+                        lines = response.text.splitlines()
+                        final_response = ""
+                        for line in lines:
+                            line = line.strip()
+                            if not line or not line.startswith("{"):
+                                continue
+                            json_chunks = []
+                            if line.count("}{") > 0:
+                                parts = line.replace('}{', '}|||{').split('|||')
+                                json_chunks.extend(parts)
+                            else:
+                                json_chunks.append(line)
+                            for chunk in json_chunks:
+                                try:
+                                    data = json.loads(chunk)
+                                    if data.get("done"):
+                                        final_response = data.get("response", "")
+                                except Exception:
+                                    continue
+                        if not final_response:
+                            # fallback: 마지막 줄의 response라도 사용
+                            for line in reversed(lines):
+                                line = line.strip()
+                                if not line or not line.startswith("{"):
+                                    continue
+                                try:
+                                    data = json.loads(line)
+                                    if "response" in data:
+                                        final_response = data["response"]
+                                        break
+                                except Exception:
+                                    continue
+                        output = final_response
+                        history.append((message, output))
+                        return history, "", f"응답 완료 ({len(output)}자)"
+                    # llama.cpp 서버 실행 및 요청은 ollama가 아닐 때만
+                    model_path = benchmark.model_paths.get(model)
+                    if not model_path:
+                        return history, "", f"모델 경로를 찾을 수 없습니다: {model}"
+                    if not benchmark.server_manager.start(model_path, benchmark.context_size, port_val, gpu_l):
+                        return history, "", f"로컬 서버({model}) 실행 실패 또는 연결 불가"
+                    headers = {"Content-Type": "application/json"}
+                    response = requests.post(f"http://{SERVER_HOST}:{port_val}/v1/chat/completions", headers=headers, json=json_data)
+                    response.raise_for_status()
+                    # JSONDecodeError 방지: 여러 줄 중 첫 번째 유효한 JSON만 파싱
+                    import json
+                    data = None
+                    try:
+                        data = response.json()
+                    except Exception:
+                        lines = response.text.splitlines()
+                        for line in lines:
+                            try:
+                                data = json.loads(line)
+                                break
+                            except Exception:
+                                continue
+                        if data is None:
+                            raise  # 아무것도 파싱 안 되면 원래 에러 발생
+                    output = data['choices'][0]['message']['content']
+                history.append((message, output))
+                return history, "", f"응답 완료 ({len(output)}자)"
+            except Exception as e:
+                error_msg = f"오류: {str(e)}"
+                history.append((message, error_msg))
+                return history, "", error_msg
+
+        def clear_native_chat():
+            return [], "대화 기록이 지워졌습니다."
+
+        native_send_btn.click(
+            send_native_message,
+            [native_prompt_input, native_chatbot, native_model_dropdown, native_system_prompt_input, native_temp, native_top_p, native_max_tokens, gpu_layers, port, openai_key, gemini_key],
+            [native_chatbot, native_prompt_input, native_status]
+        )
+        native_prompt_input.submit(
+            send_native_message,
+            [native_prompt_input, native_chatbot, native_model_dropdown, native_system_prompt_input, native_temp, native_top_p, native_max_tokens, gpu_layers, port, openai_key, gemini_key],
+            [native_chatbot, native_prompt_input, native_status]
+        )
+        native_clear_btn.click(
+            clear_native_chat,
+            [],
+            [native_chatbot, native_status]
         )
     return demo
 
